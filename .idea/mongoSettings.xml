@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="MongoConfiguration">
+    <option name="serverConfigurations">
+      <list>
+        <ServerConfiguration>
+          <option name="label" value="Biopedia" />
+          <option name="serverUrls">
+            <list>
+              <option value="localhost:27017" />
+            </list>
+          </option>
+          <option name="userDatabase" value="Biopedia" />
+        </ServerConfiguration>
+      </list>
+    </option>
+    <option name="shellPath" value="C:\Program Files\MongoDB 2.6 Standard\bin\mongod.exe" />
+  </component>
+</project>
+

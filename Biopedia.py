@@ -1,6 +1,9 @@
+# TODO: projects, profiles, data
 from flask import Flask, render_template
+from flask.ext.pymongo import PyMongo
 
 app = Flask(__name__)
+mongo = PyMongo(app)
 
 @app.route('/')
 @app.route('/index')
@@ -13,7 +16,17 @@ def index(language='en'):
     """
     return render_template('index.html', language=language)
 
-# TODO: projects, profiles, data
+
+@app.route('/projects')
+@app.route('/<language>/projects')
+def projects(language='en'):
+    """
+    Returns the projects page.
+    :param language: Defines the language ('en' or 'cn') used for the template.
+    :return: The rendered project.html template.
+    """
+    project_list = mongo.db.projects.find()
+    return render_template('projects.html', language=language, project_list=project_list)
 
 
 if __name__ == '__main__':
