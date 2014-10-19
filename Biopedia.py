@@ -1,6 +1,7 @@
 # TODO: projects, profiles, data
-from flask import Flask, render_template
+from flask import Flask, render_template, request
 from flask.ext.pymongo import PyMongo
+
 
 app = Flask(__name__)
 mongo = PyMongo(app)
@@ -27,6 +28,29 @@ def projects(language='en'):
     """
     project_list = mongo.db.projects.find()
     return render_template('projects.html', language=language, project_list=project_list)
+
+
+@app.route('/samples', methods=['GET'])
+@app.route('/<language>/samples', methods=['GET'])
+def samples(language='en'):
+    """
+    Returns the sample page.
+    :param language: Defines the language ('en' or 'cn') used for the template
+    :return: The rendered samples.html template
+              /samples?name=<project_name>
+    """
+    project_name = request.args.get('name', '')
+    assert project_name
+    assert mongo.db.projects.find({"name":project_name}).count() > 0
+    # the project_name ought to be exist in db projects
+    assert mongo.db.samples.find({"project_name":project_name}).count() > 0
+    # the project_name ought to be exist in db samples
+    sample_list = mongo.db.samples.find({"project_name":project_name})
+    project_fields_name = dict(sample_list[0])['elements'].keys()
+    # to take the keys of one of the sample as heads of the sample table
+    # a sample consists 'project_name it belongs to' and 'elements' dict
+    return render_template('samples.html', language=language,
+                           sample_list=sample_list, project_fields_name=project_fields_name)
 
 
 if __name__ == '__main__':

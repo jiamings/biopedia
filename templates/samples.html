@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table>
+    <tr>
+   {% for field in project_fields_name %}
+        <th>{{ field }}</th>
+   {% endfor %}
+    </tr>
+    {% for sample in sample_list %}
+    <tr>
+       {% for field in project_fields_name %}
+        <td>{{ sample['elements'][field] }}</td>
+        {% endfor %}
+    </tr>
+    {% endfor %}
+ </table>
+</body>
+</html>
