@@ -1,4 +1,6 @@
-# TODO: projects, profiles, data
+"""
+Main Entrance for the application.
+"""
 from flask import Flask, render_template, request
 from flask.ext.pymongo import PyMongo
 
@@ -13,18 +15,19 @@ def index(language='en'):
     """
     Returns the index page.
     :param language: Defines the language ('en' or 'cn') used for the template.
-    :return: The rendered index.html template.
+    :return: The rendered index.html template, which currently contains almost nothing.
     """
     return render_template('index.html', language=language)
 
 
-@app.route('/projects')
-@app.route('/<language>/projects')
+@app.route('/projects', methods=['GET'])
+@app.route('/<language>/projects', methods=['GET'])
 def projects(language='en'):
     """
     Returns the projects page.
     :param language: Defines the language ('en' or 'cn') used for the template.
-    :return: The rendered project.html template.
+    :return: The rendered project.html template which contains all the projects for now.
+                /projects
     """
     project_list = mongo.db.projects.find()
     return render_template('projects.html', language=language, project_list=project_list)
