@@ -3,9 +3,14 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+        <!-- Bootstrap core CSS -->
+    <link href="{{url_for('static', filename='bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="{{url_for('static', filename='projects.css')}}" rel="stylesheet">
 </head>
 <body>
-<table>
+<table style="margin:auto; width:80%;" class="table table-striped">
     <tr>
    {% for field in project_fields_name %}
         <th>{{ field }}</th>
@@ -19,5 +24,11 @@
     </tr>
     {% endfor %}
  </table>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="{{url_for('static', filename='bootstrap.min.js')}}"></script>
 </body>
 </html>
