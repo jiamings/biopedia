@@ -79,7 +79,7 @@
             <tbody>
               {% for project in project_list %}
               <tr>
-                <td>{{ project['name'] }}</td>
+                <td><a href="/samples?name={{project['name']}}">{{ project['name'] }}</a></td>
                 <td>{{ project['environment'] }}</td>
                 <td>{{ project['site'] }}</td>
                 <td>{{ project['sequence_type'] }}</td>
