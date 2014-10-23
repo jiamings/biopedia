@@ -1,0 +1,50 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Chart.js柱形图DEMO演示环形图DEMO演示</title>
+		<script src="../Chart.js"></script>
+		<meta name = "viewport" content = "initial-scale = 1, user-scalable = no">
+		<meta charset="UTF-8">
+		<style>
+			canvas{
+			}
+		</style>
+	</head>
+	<body>
+		<canvas id="canvas" height="450" width="450"></canvas>
+
+<div style="text-align:center;clear:both;">
+<script src="/gg_bd_ad_720x90.js" type="text/javascript"></script>
+<script src="/follow.js" type="text/javascript"></script>
+</div>
+	<script>
+
+		var doughnutData = [
+				{
+					value: 30,
+					color:"#F7464A"
+				},
+				{
+					value : 50,
+					color : "#46BFBD"
+				},
+				{
+					value : 100,
+					color : "#FDB45C"
+				},
+				{
+					value : 40,
+					color : "#949FB1"
+				},
+				{
+					value : 120,
+					color : "#4D5360"
+				}
+			
+			];
+
+	var myDoughnut = new Chart(document.getElementById("canvas").getContext("2d")).Doughnut(doughnutData);
+	
+	</script>
+	</body>
+</html>
