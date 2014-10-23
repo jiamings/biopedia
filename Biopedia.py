@@ -49,7 +49,9 @@ def samples(language='en'):
     assert mongo.db.samples.find({"project_name":project_name}).count() > 0
     # the project_name ought to be exist in db samples
     sample_list = mongo.db.samples.find({"project_name":project_name})
-    project_fields_name = dict(sample_list[0])['elements'].keys()
+    project_fields_name = dict(sample_list[0]).keys()
+    project_fields_name.remove("_id")
+    project_fields_name.remove("project_name")
     # to take the keys of one of the sample as heads of the sample table
     # a sample consists 'project_name it belongs to' and 'elements' dict
     return render_template('samples.html', language=language,
