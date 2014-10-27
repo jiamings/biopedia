@@ -1,8 +1,7 @@
-__author__ = 'yuanyuan'
-
 import pymongo
 
 client = pymongo.MongoClient()
+
 
 def save_sample(elements):
     """
@@ -13,13 +12,13 @@ def save_sample(elements):
 
     db = client.Biopedia
 
-    if (type(elements)!=dict):
+    if (type(elements) != dict):
         return False
 
-    if db.projects.find({'name':elements['project_name']}).count()==0:
+    if db.projects.find({'name': elements['project_name']}).count() == 0:
         return False
 
-    if db.samples.find().count()>0 and len(db.samples.find().limit(1)[0])<>len(elements):
+    if db.samples.find().count() > 0 and len(db.samples.find().limit(1)[0]) <> len(elements):
         return False
 
     db.samples.save(elements)

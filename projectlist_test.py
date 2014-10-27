@@ -1,13 +1,12 @@
 import unittest
-from projectlist import save_project
-from datetime import date
+import projectlist
 
 class ProjectListTestCase(unittest.TestCase):
     """
     Tests all the functions in projectlist.py.
     """
     def test_save_project(self):
-        obj = save_project(
+        obj = projectlist.save_project(
             name='MetaTongue',
             environment='Human',
             site='Oral',
