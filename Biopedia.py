@@ -50,9 +50,8 @@ def samples(language='en'):
     # the project_name ought to be exist in db samples
     sample_list = mongo.db.samples.find({"project_name":project_name})
     project_fields_name = dict(sample_list[0]).keys()
-    print sample_list[0]
-    print sample_list[0].keys()
-    print project_fields_name
+    project_fields_name.remove("_id")
+    project_fields_name.remove("project_name")
     # to take the keys of one of the sample as heads of the sample table
     # a sample consists 'project_name it belongs to' and 'elements' dict
     return render_template('samples.html', language=language, project_name=project_name,
