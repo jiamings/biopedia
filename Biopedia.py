@@ -60,6 +60,10 @@ def samples(language='en'):
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name)
 
+@app.route('/charts', methods=['GET'])
+def charts():
+    return render_template('charts.html')
+
 
 default_selected_details = \
     {"MetaTongue":["name", "sex", "age", "residence", "Nationality",

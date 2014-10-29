@@ -3,18 +3,20 @@
 <head>
     <meta charset="utf-8">
     <title>
+<<<<<<< HEAD
+        Biopedia - {{ project_name }}
+=======
         {% if language =='en' %}
         Biopedia - Projects
         {% else %}
         Biopedia - 项目
         {% endif %}
+>>>>>>> origin/master
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
@@ -70,16 +72,27 @@
 </div>
 
 <div class="container">
+<<<<<<< HEAD
+    <table id="samples" class="table table-striped">
+
+        <thead>
+=======
     <table id="sample" class="table table-striped">
 		<thead>
+>>>>>>> origin/master
         <tr>
             <th>name</th>
             {% for field in project_fields_name %}
             <th>{{ field }}</th>
             {% endfor %}
         </tr>
+<<<<<<< HEAD
+        </thead>
+        <tbody>
+=======
 		</thead>
 		<tbody>
+>>>>>>> origin/master
         {% for sample in sample_list %}
         <tr>
             <td><a href="/profile?project={{project_name}}&name={{sample['name']}}">{{sample['name']}}</a></td>
@@ -88,7 +101,12 @@
             {% endfor %}
         </tr>
         {% endfor %}
+<<<<<<< HEAD
+        </tbody>
+
+=======
 		</tbody>
+>>>>>>> origin/master
     </table>
 </div>
 
@@ -107,7 +125,7 @@ Self-defined Scripts
 -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#sample').dataTable().columnFilter();
+        $('#samples').dataTable();
     });
 
 
