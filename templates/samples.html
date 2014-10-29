@@ -73,6 +73,7 @@
     <table id="sample" class="table table-striped">
 		<thead>
         <tr>
+            <th>name</th>
             {% for field in project_fields_name %}
             <th>{{ field }}</th>
             {% endfor %}
@@ -81,6 +82,7 @@
 		<tbody>
         {% for sample in sample_list %}
         <tr>
+            <td><a href="/profile?project={{project_name}}&name={{sample['name']}}">{{sample['name']}}</a></td>
             {% for field in project_fields_name %}
             <td>{{ sample[field] }}</td>
             {% endfor %}

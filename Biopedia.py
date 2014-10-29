@@ -34,8 +34,7 @@ def projects(language='en'):
     return render_template('projects.html', language=language, project_list=project_list)
 
 default_selected_fields = \
-    {"MetaTongue":["name", "sex", "age", "residence", "nationality",
-                   "married", "drink", "smoke", "tongueColor", "tongueType"]}
+    {"MetaTongue": ["sex", "age", "residence", "Nationality", "married", "drink", "smoke", "tongueColor", "tongueType"]}
 
 @app.route('/samples', methods=['GET'])
 @app.route('/<language>/samples', methods=['GET'])
@@ -63,7 +62,7 @@ def samples(language='en'):
 
 
 default_selected_details = \
-    {"MetaTongue":["name", "sex", "age", "residence", "nationality",
+    {"MetaTongue":["name", "sex", "age", "residence", "Nationality",
                    "married", "drink", "smoke"]}
 
 
@@ -82,8 +81,10 @@ def sample_profile(language='en'):
     sample_name = request.args.get('name', '')
     assert sample_name
     assert mongo.db.samples.find({"name": sample_name, "project_name": project_name}).count() > 0
+    # get sample name and project name from REQUEST
     sample_detail = mongo.db.samples.find({"name": sample_name, "project_name": project_name})[0]
     selected_details = default_selected_details[project_name]
+    # select certain details
     return render_template('profile.html', language=language, sample_name=sample_name,
                            project_name=project_name, sample_detail=sample_detail,
                            selected_details_name=selected_details)
