@@ -3,18 +3,12 @@
 <head>
     <meta charset="utf-8">
     <title>
-        {% if language =='en' %}
-            Biopedia - Projects
-        {% else %}
-            Biopedia - 项目
-        {% endif %}
+        Biopedia - {{ project_name }}
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-
-    <title>Starter Template for Bootstrap</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
@@ -70,12 +64,16 @@
 </div>
 
 <div class="container">
-    <table id="sample" class="table table-striped">
+    <table id="samples" class="table table-striped">
+
+        <thead>
         <tr>
             {% for field in project_fields_name %}
                 <th>{{ field }}</th>
             {% endfor %}
         </tr>
+        </thead>
+        <tbody>
         {% for sample in sample_list %}
             <tr>
                 {% for field in project_fields_name %}
@@ -83,6 +81,8 @@
                 {% endfor %}
             </tr>
         {% endfor %}
+        </tbody>
+
     </table>
 </div>
 
@@ -101,7 +101,7 @@ Self-defined Scripts
 -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#sample').dataTable().columnFilter();
+        $('#samples').dataTable();
     });
 </script>
 
