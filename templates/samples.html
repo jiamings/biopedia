@@ -4,9 +4,9 @@
     <meta charset="utf-8">
     <title>
         {% if language =='en' %}
-            Biopedia - Projects
+        Biopedia - Projects
         {% else %}
-            Biopedia - 项目
+        Biopedia - 项目
         {% endif %}
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -29,8 +29,8 @@
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
 
 </head>
@@ -71,18 +71,22 @@
 
 <div class="container">
     <table id="sample" class="table table-striped">
+		<thead>
         <tr>
             {% for field in project_fields_name %}
-                <th>{{ field }}</th>
+            <th>{{ field }}</th>
             {% endfor %}
         </tr>
+		</thead>
+		<tbody>
         {% for sample in sample_list %}
-            <tr>
-                {% for field in project_fields_name %}
-                    <td>{{ sample[field] }}</td>
-                {% endfor %}
-            </tr>
+        <tr>
+            {% for field in project_fields_name %}
+            <td>{{ sample[field] }}</td>
+            {% endfor %}
+        </tr>
         {% endfor %}
+		</tbody>
     </table>
 </div>
 
@@ -103,6 +107,8 @@ Self-defined Scripts
     $(document).ready(function () {
         $('#sample').dataTable().columnFilter();
     });
+
+
 </script>
 
 </body>

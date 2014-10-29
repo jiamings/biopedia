@@ -1,10 +1,12 @@
 import unittest
 import projectlist
 
+
 class ProjectListTestCase(unittest.TestCase):
     """
     Tests all the functions in projectlist.py.
     """
+
     def test_save_project(self):
         obj = projectlist.save_project(
             name='MetaTongue',

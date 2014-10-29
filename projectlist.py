@@ -3,6 +3,7 @@ from datetime import date
 
 client = pymongo.MongoClient()
 
+
 def save_project(name, environment, site, sequence_type,
                  project_id, num_of_total_sequences,
                  num_of_orfs, num_of_samples, read_length,

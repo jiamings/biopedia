@@ -8,6 +8,7 @@ from flask.ext.pymongo import PyMongo
 app = Flask(__name__)
 mongo = PyMongo(app)
 
+
 @app.route('/')
 @app.route('/index')
 @app.route('/<language>/index')
@@ -32,6 +33,9 @@ def projects(language='en'):
     project_list = mongo.db.projects.find()
     return render_template('projects.html', language=language, project_list=project_list)
 
+default_selected_fields = \
+    {"MetaTongue":["name", "sex", "age", "residence", "nationality",
+                   "married", "drink", "smoke", "tongueColor", "tongueType"]}
 
 @app.route('/samples', methods=['GET'])
 @app.route('/<language>/samples', methods=['GET'])
@@ -44,14 +48,15 @@ def samples(language='en'):
     """
     project_name = request.args.get('name', '')
     assert project_name
-    assert mongo.db.projects.find({"name":project_name}).count() > 0
+    assert mongo.db.projects.find({"name": project_name}).count() > 0
     # the project_name ought to be exist in db projects
-    assert mongo.db.samples.find({"project_name":project_name}).count() > 0
+    assert mongo.db.samples.find({"project_name": project_name}).count() > 0
     # the project_name ought to be exist in db samples
-    sample_list = mongo.db.samples.find({"project_name":project_name})
-    project_fields_name = dict(sample_list[0]).keys()
-    project_fields_name.remove("_id")
-    project_fields_name.remove("project_name")
+    sample_list = mongo.db.samples.find({"project_name": project_name})
+    #project_fields_name = dict(sample_list[0]).keys()
+    #project_fields_name.remove("_id")
+    #project_fields_name.remove("project_name")
+    project_fields_name = default_selected_fields[project_name]
     # to take the keys of one of the sample as heads of the sample table
     # a sample consists 'project_name it belongs to' and 'elements' dict
     return render_template('samples.html', language=language, project_name=project_name,
