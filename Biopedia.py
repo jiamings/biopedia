@@ -58,10 +58,35 @@ def samples(language='en'):
     #project_fields_name.remove("project_name")
     project_fields_name = default_selected_fields[project_name]
     # to take the keys of one of the sample as heads of the sample table
-    # a sample consists 'project_name it belongs to' and 'elements' dict
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name)
 
+
+default_selected_details = \
+    {"MetaTongue":["name", "sex", "age", "residence", "nationality",
+                   "married", "drink", "smoke"]}
+
+
+@app.route('/profile', methods=['GET'])
+@app.route('/<language>/profile', methods=['GET'])
+def sample_profile(language='en'):
+    """
+
+    :param language: language: Defines the language ('en' or 'cn') used for the template
+    :return: The rendered samples.html template
+              /samples?project=<project_name>&name=<sample_name>
+    """
+    project_name = request.args.get('project', '')
+    assert project_name
+    assert mongo.db.projects.find({"name": project_name}).count() > 0
+    sample_name = request.args.get('name', '')
+    assert sample_name
+    assert mongo.db.samples.find({"name": sample_name, "project_name": project_name}).count() > 0
+    sample_detail = mongo.db.samples.find({"name": sample_name, "project_name": project_name})[0]
+    selected_details = default_selected_details[project_name]
+    return render_template('profile.html', language=language, sample_name=sample_name,
+                           project_name=project_name, sample_detail=sample_detail,
+                           selected_details_name=selected_details)
 
 if __name__ == '__main__':
     app.run(debug=True)
