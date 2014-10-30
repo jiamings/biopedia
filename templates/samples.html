@@ -109,11 +109,18 @@
     <h4 class="modal-title">Stack One</h4>
   </div>
   <div class="modal-body">
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <p>One fine body…</p>
-    <input class="form-control" type="text" data-tabindex="1" />
-    <input class="form-control" type="text" data-tabindex="2" />
+    <input class="form-group" type="checkbox"/> name<br>
+    <input class="form-group" type="checkbox"/> sex<br>
+    <input class="form-group" type="checkbox"/> age<br>
+      <input class="form-group" type="checkbox"/> residence<br>
+      <input class="form-group" type="checkbox"/> Nationality<br>
+      <input class="form-group" type="checkbox"/> married<br>
+      <input class="form-group" type="checkbox"/> drink<br>
+      <input class="form-group" type="checkbox"/> smoke<br>
+      <input class="form-group" type="checkbox"/> car<br>
+
+    <input class="form-group" type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
+    <input class="form-control" type="text"/>
     <button class="btn btn-default" data-toggle="modal" href="#stack2">Launch modal</button>
   </div>
   <div class="modal-footer">
@@ -122,6 +129,11 @@
   </div>
 </div>
 
+<form action="demo_form.asp" method="get">
+  <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
+  <input type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
+  <input type="submit" value="Submit">
+</form>
 
 <!-- Scripts Placed at the end of the document so the pages load faster -->
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
