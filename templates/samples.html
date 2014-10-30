@@ -21,10 +21,7 @@
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
 
-    <link href="{{ url_for('static', filename='css/bootstrap3.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" />
-    <link href="{{ url_for('static', filename='css/bootstrap-modal.css') }}" rel="stylesheet" />
+
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -97,28 +94,42 @@
 </div>
 
 <!-- Modal Definitions (tabbed over for <pre>) -->
-<div id="column_selection" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-   <form action="/samples" method="get">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title">Select fields</h4>
+<div class="modal fade" id="column_selection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select Columns to Show</h4>
+      </div>
+    <form class="form-horizontal">
+      <div class="modal-body">
+          <div style="overflow-y:auto; overflow-x:auto;  height: 400px" >
+                <fieldset>
+                {% for field_name in all_fields_name %}
+                    <div class="checkbox col-lg-4">
+                        <label>
+                            {% if field_name in project_fields_name %}
+                                <input checked="checked" name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}}
+                            {% else %}
+                                <input name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}}
+                            {% endif %}
+                        </label>
+                    </div>
+                 {% endfor %}
+                 <input name="name" value="{{ project_name }}" type = "hidden">
+               </fieldset>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
+      </div>
+    </form>
+    </div>
   </div>
-  <div class="modal-body">
-     {% for field_name in all_fields_name %}
-        {% if field_name in project_fields_name %}
-        <input checked="checked" name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}} &nbsp;&nbsp;&nbsp;
-        {% else %}
-        <input name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}} &nbsp;&nbsp;&nbsp;
-        {% endif %}
-     {% endfor %}
-     <input name="name" value="{{ project_name }}" type = "hidden">
-  </div>
-  <div class="modal-footer">
-    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-    <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
-  </div>
-   </form>
 </div>
+
 
 <!-- Scripts Placed at the end of the document so the pages load faster -->
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
@@ -127,12 +138,8 @@
 <script src="{{ url_for('static', filename='js/dataTables.bootstrap.js') }}"></script>
 <script src="//fezvrasta.github.io/snackbarjs/dist/snackbar.min.js"></script>
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap-modal.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
-
-<script src="{{ url_for('static', filename='js/bootstrap-modalmanager.js') }}"></script>
-<script src="{{ url_for('static', filename='js/bootstrap-modal.js') }}"></script>
 <!--
 Self-defined Scripts
 -->
@@ -140,8 +147,6 @@ Self-defined Scripts
     $(document).ready(function () {
         $('#samples').dataTable();
     });
-
-
 </script>
 
 </body>
