@@ -72,6 +72,13 @@
 </div>
 
 <div class="container">
+    <h1>Chart No.1</h1>
+    <div class="row">
+        <div id="chart1"></div>
+    </div>
+</div>
+
+<div class="container">
     <h1>Chart No.2</h1>
     <div class="row">
         <div id="chart2"></div>
@@ -98,6 +105,7 @@
         <div id="chart6"></div>
     </div>
 </div>
+
 
 <!-- Scripts Placed at the end of the document so the pages load faster -->
 
@@ -815,6 +823,122 @@ $(document).ready(function() {
 				});
 			});
 </script>
+
+  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/exporting.js"></script>
+  <script type="text/javascript" src="http://cdn.hcharts.cn/highcharts/highcharts-more.js"></script>
+
+  <script>
+    $(function () {
+    $('#chart1').highcharts({
+
+        /*chart: {
+            type: 'boxplot'
+        },
+        */
+
+        title: {
+            text: 'Quality scores across all bases(Illumina 1.5 encoding) '
+        },
+
+        legend: {
+            enabled: false
+        },
+
+        xAxis: {
+            categories: ['1', '2', '3', '4', '5','6','7','8','9','10-14','15-19','20-24','25-29','30-34','35-39','40-44','45-49','50-54','55-59','60-64','65-69','70-74','75-79','80-84','85-89','90' ],
+            title: {
+                text: 'Position in read(bp).'
+            }
+        },
+
+        yAxis: {
+            title: {
+                text: 'Values'
+            },
+
+             tickPositions: [31, 41],
+            plotLines: [{
+                value: 35,
+                /*color: 'red',*/
+                width: 1,
+                label: {
+                    /*text: 'Theoretical mean: 932',*/
+                    align: 'center',
+                    style: {
+                        color: 'gray'
+                    }
+                }
+            }]
+        },
+
+
+        series: [{
+            type:'boxplot',
+            name: 'Observations',
+            data: [
+                [31, 33, 34, 34, 34],
+                [31, 34, 34, 34, 34],
+                [31, 34, 34, 34, 34],
+                [35, 37, 37, 37, 37],
+                [35, 37, 37, 37, 37],
+                [35, 37, 37, 37, 37],
+                [35, 37, 37, 37, 37],
+                [35, 37, 37, 37, 37],
+                [37, 39, 39, 39, 39],
+                [37.2, 39.2, 39, 39.4, 39.4],
+                [38, 40, 41, 41, 41],
+                [38, 40, 41, 41, 41],
+                [38, 40, 41, 41, 41],
+                [37.2, 40, 41, 41, 41],
+                [36.4, 39.8, 41, 41, 41],
+                [35.2, 39, 41, 41, 41],
+                [35, 38.4, 40, 41, 41],
+                [35, 38, 40, 41, 41],
+                [35, 37.2, 40, 41, 41],
+                [34.6, 36.4, 39.6, 41, 41],
+                [34, 35, 38.8, 41, 41],
+                [33.4, 35, 36.8, 39.6, 41],
+                [32.4, 34.8, 35.2, 37.8, 39.6],
+                [33, 35, 35, 36.6, 38.8],
+                [32, 35, 35, 36, 37],
+                [32, 35, 35, 35, 36]
+
+
+            ],
+            tooltip: {
+                headerFormat: '<em>Experiment No {point.key}</em><br/>'
+            }
+        },
+
+                 {
+            type: 'spline',
+            name: 'mean',
+            data: [33.14,33.32 ,33.33,36.58,36.54,36.55,36.53,36.53,38.39,38.72,40.00,39.94,39.82,39.64,39.39,39.13,38.81,38.72,38.43,38.00,37.28,36.44,35.34,34.81,34.02,33.62 ]
+        },
+
+                 {
+            name: 'Outlier',
+            color: Highcharts.getOptions().colors[0],
+            type: 'scatter',
+            data: [ // x, y positions where 0 is the first category
+                [0, 644],
+                [4, 718],
+                [4, 951],
+                [4, 969]
+            ],
+            marker: {
+                fillColor: 'white',
+                lineWidth: 1,
+                lineColor: Highcharts.getOptions().colors[0]
+            },
+            tooltip: {
+                pointFormat: 'Observation: {point.y}'
+            }
+        }]
+
+    });
+});
+  </script>
 
 </body>
 </html>
