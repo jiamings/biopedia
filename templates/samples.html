@@ -98,24 +98,24 @@
 
 <!-- Modal Definitions (tabbed over for <pre>) -->
 <div id="column_selection" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
-   <form action="/hihui" method="get">
+   <form action="/samples" method="get">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-    <h4 class="modal-title">Stack One</h4>
+    <h4 class="modal-title">Select fields</h4>
   </div>
   <div class="modal-body">
-    <input class="form-group" type="checkbox" value="name"/> name<br>
-    <input class="form-group" type="checkbox" value="sex"/> sex<br>
-    <input class="form-group" type="checkbox" value="age"/> age<br>
-      <input class="form-group" type="checkbox" value="residence"/> residence<br>
-      <input class="form-group" type="checkbox" value="Nationality"/> Nationality<br>
-      <input class="form-group" type="checkbox" value="married"/> married<br>
-      <input class="form-group" type="checkbox" value="drink"/> drink<br>
-      <input class="form-group" type="checkbox" value="smoke"/> smoke<br>
+     {% for field_name in all_fields_name %}
+        {% if field_name in project_fields_name %}
+        <input checked="checked" name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}} &nbsp;&nbsp;&nbsp;
+        {% else %}
+        <input name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}} &nbsp;&nbsp;&nbsp;
+        {% endif %}
+     {% endfor %}
+     <input name="name" value="{{ project_name }}" type = "hidden">
   </div>
   <div class="modal-footer">
     <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-    <button type="button" class="btn btn-primary" value="submit">Ok</button>
+    <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
   </div>
    </form>
 </div>

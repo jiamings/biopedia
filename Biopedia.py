@@ -55,10 +55,21 @@ def samples(language='en'):
     #project_fields_name = dict(sample_list[0]).keys()
     #project_fields_name.remove("_id")
     #project_fields_name.remove("project_name")
-    project_fields_name = default_selected_fields[project_name]
+    if request.args.get("fields",''):
+        project_fields_name = request.args.getlist("fields")
+        print(project_fields_name)
+    else:
+        project_fields_name = default_selected_fields[project_name]
+    if len(project_fields_name) > 10:
+        project_fields_name = project_fields_name[0:9]
     # to take the keys of one of the sample as heads of the sample table
+    all_fields_name = dict(sample_list[0]).keys()
+    all_fields_name.remove("_id")
+    all_fields_name.remove("project_name")
+    all_fields_name.sort()
     return render_template('samples.html', language=language, project_name=project_name,
-                           sample_list=sample_list, project_fields_name=project_fields_name)
+                           sample_list=sample_list, project_fields_name=project_fields_name,
+                           all_fields_name=all_fields_name)
 
 @app.route('/charts', methods=['GET'])
 def charts():
