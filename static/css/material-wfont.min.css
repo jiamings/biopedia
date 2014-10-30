@@ -5984,10 +5984,6 @@ legend {
     margin-bottom: 16px
 }
 
-.modal-backdrop {
-    display: none
-}
-
 .snackbar {
     background-color: #323232;
     color: rgba(255, 255, 255, .84);
