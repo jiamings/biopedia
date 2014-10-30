@@ -11,15 +11,20 @@
     <meta name="author" content="">
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+{#    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">#}
     <!-- Google Material Design CSS-->
     <link href="{{ url_for('static', filename='css/ripples.min.css') }}" rel="stylesheet">
-    <link href="{{ url_for('static', filename='css/material-wfont.min.css') }}" rel="stylesheet">
+{#    <link href="{{ url_for('static', filename='css/material-wfont.min.css') }}" rel="stylesheet">#}
     <link href="{{ url_for('static', filename='css/snackbar.min.css') }}" rel="stylesheet">
     <!-- Datatable CSS -->
     <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
+
+    <link href="{{ url_for('static', filename='css/bootstrap3.css') }}" rel="stylesheet" />
+{#    <link href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet" />#}
+    <link href="{{ url_for('static', filename='css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" />
+    <link href="{{ url_for('static', filename='css/bootstrap-modal.css') }}" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -63,6 +68,17 @@
     </div>
 </div>
 
+<div class="page-container">
+    <div class="container" style="position: relative">
+          <div class="stackable">
+            <div class="text-center">
+            <button class="demo btn btn-primary btn-lg" data-toggle="modal" href="#stack1">View Demo</button>
+            </div>
+          </div>
+          <br />
+    </div>
+</div>
+
 <div class="container">
     <table id="samples" class="table table-striped">
 		<thead>
@@ -86,7 +102,59 @@
     </table>
 </div>
 
+<!-- Modal Definitions (tabbed over for <pre>) -->
+<div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Stack One</h4>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+    <p>One fine body…</p>
+    <p>One fine body…</p>
+    <input class="form-control" type="text" data-tabindex="1" />
+    <input class="form-control" type="text" data-tabindex="2" />
+    <button class="btn btn-default" data-toggle="modal" href="#stack2">Launch modal</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+    <button type="button" class="btn btn-primary">Ok</button>
+  </div>
+</div>
 
+<div id="stack2" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Stack Two</h4>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+    <p>One fine body…</p>
+    <input class="form-control" type="text" data-tabindex="1" />
+    <input class="form-control" type="text" data-tabindex="2" />
+    <button class="btn btn-default" data-toggle="modal" href="#stack3">Launch modal</button>
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+    <button type="button" class="btn btn-primary">Ok</button>
+  </div>
+</div>
+
+<div id="stack3" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+    <h4 class="modal-title">Stack Three</h4>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+    <input class="form-control" type="text" data-tabindex="1" />
+    <input class="form-control" type="text" data-tabindex="2" />
+  </div>
+  <div class="modal-footer">
+    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+    <button type="button" class="btn btn-primary">Ok</button>
+  </div>
+</div>
 <!-- Scripts Placed at the end of the document so the pages load faster -->
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>
@@ -97,6 +165,9 @@
 <script src="{{ url_for('static', filename='js/bootstrap-modal.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+
+<script src="{{ url_for('static', filename='js/bootstrap-modalmanager.js') }}"></script>
+<script src="{{ url_for('static', filename='js/bootstrap-modal.js') }}"></script>
 <!--
 Self-defined Scripts
 -->
