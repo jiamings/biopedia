@@ -11,10 +11,10 @@
     <meta name="author" content="">
 
     <!-- Bootstrap core CSS -->
-{#    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">#}
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Google Material Design CSS-->
     <link href="{{ url_for('static', filename='css/ripples.min.css') }}" rel="stylesheet">
-{#    <link href="{{ url_for('static', filename='css/material-wfont.min.css') }}" rel="stylesheet">#}
+    <link href="{{ url_for('static', filename='css/material-wfont.min.css') }}" rel="stylesheet">
     <link href="{{ url_for('static', filename='css/snackbar.min.css') }}" rel="stylesheet">
     <!-- Datatable CSS -->
     <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
@@ -22,7 +22,7 @@
     <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
 
     <link href="{{ url_for('static', filename='css/bootstrap3.css') }}" rel="stylesheet" />
-{#    <link href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet" />#}
+    <link href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/bootstrap-modal-bs3patch.css') }}" rel="stylesheet" />
     <link href="{{ url_for('static', filename='css/bootstrap-modal.css') }}" rel="stylesheet" />
 
@@ -68,16 +68,9 @@
     </div>
 </div>
 
-<div class="page-container">
-    <div class="container" style="position: relative">
-          <div class="stackable">
-            <div class="text-center">
-            <button class="demo btn btn-primary btn-lg" data-toggle="modal" href="#stack1">View Demo</button>
-            </div>
-          </div>
-          <br />
-    </div>
-</div>
+
+
+
 
 <div class="container">
     <table id="samples" class="table table-striped">
@@ -100,42 +93,32 @@
         {% endfor %}
 		</tbody>
     </table>
+    <label  data-toggle="modal" data-target="#column_selection">More Fields</label>
 </div>
 
 <!-- Modal Definitions (tabbed over for <pre>) -->
-<div id="stack1" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+<div id="column_selection" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+   <form action="/hihui" method="get">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
     <h4 class="modal-title">Stack One</h4>
   </div>
-   <form action="/Biopedia" method="get">
   <div class="modal-body">
-    <input class="form-group" type="checkbox"/> name<br>
-    <input class="form-group" type="checkbox"/> sex<br>
-    <input class="form-group" type="checkbox"/> age<br>
-      <input class="form-group" type="checkbox"/> residence<br>
-      <input class="form-group" type="checkbox"/> Nationality<br>
-      <input class="form-group" type="checkbox"/> married<br>
-      <input class="form-group" type="checkbox"/> drink<br>
-      <input class="form-group" type="checkbox"/> smoke<br>
-      <input class="form-group" type="checkbox"/> car<br>
-
-    <input class="form-group" type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
-    <input class="form-control" type="text"/>
-    <button class="btn btn-default" data-toggle="modal" href="#stack2">Launch modal</button>
+    <input class="form-group" type="checkbox" value="name"/> name<br>
+    <input class="form-group" type="checkbox" value="sex"/> sex<br>
+    <input class="form-group" type="checkbox" value="age"/> age<br>
+      <input class="form-group" type="checkbox" value="residence"/> residence<br>
+      <input class="form-group" type="checkbox" value="Nationality"/> Nationality<br>
+      <input class="form-group" type="checkbox" value="married"/> married<br>
+      <input class="form-group" type="checkbox" value="drink"/> drink<br>
+      <input class="form-group" type="checkbox" value="smoke"/> smoke<br>
   </div>
   <div class="modal-footer">
     <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-    <button type="button" class="btn btn-primary">Ok</button>
+    <button type="button" class="btn btn-primary" value="submit">Ok</button>
   </div>
    </form>
 </div>
-
-<form action="demo_form.asp" method="get">
-  <input type="checkbox" name="vehicle" value="Bike"> I have a bike<br>
-  <input type="checkbox" name="vehicle" value="Car" checked> I have a car<br>
-  <input type="submit" value="Submit">
-</form>
 
 <!-- Scripts Placed at the end of the document so the pages load faster -->
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
