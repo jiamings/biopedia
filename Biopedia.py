@@ -7,7 +7,7 @@ from flask.ext.pymongo import PyMongo
 
 app = Flask(__name__)
 mongo = PyMongo(app)
-
+app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
 @app.route('/')
 @app.route('/index')
@@ -18,7 +18,31 @@ def index(language='en'):
     :param language: Defines the language ('en' or 'cn') used for the template.
     :return: The rendered index.html template, which currently contains almost nothing.
     """
+    if 'username' in session:
+        return render_template('index.html', language=language, username=session['username'])
     return render_template('index.html', language=language)
+
+@app.route('/login', methods=['POST'])
+def login():
+    username = request.form['username']
+    password = request.form['password']
+    # TODO: add database operations to support password checking
+    session['username'] = username
+    return redirect(url_for('index'))
+
+@app.route('/register', methods=['POST'])
+def register():
+    username = request.form['username']
+    email = request.form['email']
+    password = request.form['password']
+
+    session['username'] = username
+    return redirect(url_for('index'))
+
+@app.route('/logout')
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 
 @app.route('/projects', methods=['GET'])
