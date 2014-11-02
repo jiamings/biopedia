@@ -35,6 +35,8 @@ def projects(language='en'):
 
 default_selected_fields = \
     {"MetaTongue": ["sex", "age", "residence", "Nationality", "married", "drink", "smoke", "tongueColor", "tongueType"]}
+default_fields_string_type = {"MetaTongue": ["sex", "residence", "Nationality", "tongueColor"]};
+
 
 @app.route('/samples', methods=['GET'])
 @app.route('/<language>/samples', methods=['GET'])
@@ -55,21 +57,56 @@ def samples(language='en'):
     #project_fields_name = dict(sample_list[0]).keys()
     #project_fields_name.remove("_id")
     #project_fields_name.remove("project_name")
-    if request.args.get("fields",''):
+    if request.args.get("fields", ''):
         project_fields_name = request.args.getlist("fields")
-        print(project_fields_name)
+        #print(project_fields_name)
     else:
         project_fields_name = default_selected_fields[project_name]
-    if len(project_fields_name) > 10:
-        project_fields_name = project_fields_name[0:9]
     # to take the keys of one of the sample as heads of the sample table
     all_fields_name = dict(sample_list[0]).keys()
     all_fields_name.remove("_id")
     all_fields_name.remove("project_name")
     all_fields_name.sort()
+    # get all the fields (for more fields)
+    fields_string_type = default_fields_string_type[project_name]
+    string_field_element = {}
+
+    for sample in sample_list:
+        for field in fields_string_type:
+            if not string_field_element.has_key(field):
+                string_field_element[field] = []
+            string_field_element[field].append(sample[field])
+    # to get possible value of keys
+
+    filter = {"project_name": project_name}
+    for field in project_fields_name:
+        if field in fields_string_type:
+            value = request.args.get(field, '')
+            if value:
+                filter[field] = value
+        else:
+            value = request.args.getlist(field)
+            if len(value)>1 and value[1].isdigit():
+                if value[0] != 'no':
+                    if value[0] == 'eq':
+                        filter[field] = int(value[1])
+                    elif value[0] == 'lt':
+                        filter[field] = {'$lt': int(value[1])}
+                    elif value[0] == 'gt':
+                        filter[field] = {'$gt': int(value[1])}
+    # to build the filter
+
+    sample_list = mongo.db.samples.find(filter)
+    # use the filter to select certain samples
+
+    for field in fields_string_type:
+        string_field_element[field] = list(set(string_field_element[field]))
+        string_field_element[field].sort()
+    # make the list sorted
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
-                           all_fields_name=all_fields_name)
+                           all_fields_name=all_fields_name, fields_string_type=fields_string_type,
+                           string_field_element=string_field_element)
 
 @app.route('/charts', methods=['GET'])
 def charts():
@@ -77,8 +114,8 @@ def charts():
 
 
 default_selected_details = \
-    {"MetaTongue":["name", "sex", "age", "residence", "Nationality",
-                   "married", "drink", "smoke"]}
+    {"MetaTongue": ["name", "sex", "age", "residence", "Nationality",
+                    "married", "drink", "smoke"]}
 
 
 @app.route('/profile', methods=['GET'])
