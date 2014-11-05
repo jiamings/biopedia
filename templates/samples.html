@@ -20,6 +20,7 @@
     <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dataTables.keyTable.css') }}" rel="stylesheet">
 
 
 
@@ -70,6 +71,12 @@
 
 
 <div class="container">
+<div style="text-align: center">
+<div class="btn-group">
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#column_selection">Select More Fields ...</button>
+  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter">Set Fields Filter</button>
+</div>
+</div>
     <table id="samples" class="table table-striped">
 		<thead>
         <tr>
@@ -90,8 +97,7 @@
         {% endfor %}
 		</tbody>
     </table>
-    <label  data-toggle="modal" data-target="#column_selection">More Fields</label>
-    <label  data-toggle="modal" data-target="#filter">Filter</label>
+
 </div>
 
 <!-- Modal Definitions (tabbed over for <pre>) -->
@@ -131,7 +137,9 @@
   </div>
 </div>
 
-<div id="filter" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+<div id="filter" class="modal fade" id = "column_selection" tabindex="-1" data-focus-on="input:first" style="display: none;">
+    <div class="modal-dialog modal-dialog-">
+      <div class="modal-content">
     <form action="/samples" method="get">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -139,27 +147,37 @@
         </div>
         <div class="modal-body">
 
-            {% for field in project_fields_name %}
-            {% if field in fields_string_type %}
-            <label>{{ field }}</label>
-            <select name="{{ field }}">
-                <option value="">{{ element }}</option>
-                {% for element in string_field_element[field] %}
-                    <option value="{{ element }}">{{ element }}</option>
+                <table class="table table-striped">
+                <thead></thead>
+                <tbody>
+                {% for field in project_fields_name %}
+                <tr>
+                {% if field in fields_string_type %}
+                <td><label>{{ field }}</label></td>
+                <td><select name="{{ field }}">
+                    <option value="">{{ element }}</option>
+                    {% for element in string_field_element[field] %}
+                        <option value="{{ element }}">{{ element }}</option>
+                    {% endfor %}
+                </select>
+                </td>
+                <td><input type="text" disabled /></td>
+                {% else %}
+                <td><label>{{ field }}</label></td>
+                <td><select name="{{ field }}">
+                    <option value="no"></option>
+                    <option value="eq">=</option>
+                    <option value="lt">&lt;</option>
+                    <option value="gt">&gt;</option>
+
+                </select>
+                </td>
+                <td><input type="text" name="{{field}}"/></td>
+                {% endif %}
+                </tr>
                 {% endfor %}
-            </select>
-            {% else %}
-            <label>{{ field }}</label>
-            <select name="{{ field }}">
-                <option value="no"></option>
-                <option value="eq">=</option>
-                <option value="lt">&lt;</option>
-                <option value="gt">&gt;</option>
-                <input type="text" name="{{field}}" />
-            </select>
-            {% endif %}
-                <br />
-            {% endfor %}
+                </tbody>
+                </table>
 
             <input name="name" value="{{ project_name }}" type = "hidden">
 
@@ -170,6 +188,8 @@
         </div>
 
     </form>
+      </div>
+    </div>
 </div>
 
 <!-- Scripts Placed at the end of the document so the pages load faster -->
@@ -182,13 +202,21 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dataTables.keyTable.js') }}"></script>
+
 <!--
 Self-defined Scripts
 -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#samples').dataTable();
+        var table = $('#samples').dataTable({
+        "scrollX": true
     });
+    new $.fn.dataTable.KeyTable( table );
+
+    });
+
+
 </script>
 
 </body>
