@@ -42,9 +42,9 @@ def login():
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            return redirect(url_for('index', alert_place="register", alert_message="Password incorrect."))
+            return redirect(url_for('index', alert_place="login", alert_message="Password incorrect."))
     else:
-        return redirect(url_for('index', alert_place="register", alert_message="User does not exist."))
+        return redirect(url_for('index', alert_place="login", alert_message="User does not exist."))
 
 
 @app.route('/register', methods=['POST'])
