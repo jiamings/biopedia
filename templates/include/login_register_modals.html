@@ -11,16 +11,16 @@
 
                     <fieldset>
                         <div class="form-group">
-                            <label for="inputEmail" class="col-lg-2 control-label">Username</label>
+                            <label for="inputEmail" class="col-lg-4 control-label">Username</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="text" class="form-control" name="username" placeholder="Username" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <label for="inputPassword" class="col-lg-4 control-label">Password</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="password" class="form-control" name="password" placeholder="Password" required>
                             </div>
                         </div>
@@ -51,30 +51,44 @@
                     </div>
                     <fieldset>
                         <div class="form-group">
-                            <label for="inputEmail" class="col-lg-2 control-label">Username</label>
+                            <label for="inputUsername" class="col-lg-4 control-label">Username</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="text" class="form-control" name="username" id="registerUsername" placeholder="Username" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+                            <label for="inputFirstname" class="col-lg-4 control-label">First Name</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="firstname" id="registerFirstname" placeholder="First Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputLastname" class="col-lg-4 control-label">Last Name</label>
+
+                            <div class="col-lg-8">
+                                <input type="text" class="form-control" name="lastname" id="registerLastname" placeholder="Last Name" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-4 control-label">Email</label>
+
+                            <div class="col-lg-8">
                                 <input type="email" class="form-control" name="email" id="registerEmail" placeholder="Email" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+                            <label for="inputPassword" class="col-lg-4 control-label">Password</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="password" class="form-control" name="password" id="registerPassword" placeholder="Password" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputConfirmPassword" class="col-lg-2 control-label">Confirm Password</label>
+                            <label for="inputConfirmPassword" class="col-lg-4 control-label">Confirm Password</label>
 
-                            <div class="col-lg-10">
+                            <div class="col-lg-8">
                                 <input type="password" class="form-control" id="registerConfirmPassword"
                                        placeholder="Confirm Password" required>
                             </div>
@@ -89,3 +103,44 @@
         </div>
     </div>
 </div>
+
+
+<script type="text/javascript">
+function validateEmail(email) {
+    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
+}
+function validateUsername(username) {
+    var re = /^\w+$/;
+    return re.test(username);
+}
+function validateRegistration() {
+    var username = $("#registerUsername").val();
+    if (validateUsername(username) == false) {
+        $("#registerErrorMessage").text("A valid username can only contain alphabets, numbers, and underscores.");
+        $("#registerError").show();
+        return false;
+    }
+    var email = $("#registerEmail").val();
+    if (validateEmail(email) == false) {
+        $("#registerErrorMessage").text("Email is not valid.");
+        $("#registerError").show();
+        return false;
+    }
+    var password = $("#registerPassword").val();
+    var confirmPassword = $("#registerConfirmPassword").val();
+    if (password != confirmPassword) {
+        $("#registerErrorMessage").text("Passwords do not match.");
+        $("#registerError").show();
+        return false;
+    } else if (password.length < 6) {
+         $("#registerErrorMessage").text("A password should contain at least 6 characters.");
+         $("#registerError").show();
+        return false;
+    }
+    $("#registerError").hide();
+    return true;
+}
+
+
+</script>

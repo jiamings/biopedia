@@ -35,7 +35,8 @@ def register():
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
-
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
     session['username'] = username
     return redirect(url_for('index'))
 

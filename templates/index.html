@@ -119,45 +119,20 @@
     </div>
 </div>
 
+
+
+{% include "include/scripts.html" %}
+
 <!-- Modals
 -->
 {% if not username %}
     {% include "include/login_register_modals.html" %}
 {% endif %}
 
-{% include "include/scripts.html" %}
 <!--
 Self-defined Scripts
 -->
-<script type="text/javascript">
-function validateEmail(email) {
-    var re = /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(email);
-}
-function validateRegistration() {
-    var email = $("#registerEmail").val();
-    if (validateEmail(email) == false) {
-        $("#registerErrorMessage").text("Email is not valid.");
-        $("#registerError").show();
-        return false;
-    }
-    var password = $("#registerPassword").val();
-    var confirmPassword = $("#registerConfirmPassword").val();
-    if (password != confirmPassword) {
-        $("#registerErrorMessage").text("Passwords do not match.");
-        $("#registerError").show();
-        return false;
-    } else if (password.length < 6) {
-         $("#registerErrorMessage").text("A password should contain at least 6 characters.");
-         $("#registerError").show();
-        return false;
-    }
-    $("#registerError").hide();
-    return true;
-}
 
-
-</script>
 
 </body>
 </html>
