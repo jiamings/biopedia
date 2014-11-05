@@ -8,7 +8,9 @@
             </div>
             <form class="form-horizontal" action="login" method="post">
                 <div class="modal-body">
-
+                    <div class="alert alert-danger" id="loginError" style="display:none;">
+                        <p id="loginErrorMessage"></p>
+                    </div>
                     <fieldset>
                         <div class="form-group">
                             <label for="inputEmail" class="col-lg-4 control-label">Username</label>
@@ -142,5 +144,26 @@ function validateRegistration() {
     return true;
 }
 
+function alert_refresh(alert_place, alert_message) {
+    if (alert_place == "login") {
+        $(window).load(function () {
+           $("#mylogin").modal('show');
+        });
+        $("#loginErrorMessage").text(alert_message);
+        $("#loginError").show();
+    } else if (alert_place == "register") {
+        $(window).load(function () {
+           $("#myregister").modal('show');
+        });
+        $("#registerErrorMessage").text(alert_message);
+        $("#registerError").show();
+    }
+}
+
+$(document).ready(function () {
+    {% if alert_place %}
+    alert_refresh("{{ alert_place }}", "{{ alert_message }}")
+    {% endif %}
+});
 
 </script>

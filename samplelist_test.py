@@ -4,6 +4,7 @@ from samplelist import save_sample
 
 
 class SampleListTestCase(unittest.TestCase):
+
     """
     Tests all the functions in samplelist.py.
     """
@@ -34,7 +35,7 @@ class SampleListTestCase(unittest.TestCase):
                       "cleanReads": 41821056, "scaffoldsUp500bp": 42895,
                       "N50Length": 3645, "ORFs": 142224, "avgLength": 340.62,
                       "age": "NA", "sex": "NA", "tongueColor": "NA",
-            }
+                      }
         )
         self.assertEquals(obj, False)
 
