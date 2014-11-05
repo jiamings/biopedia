@@ -47,7 +47,7 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
-                <li><a href="/index">Index</a></li>
+                <li><a href="/index">Home</a></li>
                 <li><a href="/{{ language }}/projects">Projects</a></li>
                 <li class="active"><a href="#">{{ project_name }}</a></li>
             </ul>
@@ -59,7 +59,7 @@
 
 <div class="jumbotron">
     <div class="container">
-        <h2>{{ project_name }}</h2>
+        <h1>{{ project_name }}</h1>
 
         <p>We need a description for every project.</p>
     </div>
@@ -131,8 +131,6 @@
   </div>
 </div>
 
-
-<<<<<<< HEAD
 <div id="filter" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
     <form action="/samples" method="get">
         <div class="modal-header">
@@ -174,9 +172,7 @@
     </form>
 </div>
 
-=======
 <!-- Scripts Placed at the end of the document so the pages load faster -->
->>>>>>> 897a38aa9124a43d2f40d2657a28664051d7f1d6
 <script src="{{ url_for('static', filename='js/jquery.min.js') }}"></script>
 <!-- Scripts Placed at the end of the document so the pages load faster -->
 <script src="{{ url_for('static', filename='js/jquery.dataTables.min.js') }}"></script>

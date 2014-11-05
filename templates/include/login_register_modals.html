@@ -1,0 +1,91 @@
+<div class="modal fade" id="mylogin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">Login with Biopedia Account</h4>
+            </div>
+            <form class="form-horizontal" action="login" method="post">
+                <div class="modal-body">
+
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-2 control-label">Username</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="username" placeholder="Username" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" name="password" placeholder="Password" required>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" value="login">Login</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="myregister" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">Register New Biopedia Account</h4>
+            </div>
+            <form class="form-horizontal" action="register" onsubmit="return validateRegistration()" method="post">
+            <div class="modal-body">
+                    <div class="alert alert-danger" id="registerError" style="display:none;">
+                        <p id="registerErrorMessage"></p>
+                    </div>
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-2 control-label">Username</label>
+
+                            <div class="col-lg-10">
+                                <input type="text" class="form-control" name="username" id="registerUsername" placeholder="Username" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputEmail" class="col-lg-2 control-label">Email</label>
+
+                            <div class="col-lg-10">
+                                <input type="email" class="form-control" name="email" id="registerEmail" placeholder="Email" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputPassword" class="col-lg-2 control-label">Password</label>
+
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" name="password" id="registerPassword" placeholder="Password" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="inputConfirmPassword" class="col-lg-2 control-label">Confirm Password</label>
+
+                            <div class="col-lg-10">
+                                <input type="password" class="form-control" id="registerConfirmPassword"
+                                       placeholder="Confirm Password" required>
+                            </div>
+                        </div>
+                    </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" value="register" id="registerButton">Register</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
