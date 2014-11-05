@@ -9,6 +9,7 @@ app = Flask(__name__)
 mongo = PyMongo(app)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
 
+
 @app.route('/')
 @app.route('/index')
 @app.route('/<language>/index')
@@ -22,22 +23,45 @@ def index(language='en'):
         return render_template('index.html', language=language, username=session['username'])
     return render_template('index.html', language=language)
 
+
 @app.route('/login', methods=['POST'])
 def login():
     username = request.form['username']
     password = request.form['password']
+    # whether we find the target username in the database or not
+    u = mongo.db.testData.findOne({name:username})
+
+    if u:
+        if u.pw == password:
+            session['username'] = username
+            return redirect(url_for('index')) # the password matches the username
+        else:
+            return redirect(url_for('index')) # the password does not match the username
+    else:
+        return redirect(url_for('index')) # we do not find the username in the database
+
+
     # TODO: add database operations to support password checking
     session['username'] = username
     return redirect(url_for('index'))
+
 
 @app.route('/register', methods=['POST'])
 def register():
     username = request.form['username']
     email = request.form['email']
     password = request.form['password']
+    # TODO: write data into database(avoid the repetition of username)
+
+    # Version 1 : we only have one doc in the database
+    rec1 = {name :username,pw:password,em:email}
+    mongo.db.testData.insert(rec1)
+
+
 
     session['username'] = username
     return redirect(url_for('index'))
+
 
 @app.route('/logout')
 def logout():
@@ -58,8 +82,10 @@ def projects(language='en'):
     return render_template('projects.html', language=language, project_list=project_list)
 
 default_selected_fields = \
-    {"MetaTongue": ["sex", "age", "residence", "Nationality", "married", "drink", "smoke", "tongueColor", "tongueType"]}
-default_fields_string_type = {"MetaTongue": ["sex", "residence", "Nationality", "tongueColor"]};
+    {"MetaTongue": ["sex", "age", "residence", "Nationality",
+                    "married", "drink", "smoke", "tongueColor", "tongueType"]}
+default_fields_string_type = {
+    "MetaTongue": ["sex", "residence", "Nationality", "tongueColor"]}
 
 
 @app.route('/samples', methods=['GET'])
@@ -79,11 +105,11 @@ def samples(language='en'):
     # the project_name ought to be exist in db samples
     sample_list = mongo.db.samples.find({"project_name": project_name})
     #project_fields_name = dict(sample_list[0]).keys()
-    #project_fields_name.remove("_id")
-    #project_fields_name.remove("project_name")
+    # project_fields_name.remove("_id")
+    # project_fields_name.remove("project_name")
     if request.args.get("fields", ''):
         project_fields_name = request.args.getlist("fields")
-        #print(project_fields_name)
+        # print(project_fields_name)
     else:
         project_fields_name = default_selected_fields[project_name]
     # to take the keys of one of the sample as heads of the sample table
@@ -110,7 +136,7 @@ def samples(language='en'):
                 filter[field] = value
         else:
             value = request.args.getlist(field)
-            if len(value)>1 and value[1].isdigit():
+            if len(value) > 1 and value[1].isdigit():
                 if value[0] != 'no':
                     if value[0] == 'eq':
                         filter[field] = int(value[1])
@@ -131,6 +157,7 @@ def samples(language='en'):
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
                            string_field_element=string_field_element)
+
 
 @app.route('/charts', methods=['GET'])
 def charts():
@@ -156,9 +183,11 @@ def sample_profile(language='en'):
     assert mongo.db.projects.find({"name": project_name}).count() > 0
     sample_name = request.args.get('name', '')
     assert sample_name
-    assert mongo.db.samples.find({"name": sample_name, "project_name": project_name}).count() > 0
+    assert mongo.db.samples.find(
+        {"name": sample_name, "project_name": project_name}).count() > 0
     # get sample name and project name from REQUEST
-    sample_detail = mongo.db.samples.find({"name": sample_name, "project_name": project_name})[0]
+    sample_detail = mongo.db.samples.find(
+        {"name": sample_name, "project_name": project_name})[0]
     selected_details = default_selected_details[project_name]
     # select certain details
     return render_template('profile.html', language=language, sample_name=sample_name,
