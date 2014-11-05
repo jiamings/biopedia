@@ -48,13 +48,19 @@ def login():
 
 @app.route('/register', methods=['POST'])
 def register():
+    # login information
     username = request.form['username']
-    email = request.form['email']
     password = request.form['password']
-    # TODO: write data into database(avoid the repetition of username)
 
+    # user's profile
+    email = request.form['email']
+    firstname = request.form['firstname']
+    lastname = request.form['lastname']
+    gender = request.form['gender']
+
+    # TODO: write data into database(avoid the repetition of username)
     # Version 1 : we only have one doc in the database
-    rec1 = {name :username,pw:password,em:email}
+    rec1 = {name :username,pw:password,em:email,fn:firstname,ln:lastname,gd:gender}
     mongo.db.testData.insert(rec1)
 
 
