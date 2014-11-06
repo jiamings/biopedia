@@ -48,6 +48,7 @@
                 <li><a href="/index">Home</a></li>
                 <li class="active"><a href="/{{ language }}/projects">Projects</a></li>
             </ul>
+            {% include "include/nav_bar_right.html" %}
         </div>
         <!--/.nav-collapse -->
     </div>
@@ -115,6 +116,11 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+
+{% if not username %}
+    {% include "include/login_register_modals.html" %}
+{% endif %}
+
 <!--
 Self-defined Scripts
 -->

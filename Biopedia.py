@@ -25,8 +25,7 @@ def index(language='en'):
         return render_template('index.html', language=language, alert_place=alert_place, alert_message=alert_message)
     if 'username' in session:
         user = User.objects.get(username=session['username'])
-        return render_template('index.html', language=language, username=session['username'],
-                               firstname=user['firstname'], lastname=user['lastname'], admin=user['admin'])
+        return render_template('index.html', language=language, user=user)
     return render_template('index.html', language=language)
 
 
@@ -93,6 +92,9 @@ def projects(language='en'):
                 /projects
     """
     project_list = mongo.db.projects.find()
+    if 'username' in session:
+        user = User.objects.get(username=session['username'])
+        return render_template('projects.html', language=language, project_list=project_list, user=user)
     return render_template('projects.html', language=language, project_list=project_list)
 
 
@@ -177,7 +179,12 @@ def samples(language='en'):
             mapping[field] = field
 
     all_fields_name.remove('name')
-
+    if 'username' in session:
+        user = User.objects.get(username=session['username'])
+        return render_template('samples.html', language=language, project_name=project_name,
+                           sample_list=sample_list, project_fields_name=project_fields_name,
+                           all_fields_name=all_fields_name, fields_string_type=fields_string_type,
+                           string_field_element=string_field_element, mapping=mapping, user=user)
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
@@ -210,6 +217,11 @@ def sample_profile(language='en'):
         {"name": sample_name, "project_name": project_name})[0]
     selected_details = default_selected_details[project_name]
     # select certain details
+    if 'username' in session:
+        user = User.objects.get(username=session['username'])
+        return render_template('profile.html', language=language, sample_name=sample_name,
+                        project_name=project_name, sample_detail=sample_detail,
+                        selected_details_name=selected_details, user=user)
     return render_template('profile.html', language=language, sample_name=sample_name,
                            project_name=project_name, sample_detail=sample_detail,
                            selected_details_name=selected_details)

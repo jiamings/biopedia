@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        Biopedia - Projects
+        Biopedia - Sample
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,6 +53,7 @@
                         href="/{{ language }}/profile?project={{ project_name }}&name={{ sample_name }}">{{ sample_name }}</a>
                 </li>
             </ul>
+            {% include "include/nav_bar_right.html" %}
         </div>
         <!--/.nav-collapse -->
     </div>
@@ -128,6 +129,11 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+
+{% if not username %}
+    {% include "include/login_register_modals.html" %}
+{% endif %}
+
 <!--
 Self-defined Scripts
 -->
