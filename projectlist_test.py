@@ -3,6 +3,7 @@ import projectlist
 
 
 class ProjectListTestCase(unittest.TestCase):
+
     """
     Tests all the functions in projectlist.py.
     """
