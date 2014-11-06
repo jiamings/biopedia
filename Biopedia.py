@@ -3,10 +3,12 @@ Main Entrance for the application.
 """
 from flask import Flask, render_template, request, redirect, url_for, escape, session
 from flask.ext.pymongo import PyMongo
+from models import *
 
 app = Flask(__name__)
 mongo = PyMongo(app)
 app.secret_key = 'A0Zr98j/3yX R~XHH!jmN]LWX/,?RT'
+
 
 @app.route('/')
 @app.route('/index')
@@ -22,7 +24,7 @@ def index(language='en'):
     if alert_message and alert_place:
         return render_template('index.html', language=language, alert_place=alert_place, alert_message=alert_message)
     if 'username' in session:
-        user = mongo.db.testData.find_one({"username": session['username']})
+        user = User.objects.get(username=session['username'])
         return render_template('index.html', language=language, username=session['username'],
                                firstname=user['firstname'], lastname=user['lastname'])
     return render_template('index.html', language=language)
@@ -34,16 +36,15 @@ def login():
     password = request.form['password']
 
     # whether we find the target username in the database or not
-    user = mongo.db.testData.find_one({"username": username})
-
+    user = User.objects.get(username=username)
     if user:
         if user["password"] == password:
             session['username'] = username
             return redirect(url_for('index'))
         else:
-            return redirect(url_for('index', alert_place="register", alert_message="Password incorrect."))
+            return redirect(url_for('index', alert_place="login", alert_message="Password incorrect."))
     else:
-        return redirect(url_for('index', alert_place="register", alert_message="User does not exist."))
+        return redirect(url_for('index', alert_place="login", alert_message="User does not exist."))
 
 
 @app.route('/register', methods=['POST'])
@@ -55,23 +56,22 @@ def register():
     firstname = request.form['firstname']
     lastname = request.form['lastname']
 
-    user = mongo.db.testData.find_one({"username": username})
-    if user:
+    num_users = User.objects(username=username).count()
+    if num_users > 0:
         return redirect(url_for('index', alert_place="register", alert_message="Username has been registered."))
 
-    user = mongo.db.testData.find_one({"email": email})
-    if user:
+    num_users = User.objects(email=email).count()
+    if num_users > 0:
         return redirect(url_for('index', alert_place="register", alert_message="Email has been registered."))
 
-    user = {
-        "username": username,
-        "password": password,
-        "email": email,
-        "firstname": firstname,
-        "lastname": lastname,
-    }
+    user = User(username=username,
+                password=password,
+                email=email,
+                firstname=firstname,
+                lastname=lastname,
+                admin=False)
 
-    mongo.db.testData.insert(user)
+    user.save()
 
     session['username'] = username
     return redirect(url_for('index'))
@@ -208,16 +208,18 @@ def sample_profile(language='en'):
                            project_name=project_name, sample_detail=sample_detail,
                            selected_details_name=selected_details)
 
+
 @app.route('/user', methods=['GET'])
 @app.route('/<language>/profile', methods=['GET'])
 def profile(language='en'):
     if session['username']:
         username = session['username']
-        user = mongo.db.testData.find_one({"username": username})
+        user = User.objects.get(username=username)
         firstname = user['firstname']
         lastname = user['lastname']
         email = user['email']
-        return render_template('user.html', username=username, firstname=firstname, lastname=lastname, email=email, language=language)
+        return render_template('user.html', username=username, firstname=firstname, lastname=lastname, email=email,
+                               language=language)
     else:
         return redirect(url_for('index'))
 
