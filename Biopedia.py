@@ -26,7 +26,7 @@ def index(language='en'):
     if 'username' in session:
         user = User.objects.get(username=session['username'])
         return render_template('index.html', language=language, username=session['username'],
-                               firstname=user['firstname'], lastname=user['lastname'])
+                               firstname=user['firstname'], lastname=user['lastname'], admin=user['admin'])
     return render_template('index.html', language=language)
 
 
@@ -199,19 +199,62 @@ def sample_profile(language='en'):
 
 
 @app.route('/user', methods=['GET'])
-@app.route('/<language>/profile', methods=['GET'])
+@app.route('/<language>/user', methods=['GET'])
 def profile(language='en'):
     if session['username']:
         username = session['username']
         user = User.objects.get(username=username)
-        firstname = user['firstname']
-        lastname = user['lastname']
-        email = user['email']
-        return render_template('user.html', username=username, firstname=firstname, lastname=lastname, email=email,
+        if not user['admin']:
+            return render_template('user.html', user=user, admin=user,
                                language=language)
+        else:
+            admin = user
+            username = request.args.get('username', '')
+            if username:
+                user = User.objects.get(username=username)
+            return render_template('user.html', user=user, admin=admin,
+                                   language=language)
+
     else:
         return redirect(url_for('index'))
 
+@app.route('/user-admin')
+@app.route('/<language>/user-admin')
+def user_admin(language='en'):
+    if session['username']:
+        username = session['username']
+        user = User.objects.get(username=username)
+        if not user['admin']:
+            return redirect(url_for('index'))
+        else:
+            firstname = user['firstname']
+            lastname = user['lastname']
+            email = user['email']
+            users_list = User.objects()
+            return render_template('user-admin.html', firstname=firstname, lastname=lastname,
+                                   email=email, language=language, users_list=users_list)
+    else:
+        return redirect(url_for('index'))
+
+@app.route('/delete-user')
+def delete_user():
+    username = request.args.get('username', '')
+    user = User.objects.get(username=username)
+    if user:
+        user.delete()
+    return redirect(url_for('user_admin'))
+
+@app.route('/modify-password', methods=['POST'])
+def modify_password():
+    password = request.form['originalPassword']
+    newpassword = request.form['newPassword']
+    username = session['username']
+    user = User.objects.get(username=username)
+    if user['password'] == password:
+        User.objects(id=user.id).update_one(set__password=newpassword)
+        return redirect(url_for('profile'))
+    else:
+        return redirect(url_for('profile'))
 
 if __name__ == '__main__':
     app.run(debug=True)
