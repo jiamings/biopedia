@@ -99,6 +99,7 @@ def projects(language='en'):
 default_selected_fields = \
     {"MetaTongue": ["sex", "age", "residence", "Nationality",
                     "married", "drink", "smoke", "tongueColor", "tongueType"]}
+
 default_fields_string_type = {
     "MetaTongue": ["sex", "residence", "Nationality", "tongueColor"]}
 
@@ -120,14 +121,17 @@ def samples(language='en'):
     if request.args.get("fields", ''):
         project_fields_name = request.args.getlist("fields")
     else:
-        project_fields_name = default_selected_fields[project_name]
+        assert mongo.db.fields.find({"project_name": project_name}).count() > 0
+        project_fields_name = mongo.db.fields.find({"project_name": project_name})[0]["default_fields"]
     # to take the keys of one of the sample as heads of the sample table
     all_fields_name = dict(sample_list[0]).keys()
     all_fields_name.remove("_id")
     all_fields_name.remove("project_name")
     all_fields_name.sort()
     # get all the fields (for more fields)
-    fields_string_type = default_fields_string_type[project_name]
+    assert mongo.db.fields.find({"project_name": project_name}).count() > 0
+    fields_string_type = mongo.db.fields.find({"project_name": project_name})[0]["string_fields"]
+
     string_field_element = {}
 
     for sample in sample_list:
@@ -161,10 +165,23 @@ def samples(language='en'):
         string_field_element[field] = list(set(string_field_element[field]))
         string_field_element[field].sort()
 
+    mapping = {}
+    if language == 'cn':
+        for field in all_fields_name:
+            if mongo.db.mapping.find({'en': field}).count() > 0:
+                mapping[field] = mongo.db.mapping.find({'en': field})[0]['cn']
+            else:
+                mapping[field] = field
+    else:
+        for field in all_fields_name:
+            mapping[field] = field
+
+    all_fields_name.remove('name')
+
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
-                           string_field_element=string_field_element)
+                           string_field_element=string_field_element, mapping=mapping)
 
 
 default_selected_details = \

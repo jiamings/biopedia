@@ -20,6 +20,8 @@
     <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/dataTables.keyTable.css') }}" rel="stylesheet">
+
 
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
@@ -64,75 +66,79 @@
     </div>
 </div>
 
-
 <div class="container">
+<div style="text-align: right">
+<div data-toggle="modal" data-target="#filter"><div class="icon-preview"><i class="mdi-content-filter-list"></i><span>Set Fields Filter</span></div></div>
+</div>
     <table id="samples" class="table table-striped">
-        <thead>
+		<thead>
         <tr>
-            <th>name</th>
+            {% if 'cn' in language %}
+                <th>患者序列号</th>
+            {% else %}
+                <th>sampleId</th>
+            {% endif %}
             {% for field in project_fields_name %}
-                <th>{{ field }}</th>
+            <th>{{ mapping[field] }}</th>
             {% endfor %}
+            <th data-toggle="modal" data-target="#column_selection">MORE...</th>
         </tr>
         </thead>
         <tbody>
         {% for sample in sample_list %}
-            <tr>
-                <td><a href="/profile?project={{ project_name }}&name={{ sample['name'] }}">{{ sample['name'] }}</a>
-                </td>
-                {% for field in project_fields_name %}
-                    <td>{{ sample[field] }}</td>
-                {% endfor %}
-            </tr>
+        <tr>
+            <td><a href="/profile?project={{project_name}}&name={{sample['name']}}">{{sample['name']}}</a></td>
+            {% for field in project_fields_name %}
+            <td>{{ sample[field] }}</td>
+            {% endfor %}
+            <td></td>
+        </tr>
         {% endfor %}
-        </tbody>
+		</tbody>
     </table>
-    <label data-toggle="modal" data-target="#column_selection">More Fields</label>
-    <label data-toggle="modal" data-target="#filter">Filter</label>
+
 </div>
 
 <!-- Modal Definitions (tabbed over for <pre>) -->
-<div class="modal fade" id="column_selection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
-     aria-hidden="true">
-    <div class="modal-dialog modal-dialog-">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
-                        class="sr-only">x</span></button>
-                <h4 class="modal-title" id="myModalLabel">Select Columns to Show</h4>
-            </div>
-            <form class="form-horizontal">
-                <div class="modal-body">
-                    <div style="overflow-y:auto; overflow-x:auto;  height: 400px">
-                        <fieldset>
-                            {% for field_name in all_fields_name %}
-                                <div class="checkbox col-lg-4">
-                                    <label>
-                                        {% if field_name in project_fields_name %}
-                                            <input checked="checked" name="fields" class="form-group" type="checkbox"
-                                                   value="{{ field_name }}"/>{{ field_name }}
-                                        {% else %}
-                                            <input name="fields" class="form-group" type="checkbox"
-                                                   value="{{ field_name }}"/>{{ field_name }}
-                                        {% endif %}
-                                    </label>
-                                </div>
-                            {% endfor %}
-                            <input name="name" value="{{ project_name }}" type="hidden">
-                        </fieldset>
-
+<div class="modal fade" id="column_selection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+        <h4 class="modal-title" id="myModalLabel">Select Columns to Show</h4>
+      </div>
+    <form class="form-horizontal">
+      <div class="modal-body">
+          <div style="overflow-y:auto; overflow-x:auto;  height: 400px" >
+                <fieldset>
+                {% for field_name in all_fields_name %}
+                    <div class="checkbox col-lg-4">
+                        <label>
+                            {% if field_name in project_fields_name %}
+                                <input checked="checked" name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{mapping[field_name]}}
+                            {% else %}
+                                <input name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{mapping[field_name]}}
+                            {% endif %}
+                        </label>
                     </div>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-                    <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
-                </div>
-            </form>
-        </div>
+                 {% endfor %}
+                 <input name="name" value="{{ project_name }}" type = "hidden">
+               </fieldset>
+
+          </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
+      </div>
+    </form>
     </div>
+  </div>
 </div>
 
 <div id="filter" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
+    <div class="modal-dialog modal-dialog-">
+      <div class="modal-content">
     <form action="/samples" method="get">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -140,30 +146,38 @@
         </div>
         <div class="modal-body">
 
-            {% for field in project_fields_name %}
+                <table class="table table-striped">
+                <thead></thead>
+                <tbody>
+                {% for field in project_fields_name %}
+                <tr>
                 {% if field in fields_string_type %}
-                    <label>{{ field }}</label>
-                    <select name="{{ field }}">
-                        <option value="">{{ element }}</option>
-                        {% for element in string_field_element[field] %}
-                            <option value="{{ element }}">{{ element }}</option>
-                        {% endfor %}
-                    </select>
+                <td><label>{{ mapping[field] }}</label></td>
+                <td><select name="{{ field }}" style="width:180px">
+                    <option value="">{{ element }}</option>
+                    {% for element in string_field_element[field] %}
+                        <option value="{{ element }}">{{ element }}</option>
+                    {% endfor %}
+                </select>
+                </td>
+                <td><input type="text" disabled /></td>
                 {% else %}
-                    <label>{{ field }}</label>
-                    <select name="{{ field }}">
-                        <option value="no"></option>
-                        <option value="eq">=</option>
-                        <option value="lt">&lt;</option>
-                        <option value="gt">&gt;</option>
-                        <input type="text" name="{{ field }}"/>
-                    </select>
+                <td><label>{{  mapping[field] }}</label></td>
+                <td><select name="{{ field }}" style="width:180px">
+                    <option value="no"></option>
+                    <option value="eq">=</option>
+                    <option value="lt">&lt;</option>
+                    <option value="gt">&gt;</option>
+
+                </select>
+                </td>
+                <td><input type="text" name="{{field}}"/></td>
                 {% endif %}
-                <br/>
-            {% endfor %}
-
-            <input name="name" value="{{ project_name }}" type="hidden">
-
+                </tr>
+                {% endfor %}
+                </tbody>
+                </table>
+            <input name="name" value="{{ project_name }}" type = "hidden">
         </div>
         <div class="modal-footer">
             <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
@@ -171,6 +185,8 @@
         </div>
 
     </form>
+      </div>
+    </div>
 </div>
 
 <!-- Scripts Placed at the end of the document so the pages load faster -->
@@ -183,13 +199,21 @@
 <script src="{{ url_for('static', filename='js/bootstrap.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/material.min.js') }}"></script>
 <script src="{{ url_for('static', filename='js/ripples.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/dataTables.keyTable.js') }}"></script>
+
 <!--
 Self-defined Scripts
 -->
 <script type="text/javascript">
     $(document).ready(function () {
-        $('#samples').dataTable();
+        var table = $('#samples').dataTable({
+        "scrollX": true
     });
+    new $.fn.dataTable.KeyTable( table );
+
+    });
+
+
 </script>
 
 </body>
