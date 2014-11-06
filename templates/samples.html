@@ -66,15 +66,9 @@
     </div>
 </div>
 
-
-
-
-
 <div class="container">
-<div style="text-align: center">
-<div class="btn-group">
-  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter">Set Fields Filter</button>
-</div>
+<div style="text-align: right">
+<div data-toggle="modal" data-target="#filter"><div class="icon-preview"><i class="mdi-content-filter-list"></i><span>Set Fields Filter</span></div></div>
 </div>
     <table id="samples" class="table table-striped">
 		<thead>
@@ -159,7 +153,7 @@
                 <tr>
                 {% if field in fields_string_type %}
                 <td><label>{{ mapping[field] }}</label></td>
-                <td><select name="{{ field }}">
+                <td><select name="{{ field }}" style="width:180px">
                     <option value="">{{ element }}</option>
                     {% for element in string_field_element[field] %}
                         <option value="{{ element }}">{{ element }}</option>
@@ -169,7 +163,7 @@
                 <td><input type="text" disabled /></td>
                 {% else %}
                 <td><label>{{  mapping[field] }}</label></td>
-                <td><select name="{{ field }}">
+                <td><select name="{{ field }}" style="width:180px">
                     <option value="no"></option>
                     <option value="eq">=</option>
                     <option value="lt">&lt;</option>
