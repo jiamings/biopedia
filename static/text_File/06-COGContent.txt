@@ -1,0 +1,25 @@
+COG	QH-1
+[A] RNA processing and modification	4.73986
+[B] Chromatin structure and dynamics	8.14796
+[C] Energy production and conversion	2244.32
+[D] Cell cycle control, cell division, chromosome partitioning	631.323
+[E] Amino acid transport and metabolism	3293.91
+[F] Nucleotide transport and metabolism	1646.9
+[G] Carbohydrate transport and metabolism	2943.68
+[H] Coenzyme transport and metabolism	1599.06
+[I] Lipid transport and metabolism	857.867
+[J] Translation, ribosomal structure and biogenesis	4129.22
+[K] Transcription	1793.61
+[L] Replication, recombination and repair	3307.43
+[M] Cell wall/membrane/envelope biogenesis	2956.17
+[N] Cell motility	42.7174
+[O] Posttranslational modification, protein turnover, chaperones	1660.83
+[P] Inorganic ion transport and metabolism	2003.9
+[Q] Secondary metabolites biosynthesis, transport and catabolism	449.644
+[R] General function prediction only	4901.16
+[T] Signal transduction mechanisms	791.628
+[U] Intracellular trafficking, secretion, and vesicular transport	803.987
+[V] Defense mechanisms	1273.44
+[W] Extracellular structures	61.0684713
+[Z] Cytoskeleton	3.43022
+Function unknown	6278.61
