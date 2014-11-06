@@ -172,6 +172,8 @@ def samples(language='en'):
         for field in all_fields_name:
             mapping[field] = field
 
+    all_fields_name.remove('name')
+
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,

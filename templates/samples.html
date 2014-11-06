@@ -151,34 +151,13 @@
         </div>
         <div class="modal-body">
 
-            {% for field in project_fields_name %}
-            {% if field in fields_string_type %}
-            <label>{{  mapping[field] }}</label>
-            <select name="{{ field }}">
-                <option value="">{{ element }}</option>
-                {% for element in string_field_element[field] %}
-                    <option value="{{ element }}">{{ element }}</option>
-                {% endfor %}
-            </select>
-            {% else %}
-            <label>{{ mapping[field] }}</label>
-            <select name="{{ field }}">
-                <option value="no"></option>
-                <option value="eq">=</option>
-                <option value="lt">&lt;</option>
-                <option value="gt">&gt;</option>
-                <input type="text" name="{{field}}" />
-            </select>
-            {% endif %}
-                <br />
-            {% endfor %}
                 <table class="table table-striped">
                 <thead></thead>
                 <tbody>
                 {% for field in project_fields_name %}
                 <tr>
                 {% if field in fields_string_type %}
-                <td><label>{{ field }}</label></td>
+                <td><label>{{ mapping[field] }}</label></td>
                 <td><select name="{{ field }}">
                     <option value="">{{ element }}</option>
                     {% for element in string_field_element[field] %}
@@ -188,7 +167,7 @@
                 </td>
                 <td><input type="text" disabled /></td>
                 {% else %}
-                <td><label>{{ field }}</label></td>
+                <td><label>{{  mapping[field] }}</label></td>
                 <td><select name="{{ field }}">
                     <option value="no"></option>
                     <option value="eq">=</option>
