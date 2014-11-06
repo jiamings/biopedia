@@ -22,7 +22,6 @@
     <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
 
 
-
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -66,69 +65,71 @@
 </div>
 
 
-
-
-
 <div class="container">
     <table id="samples" class="table table-striped">
-		<thead>
+        <thead>
         <tr>
             <th>name</th>
             {% for field in project_fields_name %}
-            <th>{{ field }}</th>
+                <th>{{ field }}</th>
             {% endfor %}
         </tr>
         </thead>
         <tbody>
         {% for sample in sample_list %}
-        <tr>
-            <td><a href="/profile?project={{project_name}}&name={{sample['name']}}">{{sample['name']}}</a></td>
-            {% for field in project_fields_name %}
-            <td>{{ sample[field] }}</td>
-            {% endfor %}
-        </tr>
+            <tr>
+                <td><a href="/profile?project={{ project_name }}&name={{ sample['name'] }}">{{ sample['name'] }}</a>
+                </td>
+                {% for field in project_fields_name %}
+                    <td>{{ sample[field] }}</td>
+                {% endfor %}
+            </tr>
         {% endfor %}
-		</tbody>
+        </tbody>
     </table>
-    <label  data-toggle="modal" data-target="#column_selection">More Fields</label>
-    <label  data-toggle="modal" data-target="#filter">Filter</label>
+    <label data-toggle="modal" data-target="#column_selection">More Fields</label>
+    <label data-toggle="modal" data-target="#filter">Filter</label>
 </div>
 
 <!-- Modal Definitions (tabbed over for <pre>) -->
-<div class="modal fade" id="column_selection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-        <h4 class="modal-title" id="myModalLabel">Select Columns to Show</h4>
-      </div>
-    <form class="form-horizontal">
-      <div class="modal-body">
-          <div style="overflow-y:auto; overflow-x:auto;  height: 400px" >
-                <fieldset>
-                {% for field_name in all_fields_name %}
-                    <div class="checkbox col-lg-4">
-                        <label>
-                            {% if field_name in project_fields_name %}
-                                <input checked="checked" name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}}
-                            {% else %}
-                                <input name="fields" class="form-group" type="checkbox" value="{{field_name}}"/>{{field_name}}
-                            {% endif %}
-                        </label>
-                    </div>
-                 {% endfor %}
-                 <input name="name" value="{{ project_name }}" type = "hidden">
-               </fieldset>
+<div class="modal fade" id="column_selection" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
+                        class="sr-only">x</span></button>
+                <h4 class="modal-title" id="myModalLabel">Select Columns to Show</h4>
+            </div>
+            <form class="form-horizontal">
+                <div class="modal-body">
+                    <div style="overflow-y:auto; overflow-x:auto;  height: 400px">
+                        <fieldset>
+                            {% for field_name in all_fields_name %}
+                                <div class="checkbox col-lg-4">
+                                    <label>
+                                        {% if field_name in project_fields_name %}
+                                            <input checked="checked" name="fields" class="form-group" type="checkbox"
+                                                   value="{{ field_name }}"/>{{ field_name }}
+                                        {% else %}
+                                            <input name="fields" class="form-group" type="checkbox"
+                                                   value="{{ field_name }}"/>{{ field_name }}
+                                        {% endif %}
+                                    </label>
+                                </div>
+                            {% endfor %}
+                            <input name="name" value="{{ project_name }}" type="hidden">
+                        </fieldset>
 
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-        <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
-      </div>
-    </form>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                    <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
+                </div>
+            </form>
+        </div>
     </div>
-  </div>
 </div>
 
 <div id="filter" class="modal fade" tabindex="-1" data-focus-on="input:first" style="display: none;">
@@ -140,28 +141,28 @@
         <div class="modal-body">
 
             {% for field in project_fields_name %}
-            {% if field in fields_string_type %}
-            <label>{{ field }}</label>
-            <select name="{{ field }}">
-                <option value="">{{ element }}</option>
-                {% for element in string_field_element[field] %}
-                    <option value="{{ element }}">{{ element }}</option>
-                {% endfor %}
-            </select>
-            {% else %}
-            <label>{{ field }}</label>
-            <select name="{{ field }}">
-                <option value="no"></option>
-                <option value="eq">=</option>
-                <option value="lt">&lt;</option>
-                <option value="gt">&gt;</option>
-                <input type="text" name="{{field}}" />
-            </select>
-            {% endif %}
-                <br />
+                {% if field in fields_string_type %}
+                    <label>{{ field }}</label>
+                    <select name="{{ field }}">
+                        <option value="">{{ element }}</option>
+                        {% for element in string_field_element[field] %}
+                            <option value="{{ element }}">{{ element }}</option>
+                        {% endfor %}
+                    </select>
+                {% else %}
+                    <label>{{ field }}</label>
+                    <select name="{{ field }}">
+                        <option value="no"></option>
+                        <option value="eq">=</option>
+                        <option value="lt">&lt;</option>
+                        <option value="gt">&gt;</option>
+                        <input type="text" name="{{ field }}"/>
+                    </select>
+                {% endif %}
+                <br/>
             {% endfor %}
 
-            <input name="name" value="{{ project_name }}" type = "hidden">
+            <input name="name" value="{{ project_name }}" type="hidden">
 
         </div>
         <div class="modal-footer">

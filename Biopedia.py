@@ -205,8 +205,15 @@ def profile(language='en'):
         username = session['username']
         user = User.objects.get(username=username)
         if not user['admin']:
-            return render_template('user.html', user=user, admin=user,
-                               language=language)
+            alert_message = request.args.get('alert_message', '')
+            alert_type = request.args.get('alert_type', '')
+            if alert_type:
+                return render_template('user.html', user=user, admin=user,
+                               language=language, alert_message=alert_message,
+                               alert_type=alert_type)
+            else:
+                return render_template('user.html', user=user, admin=user,
+                                       language=language)
         else:
             admin = user
             username = request.args.get('username', '')
@@ -252,9 +259,9 @@ def modify_password():
     user = User.objects.get(username=username)
     if user['password'] == password:
         User.objects(id=user.id).update_one(set__password=newpassword)
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', alert_type="alert-success", alert_message="Successfully changed password!"))
     else:
-        return redirect(url_for('profile'))
+        return redirect(url_for('profile', alert_type="alert-danger", alert_message="Password incorrect."))
 
 if __name__ == '__main__':
     app.run(debug=True)

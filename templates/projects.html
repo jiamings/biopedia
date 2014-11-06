@@ -84,24 +84,22 @@
         </thead>
         <tbody>
         {% for project in project_list %}
-        <tr>
-            <td><a href="/samples?name={{ project['name'] }}">{{ project['name'] }}</a></td>
-            <td>{{ project['environment'] }}</td>
-            <td>{{ project['site'] }}</td>
-            <td>{{ project['sequence_type'] }}</td>
-            <td>{{ project['project_id'] }}</td>
-            <td>{{ project['num_of_total_sequences'] }}</td>
-            <td>{{ project['num_of_orfs'] }}</td>
-            <td>{{ project['num_of_samples'] }}</td>
-            <td>{{ project['read_length'] }}</td>
-            <td>{{ project['platform'] }}</td>
-            <td>{{ project['create_date']['month'] }}/{{ project['create_date']['day'] }}/{{
-                project['create_date']['year'] }}
-            </td>
-            <td>{{ project['update_date']['month'] }}/{{ project['update_date']['day'] }}/{{
-                project['update_date']['year'] }}
-            </td>
-        </tr>
+            <tr>
+                <td><a href="/samples?name={{ project['name'] }}">{{ project['name'] }}</a></td>
+                <td>{{ project['environment'] }}</td>
+                <td>{{ project['site'] }}</td>
+                <td>{{ project['sequence_type'] }}</td>
+                <td>{{ project['project_id'] }}</td>
+                <td>{{ project['num_of_total_sequences'] }}</td>
+                <td>{{ project['num_of_orfs'] }}</td>
+                <td>{{ project['num_of_samples'] }}</td>
+                <td>{{ project['read_length'] }}</td>
+                <td>{{ project['platform'] }}</td>
+                <td>{{ project['create_date']['month'] }}/{{ project['create_date']['day'] }}/{{ project['create_date']['year'] }}
+                </td>
+                <td>{{ project['update_date']['month'] }}/{{ project['update_date']['day'] }}/{{ project['update_date']['year'] }}
+                </td>
+            </tr>
         {% endfor %}
         </tbody>
     </table>

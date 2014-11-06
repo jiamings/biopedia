@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        User Profile - {{ firstname }} {{ lastname }}
+        User Profile - {{ user['firstname'] }} {{ user['lastname'] }}
     </title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -51,24 +51,25 @@
             <ul class="nav navbar-nav navbar-right">
                 {% if admin['admin'] %}
                     <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin Management<b class="caret"></b></a>
+                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin Management<b
+                                class="caret"></b></a>
                         <ul class="dropdown-menu">
                             <li><a href="user-admin">User Management</a></li>
                             <li><a href="data-admin">Database Management</a></li>
                         </ul>
                     </li>
                 {% endif %}
-                    <li class="dropdown">
-                        <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                            {{ admin['firstname'] }} {{ admin['lastname'] }}<b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="user">Profile</a></li>
-                            <li><a href="javascript:void(0)">Upload Data</a></li>
+                <li class="dropdown">
+                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                        {{ admin['firstname'] }} {{ admin['lastname'] }}<b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li><a href="user">Profile</a></li>
+                        <li><a href="javascript:void(0)">Upload Data</a></li>
 
-                            <li class="divider"></li>
-                            <li><a href="logout">Logout</a></li>
-                        </ul>
-                    </li>
+                        <li class="divider"></li>
+                        <li><a href="logout">Logout</a></li>
+                    </ul>
+                </li>
 
 
             </ul>
@@ -79,38 +80,44 @@
 
 <div class="container">
     <h1><br/>Profile - {{ user['firstname'] }} {{ user['lastname'] }}</h1>
+
     <div class="bs-docs-section">
         <div class="row">
             <div class="col-lg-4">
-                    <div class="well">
-                        <h2>User Information</h2>
-                        <h2></h2>
-                        <table class="table">
-                            <tr>
-                                <th>Username:</th>
-                                <td>{{ user['username'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Full Name:</th>
-                                <td>{{ user['firstname'] }} {{ user['lastname'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Email:</th>
-                                <td>{{ user['email'] }}</td>
-                            </tr>
-                            <tr>
-                                <th>Password:</th>
-                                <td>
-                        <button class="btn btn-sm btn-primary" data-toggle="modal" data-target="#mymodifypassword">
-                            Modify Password
-                        </button></td>
-                            </tr>
-                        </table>
-                    </div>
+                <div class="well">
+                    <h2>User Information</h2>
+
+                    <h2></h2>
+                    <table class="table">
+                        <tr>
+                            <th>Username:</th>
+                            <td>{{ user['username'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Full Name:</th>
+                            <td>{{ user['firstname'] }} {{ user['lastname'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Email:</th>
+                            <td>{{ user['email'] }}</td>
+                        </tr>
+                        <tr>
+                            <th>Password:</th>
+                            <td>
+                                <button class="btn btn-sm btn-primary" data-toggle="modal"
+                                        data-target="#mymodifypassword">
+                                    Modify Password
+                                </button>
+                            </td>
+                        </tr>
+                    </table>
+                </div>
             </div>
             <div class="col-lg-8">
                 <h2>Uploaded Projects:</h2>
+
                 <p></p>
+
                 <div class="list-group">
                     <div class="list-group-item">
                         <div class="row-picture">
@@ -118,6 +125,7 @@
                         </div>
                         <div class="row-content">
                             <h4 class="list-group-item-heading"><a href="samples?name=MetaTongue">Meta-Tongue</a></h4>
+
                             <p class="list-group-item-text">Project descrption for Meta-Tongue</p>
                         </div>
                     </div>
@@ -128,6 +136,7 @@
                         </div>
                         <div class="row-content">
                             <h4 class="list-group-item-heading">Tile with another avatar</h4>
+
                             <p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
                         </div>
                     </div>
@@ -139,9 +148,9 @@
 
 </div>
 
-{% include "include/modify_user_profile_modal.html" %}
-{% include "include/scripts.html" %}
 
+{% include "include/scripts.html" %}
+{% include "include/modify_user_profile_modal.html" %}
 <!-- Modals
 -->
 

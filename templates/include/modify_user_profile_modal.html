@@ -1,4 +1,5 @@
-<div class="modal fade" id="mymodifypassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="mymodifypassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -6,24 +7,27 @@
                         class="sr-only">x</span></button>
                 <h4 class="modal-title" id="myModalLabel">Modify Password</h4>
             </div>
-            <form class="form-horizontal" action="modify-password" onsubmit="return validatePasswordModification()" method="post">
-            <div class="modal-body">
+            <form class="form-horizontal" action="modify-password" onsubmit="return validatePasswordModification()"
+                  method="post">
+                <div class="modal-body">
                     <div class="alert alert-danger" id="modifyPasswordError" style="display:none;">
                         <p id="modifyPasswordErrorMessage"></p>
                     </div>
-                <fieldset>
+                    <fieldset>
                         <div class="form-group">
                             <label for="inputNewPassword" class="col-lg-4 control-label">Password</label>
 
                             <div class="col-lg-8">
-                                <input type="password" class="form-control" name="originalPassword" id="originalPassword" placeholder="Original Password" required>
+                                <input type="password" class="form-control" name="originalPassword"
+                                       id="originalPassword" placeholder="Original Password" required>
                             </div>
                         </div>
-                <div class="form-group">
+                        <div class="form-group">
                             <label for="inputNewPassword" class="col-lg-4 control-label">New Password</label>
 
                             <div class="col-lg-8">
-                                <input type="password" class="form-control" name="newPassword" id="newPassword" placeholder="New Password" required>
+                                <input type="password" class="form-control" name="newPassword" id="newPassword"
+                                       placeholder="New Password" required>
                             </div>
                         </div>
                         <div class="form-group">
@@ -35,11 +39,11 @@
                             </div>
                         </div>
                     </fieldset>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="submit" class="btn btn-primary" value="modify" id="modifyButton">Modify</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary" value="modify" id="modifyButton">Modify</button>
+                </div>
             </form>
         </div>
     </div>
@@ -47,24 +51,37 @@
 
 <script type="text/javascript">
     function validatePasswordModification() {
-    var password = $("#originalPassword").val();
-    if (password.length < 6) {
-        $("#modifyPasswordErrorMessage").text("A password should contain at least 6 characters.");
-        return false;
-    }
-    var newpassword = $("#newPassword").val();
-    var confirmPassword = $("#confirmPassword").val();
-    if (newpassword != confirmPassword) {
-        $("#modifyPasswordErrorMessage").text("Passwords do not match.");
-        $("#modifyPasswordError").show();
-        return false;
-    } else if (newpassword.length < 6) {
-         $("#modifyPasswordErrorMessage").text("A password should contain at least 6 characters.");
-         $("#modifyPasswordError").show();
-        return false;
-    }
-    $("#modifyPasswordError").hide();
-    return true;
+        var password = $("#originalPassword").val();
+        if (password.length < 6) {
+            $("#modifyPasswordErrorMessage").text("A password should contain at least 6 characters.");
+            return false;
+        }
+        var newpassword = $("#newPassword").val();
+        var confirmPassword = $("#confirmPassword").val();
+        if (newpassword != confirmPassword) {
+            $("#modifyPasswordErrorMessage").text("Passwords do not match.");
+            $("#modifyPasswordError").show();
+            return false;
+        } else if (newpassword.length < 6) {
+            $("#modifyPasswordErrorMessage").text("A password should contain at least 6 characters.");
+            $("#modifyPasswordError").show();
+            return false;
+        }
+        $("#modifyPasswordError").hide();
+        return true;
 
     }
+    function alert_refresh(alert_type, alert_message) {
+        $(window).load(function () {
+            $("#mymodifypassword").modal('show');
+        });
+        $("#modifyPasswordError").text(alert_message);
+        $("#modifyPasswordError").class = "alert " + alert_type;
+        $("#modifyPasswordError").show();
+    }
+    $(document).ready(function () {
+        {% if alert_message %}
+            alert_refresh("{{ alert_type }}", "{{ alert_message }}")
+        {% endif %}
+    });
 </script>
