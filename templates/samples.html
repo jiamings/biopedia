@@ -73,7 +73,6 @@
 <div class="container">
 <div style="text-align: center">
 <div class="btn-group">
-  <button type="button" class="btn btn-default" data-toggle="modal" data-target="#column_selection">Select More Fields ...</button>
   <button type="button" class="btn btn-default" data-toggle="modal" data-target="#filter">Set Fields Filter</button>
 </div>
 </div>
@@ -88,6 +87,7 @@
             {% for field in project_fields_name %}
             <th>{{ mapping[field] }}</th>
             {% endfor %}
+            <th data-toggle="modal" data-target="#column_selection">MORE...</th>
         </tr>
         </thead>
         <tbody>
@@ -97,6 +97,7 @@
             {% for field in project_fields_name %}
             <td>{{ sample[field] }}</td>
             {% endfor %}
+            <td></td>
         </tr>
         {% endfor %}
 		</tbody>
