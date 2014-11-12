@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>
+        {% block title %}{% endblock %}
+    </title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Bootstrap core CSS -->
+    <link href="{{ url_for('static', filename='css/bootstrap.min.css') }}" rel="stylesheet">
+    <!-- Google Material Design CSS-->
+    <link href="{{ url_for('static', filename='css/ripples.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/material-wfont.min.css') }}" rel="stylesheet">
+    <link href="{{ url_for('static', filename='css/snackbar.min.css') }}" rel="stylesheet">
+    <!-- Datatable CSS -->
+    <link href="{{ url_for('static', filename='css/dataTables.bootstrap.css') }}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/projects.css') }}" rel="stylesheet">
+    {% block dataTables %}{% endblock %}
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+     <!--[if lt IE 9]>
+    {% include "include/support_ie9.html" %}
+    <![endif]-->
+
+</head>
+
+<body>
+<nav class="navbar navbar-material-lightblue navbar-fixed-top" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                    aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Biopedia</a>
+        </div>
+        <div id="navbar" class="collapse navbar-collapse">
+             {% block navbar %}
+             {% endblock %}
+        </div>
+        <!--/.nav-collapse -->
+    </div>
+</nav>
+{% block contain %}
+{% endblock %}
+
+
+{% include "include/scripts.html" %}
+{% block picture %}
+{% endblock %}
+
+<!-- Modals
+-->
+
+
+<!--
+Self-defined Scripts
+-->
+{% block scripts %}
+{% endblock %}
+
+
+</body>
+</html>
