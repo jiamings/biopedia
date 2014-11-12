@@ -15,12 +15,8 @@ def user_admin_backend(language='en'):
         if not user['admin']:
             return redirect(url_for('index'))
         else:
-            firstname = user['firstname']
-            lastname = user['lastname']
-            email = user['email']
             users_list = User.objects()
-            return render_template('user-admin.html', firstname=firstname, lastname=lastname,
-                                   email=email, language=language, users_list=users_list)
+            return render_template('user-admin.html', user=user, language=language, users_list=users_list)
     else:
         return redirect(url_for('index'))
 
