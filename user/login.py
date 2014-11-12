@@ -54,6 +54,6 @@ def register():
 
 @user_login.route('/logout')
 @user_login.route('/<language>/logout')
-def logout():
+def logout(language='en'):
     session.pop('username', None)
     return redirect(url_for('index.index_backend'))
