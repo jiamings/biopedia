@@ -33,6 +33,9 @@
             <th>Platform</th>
             <th>Create Date</th>
             <th>Update Data</th>
+            {% if user %}
+            <th>Star</th>
+            {% endif %}
         </tr>
         </thead>
         <tbody>
@@ -52,6 +55,19 @@
                 </td>
                 <td>{{ project['update_date']['month'] }}/{{ project['update_date']['day'] }}/{{ project['update_date']['year'] }}
                 </td>
+                {% if user %}
+                <td>
+                {% if project['star'] %}
+                    <img id="{{ project['name'] }}" class="circle" height="50px" width="50px"
+                         onclick="toggleStarStatus('{{ user['username'] }}', '{{ project['name'] }}')"
+                         src="/unstar-picture" alt="icon">
+                {% else %}
+                    <img id="{{ project['name'] }}" class="circle" height="50px" width="50px"
+                         onclick="toggleStarStatus('{{ user['username'] }}', '{{ project['name'] }}')"
+                         src="/star-picture" alt="icon">
+                {% endif %}
+                </td>
+                {% endif %}
             </tr>
         {% endfor %}
         </tbody>
@@ -68,6 +84,21 @@
 {%endblock%}
 {% block scripts %}
  <script type="text/javascript">
+ function toggleStarStatus(username, project) {
+     $.ajax({url:"/star?user=" + username + "&project=" + project},
+        async=false)
+     .done(function( html ){
+        if (html == "Star") {
+            $("#" + project).attr('src', '/star-picture');
+        } else if (html == "Unstar"){
+            $("#" + project).attr('src', '/unstar-picture');
+        } else {
+            alert("Session failed. Please reload your page.")
+        };
+
+     })
+ }
+
     $(document).ready(function () {
         $('#projects').dataTable().columnFilter();
     });

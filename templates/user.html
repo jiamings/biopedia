@@ -5,34 +5,13 @@
                 <li><a href="/{{ language }}/projects">Projects</a></li>
             </ul>
     <ul class="nav navbar-nav navbar-right">
-         {% if admin['admin'] %}
-          <li class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin Management<b
-                                class="caret"></b></a>
-                <ul class="dropdown-menu">
-                      <li><a href="user-admin">User Management</a></li>
-                      <li><a href="data-admin">Database Management</a></li>
-                </ul>
-          </li>
-          {% endif %}
-                <li class="dropdown">
-                    <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
-                        {{ admin['firstname'] }} {{ admin['lastname'] }}<b class="caret"></b></a>
-                    <ul class="dropdown-menu">
-                        <li><a href="user">Profile</a></li>
-                        <li><a href="javascript:void(0)">Upload Data</a></li>
-
-                        <li class="divider"></li>
-                        <li><a href="logout">Logout</a></li>
-                    </ul>
-                </li>
-           </ul>
+         {% include "include/nav_bar_right.html" %}
 {% endblock %}
 {% block contain %}
 <div class="container">
-    <h1><br/>Profile - {{ user['firstname'] }} {{ user['lastname'] }}</h1>
-
-    <div class="bs-docs-section">
+<p><br/></p>
+    <h1>{{ disp_user['firstname'] }} {{ disp_user['lastname'] }}</h1>
+        <p><br/></p>
         <div class="row">
             <div class="col-lg-4">
                 <div class="well">
@@ -42,15 +21,15 @@
                     <table class="table">
                         <tr>
                             <th>Username:</th>
-                            <td>{{ user['username'] }}</td>
+                            <td>{{ disp_user['username'] }}</td>
                         </tr>
                         <tr>
                             <th>Full Name:</th>
-                            <td>{{ user['firstname'] }} {{ user['lastname'] }}</td>
+                            <td>{{ disp_user['firstname'] }} {{ disp_user['lastname'] }}</td>
                         </tr>
                         <tr>
                             <th>Email:</th>
-                            <td>{{ user['email'] }}</td>
+                            <td>{{ disp_user['email'] }}</td>
                         </tr>
                         <tr>
                             <th>Password:</th>
@@ -65,42 +44,36 @@
                 </div>
             </div>
             <div class="col-lg-8">
-                <h2>Uploaded Projects:</h2>
+                <h2>Starred Projects:</h2>
 
-                <p></p>
+                <p><br/></p>
 
                 <div class="list-group">
+                    {% for project in starred_projects %}
                     <div class="list-group-item">
                         <div class="row-picture">
-                            <img class="circle" src="http://lorempixel.com/56/56/people/1" alt="icon">
+                            <img class="circle" src="/random-picture?project_name={{ project['project_name'] }}" alt="icon">
                         </div>
                         <div class="row-content">
-                            <h4 class="list-group-item-heading"><a href="samples?name=MetaTongue">Meta-Tongue</a></h4>
-
-                            <p class="list-group-item-text">Project descrption for Meta-Tongue</p>
+                            <h4 class="list-group-item-heading"><a href="samples?name={{ project['project_name'] }}">
+                                {{ project['project_name'] }}
+                            </a>
+                            </h4>
+                            <p>
+                                We need a description for every project.
+                            </p>
                         </div>
                     </div>
                     <div class="list-group-separator"></div>
-                    <div class="list-group-item">
-                        <div class="row-picture">
-                            <img class="circle" src="http://lorempixel.com/56/56/people/6" alt="icon">
-                        </div>
-                        <div class="row-content">
-                            <h4 class="list-group-item-heading">Tile with another avatar</h4>
-
-                            <p class="list-group-item-text">Maecenas sed diam eget risus varius blandit.</p>
-                        </div>
-                    </div>
-                    <div class="list-group-separator"></div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
     </div>
 
-</div>
 {% endblock %}
 {% block title %}
-        User Profile - {{ user['firstname'] }} {{ user['lastname'] }}
+        User Profile - {{ disp_user['firstname'] }} {{ disp_user['lastname'] }}
 {% endblock %}
 {% block picture %}
         {% include "include/modify_user_profile_modal.html" %}
