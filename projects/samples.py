@@ -74,7 +74,7 @@ def samples_backend(language='en'):
     sample_list = mongo.db.samples.find(filter)
     sample_list_out =  list(mongo.db.samples.find(filter))
 
-    file = open("./tmp/samples.json", "w")
+    file = open("./static/samples.json", "w")
     for o in sample_list_out:
         file.write(str(o))
 
