@@ -4,6 +4,7 @@ sys.path.append('../')
 from flask import Blueprint, render_template, session, request
 from models import User
 from definition import mongo
+import os
 
 samples = Blueprint('samples', __name__, template_folder='templates')
 
@@ -71,6 +72,13 @@ def samples_backend(language='en'):
     # to build the filter
 
     sample_list = mongo.db.samples.find(filter)
+    sample_list_out =  list(mongo.db.samples.find(filter))
+
+    file = open("./static/samples.json", "w")
+    for o in sample_list_out:
+        file.write(str(o))
+
+    file.close()
 
     for field in fields_string_type:
         string_field_element[field] = list(set(string_field_element[field]))
