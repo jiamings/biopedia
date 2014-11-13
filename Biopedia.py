@@ -4,6 +4,9 @@ Main Entrance for the application.
 from flask import Flask, render_template, request, redirect, url_for, escape, session
 from flask.ext.pymongo import PyMongo
 from models import *
+from werkzeug.utils import secure_filename
+import os
+
 
 app = Flask(__name__)
 mongo = PyMongo(app)
@@ -97,6 +100,121 @@ def projects(language='en'):
         return render_template('projects.html', language=language, project_list=project_list, user=user)
     return render_template('projects.html', language=language, project_list=project_list)
 
+UPLOAD_FOLDER = '.'
+
+@app.route('/projects_insert', methods=['POST'])
+@app.route('/<language>/projects_insert', methods=['POST'])
+def projects_insert(language='en'):
+    """
+
+    :param language:
+    :return:
+    """
+    name = request.form['name']
+    environment = request.form['environment']
+    site = request.form['site']
+    sequence_type = request.form['sequence_type']
+    project_id = request.form['project_id']
+    num_of_total_sequences = request.form['num_of_total_sequences']
+    num_of_orfs = request.form['num_of_orfs']
+    num_of_samples = request.form['num_of_samples']
+    read_length = request.form['read_length']
+    platform = request.form['platform']
+    create_date = request.form['create_date']
+    update_date = request.form['update_date']
+
+    print 'name'
+    print name
+    mapping_file = request.files['mapping']
+    mapping_file_secure_name = secure_filename(mapping_file.filename)
+
+    samples_file = request.files['samples']
+    samples_file_secure_name = secure_filename(samples_file.filename)
+
+    print(mapping_file_secure_name)
+    print(samples_file_secure_name)
+
+    succeed = str(name) and mongo.db.projects.find({'name': name}).count() == 0
+
+    print succeed
+
+    succeed = succeed and environment and site and sequence_type and project_id and \
+              str(num_of_total_sequences).isdigit() and str(num_of_orfs).isdigit() and \
+              str(read_length).isdigit() and platform
+
+    print succeed
+
+    if len(str(create_date).split('/'))==3 and str(create_date).split('/')[0].isdigit() and \
+            str(create_date).split('/')[1].isdigit() and str(create_date).split('/')[2].isdigit():
+        create_date = {'month': int(str(create_date).split('/')[0]),
+                       'day': int(str(create_date).split('/')[1]),
+                       'year': int(str(create_date).split('/')[2]) }
+    else:
+        succeed = False
+
+    print succeed
+
+    if len(str(update_date).split('/'))==3 and str(update_date).split('/')[0].isdigit() and \
+            str(update_date).split('/')[1].isdigit() and str(update_date).split('/')[2].isdigit():
+        update_date = {'month': int(str(update_date).split('/')[0]),
+                       'day': int(str(update_date).split('/')[1]),
+                       'year': int(str(update_date).split('/')[2]) }
+    else:
+        succeed = False
+
+    print succeed
+
+    if mapping_file_secure_name.split('.')[-1] != 'csv' or samples_file_secure_name.split('.')[-1] != 'json':
+        succeed = False
+    else:
+        fvalue = mapping_file.read()
+        #vs = str(fvalue).split('\\r\\n')
+        #fvalue = 'project_name,en,cn,details'
+        #for v in vs:
+        #    fvalue += name + ',' + v + '\r\n'
+       # print fvalue
+        mapping_file.seek(0)
+        mapping_file.save(os.path.join(UPLOAD_FOLDER, mapping_file_secure_name))
+
+        fvalue = samples_file.read()
+        samples_file.seek(0)
+        samples_file.save(os.path.join(UPLOAD_FOLDER, samples_file_secure_name))
+
+    print succeed
+
+    if succeed:
+        proj_info = {
+            "name": name,
+            "environment": environment,
+            "site": site,
+            "sequence_type": sequence_type,
+            "project_id": project_id,
+            "num_of_total_sequences": int(num_of_total_sequences),
+            "num_of_orfs": int(num_of_orfs),
+            "num_of_samples": int(num_of_samples),
+            "read_length": read_length,
+            "platform": platform,
+            "create_date": create_date,
+            "update_date": update_date,
+        }
+        mongo.db.projects.save(proj_info)
+
+        os.system("mongoimport -c mapping -d Biopedia --file %s --type csv --headerline" % mapping_file_secure_name)
+        os.system("mongoimport -c samples -d Biopedia --file %s" % samples_file_secure_name)
+
+        #os.system(["del", "mapping.csv"])
+        #os.system(["del", "samples.json"])
+
+    project_list = mongo.db.projects.find()
+
+    if 'username' in session:
+        user = User.objects.get(username=session['username'])
+
+    if 'username' in session:
+        return render_template('projects.html', language=language, project_list=project_list, user=user)
+    else:
+        return render_template('projects.html', language=language, project_list=project_list)
+
 
 default_selected_fields = \
     {"MetaTongue": ["sex", "age", "residence", "Nationality",
@@ -170,8 +288,8 @@ def samples(language='en'):
     mapping = {}
     if language == 'cn':
         for field in all_fields_name:
-            if mongo.db.mapping.find({'en': field}).count() > 0:
-                mapping[field] = mongo.db.mapping.find({'en': field})[0]['cn']
+            if mongo.db.mapping.find({'project_name': project_name, 'en': field}).count() > 0:
+                mapping[field] = mongo.db.mapping.find({'project_name': project_name, 'en': field})[0]['cn']
             else:
                 mapping[field] = field
     else:
@@ -272,6 +390,7 @@ def user_admin(language='en'):
     else:
         return redirect(url_for('index'))
 
+
 @app.route('/delete-user')
 def delete_user():
     username = request.args.get('username', '')
@@ -279,6 +398,7 @@ def delete_user():
     if user:
         user.delete()
     return redirect(url_for('user_admin'))
+
 
 @app.route('/modify-password', methods=['POST'])
 def modify_password():
@@ -291,6 +411,7 @@ def modify_password():
         return redirect(url_for('profile', alert_type="alert-success", alert_message="Successfully changed password!"))
     else:
         return redirect(url_for('profile', alert_type="alert-danger", alert_message="Password incorrect."))
+
 
 if __name__ == '__main__':
     app.run(debug=True)
