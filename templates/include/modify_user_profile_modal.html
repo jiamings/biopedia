@@ -76,7 +76,7 @@
             $("#mymodifypassword").modal('show');
         });
         $("#modifyPasswordError").text(alert_message);
-        $("#modifyPasswordError").class = "alert " + alert_type;
+        $("#modifyPasswordError").attr('class', 'alert ' + alert_type);
         $("#modifyPasswordError").show();
     }
     $(document).ready(function () {
