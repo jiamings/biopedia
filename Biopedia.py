@@ -202,8 +202,8 @@ def projects_insert(language='en'):
         os.system("mongoimport -c mapping -d Biopedia --file %s --type csv --headerline" % mapping_file_secure_name)
         os.system("mongoimport -c samples -d Biopedia --file %s" % samples_file_secure_name)
 
-        #os.system(["del", "mapping.csv"])
-        #os.system(["del", "samples.json"])
+        os.system("del %s" % mapping_file_secure_name)
+        os.system("del %s" % samples_file_secure_name)
 
     project_list = mongo.db.projects.find()
 
