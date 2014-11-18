@@ -1,147 +1,241 @@
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
     <ul class="nav navbar-nav">
-                <li><a href="/index">Home</a></li>
-                <li class="active"><a href="/{{ language }}/projects">Projects</a></li>
+        <li><a href="/index">Home</a></li>
+        <li class="active"><a href="/{{ language }}/projects">Projects</a></li>
     </ul>
     {% include "include/nav_bar_right.html" %}
 {% endblock %}
 {% block contain %}
-<div class="jumbotron">
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Projects</h1>
+
+            <p>All the projects are listed here.</p>
+
+            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
+        </div>
+    </div>
+
     <div class="container">
-        <h1>Projects</h1>
-
-        <p>All the projects are listed here.</p>
-
-        <p><a class="btn btn-primary btn-lg">Learn more</a></p>
-    </div>
-</div>
-
-<div class="container">
-    <div data-toggle="modal" data-target="#insert"><div class="icon-preview"><i class="mdi-content-filter-list"></i><span>Insert a new PROJECT</span></div></div>
-    <table id="projects" class="table table-striped table-bordered">
-        <thead>
-        <tr>
-            <th>Projects</th>
-            <th>Environment</th>
-            <th>Site</th>
-            <th>Sequence Type</th>
-            <th>Project Id</th>
-            <th># of Total Sequences</th>
-            <th># of ORFs</th>
-            <th># of Samples</th>
-            <th>Read Length</th>
-            <th>Platform</th>
-            <th>Create Date</th>
-            <th>Update Date</th>
-            {% if user %}
-            <th>Star</th>
-            {% endif %}
-        </tr>
-        </thead>
-        <tbody>
-        {% for project in project_list %}
+        <div data-toggle="modal" data-target="#insert">
+            <div class="icon-preview"><i class="mdi-content-filter-list"></i><span>Insert a new PROJECT</span></div>
+        </div>
+        <table id="projects" class="table table-striped table-bordered">
+            <thead>
             <tr>
-                <td><a href="/samples?name={{ project['name'] }}">{{ project['name'] }}</a></td>
-                <td>{{ project['environment'] }}</td>
-                <td>{{ project['site'] }}</td>
-                <td>{{ project['sequence_type'] }}</td>
-                <td>{{ project['project_id'] }}</td>
-                <td>{{ project['num_of_total_sequences'] }}</td>
-                <td>{{ project['num_of_orfs'] }}</td>
-                <td>{{ project['num_of_samples'] }}</td>
-                <td>{{ project['read_length'] }}</td>
-                <td>{{ project['platform'] }}</td>
-                <td>{{ project['create_date']['month'] }}/{{ project['create_date']['day'] }}/{{ project['create_date']['year'] }}
-                </td>
-                <td>{{ project['update_date']['month'] }}/{{ project['update_date']['day'] }}/{{ project['update_date']['year'] }}
-                </td>
+                <th>Projects</th>
+                <th>Environment</th>
+                <th>Site</th>
+                <th>Sequence Type</th>
+                <th>Project Id</th>
+                <th># of Total Sequences</th>
+                <th># of ORFs</th>
+                <th># of Samples</th>
+                <th>Read Length</th>
+                <th>Platform</th>
+                <th>Create Date</th>
+                <th>Update Date</th>
                 {% if user %}
-                <td>
-                {% if project['star'] %}
-                    <img id="{{ project['name'] }}" class="circle" height="50px" width="50px"
-                         onclick="toggleStarStatus('{{ user['username'] }}', '{{ project['name'] }}')"
-                         src="/unstar-picture" alt="icon">
-                {% else %}
-                    <img id="{{ project['name'] }}" class="circle" height="50px" width="50px"
-                         onclick="toggleStarStatus('{{ user['username'] }}', '{{ project['name'] }}')"
-                         src="/star-picture" alt="icon">
+                    <th>Star</th>
+                    {% if user['admin'] == True %}
+                        <th>Delete</th>
+                    {% endif %}
                 {% endif %}
-                </td>
-                {% endif %}
-            </tr>
-        {% endfor %}
-        </tbody>
-    </table>
-</div>
 
-<div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-        <h4 class="modal-title" id="myModalLabel">Insert a new PROJECT!</h4>
-      </div>
-    <form class="form-horizontal" action="/projects_insert" method="post" enctype="multipart/form-data">
-      <div class="modal-body">
-          <div style="overflow-y:auto; overflow-x:auto;  height: 400px" >
-                <table class="table table-striped">
-                <tbody>
-                    <tr><td><label>Name</label></td><td><input type="text" name="name"/></td></tr>
-                    <tr><td><label>Environment</label></td><td><input type="text" name="environment"/></td></tr>
-                    <tr><td><label>Site</label></td><td><input type="text" name="site"/></td></tr>
-                    <tr><td><label>Sequence Type</label></td><td><input type="text" name="sequence_type"/></td></tr>
-                    <tr><td><label>Project Id</label></td><td><input type="text" name="project_id"/></td></tr>
-                    <tr><td><label># of Total sequences</label></td><td><input type="text" name="num_of_total_sequences"/></td></tr>
-                    <tr><td><label># of ORFs</label></td><td><input type="text" name="num_of_orfs"/></td></tr>
-                    <tr><td><label># of Samples</label></td><td><input type="text" name="num_of_samples"/></td></tr>
-                    <tr><td><label>Read Length</label></td><td><input type="text" name="read_length"/></td></tr>
-                    <tr><td><label>Platform</label></td><td><input type="text" name="platform"/></td></tr>
-                    <tr><td><label>Create Date</label></td><td><input type="text" name="create_date"/></td></tr>
-                    <tr><td><label>Update Date</label></td><td><input type="text" name="update_date"/></td></tr>
-                    <tr><td><label>Mapping File</label></td><td><input type="file" name="mapping" /></td></tr>
-                    <tr><td><label>Sample File</label></td><td><input type="file" name="samples" /></td></tr>
-                </tbody>
-                </table>
-          </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-        <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
-      </div>
-    </form>
+            </tr>
+            </thead>
+            <tbody>
+            {% for project in project_list %}
+                <tr>
+                    <td><a href="/samples?name={{ project['name'] }}">{{ project['name'] }}</a></td>
+                    <td>{{ project['environment'] }}</td>
+                    <td>{{ project['site'] }}</td>
+                    <td>{{ project['sequence_type'] }}</td>
+                    <td>{{ project['project_id'] }}</td>
+                    <td>{{ project['num_of_total_sequences'] }}</td>
+                    <td>{{ project['num_of_orfs'] }}</td>
+                    <td>{{ project['num_of_samples'] }}</td>
+                    <td>{{ project['read_length'] }}</td>
+                    <td>{{ project['platform'] }}</td>
+                    <td>{{ project['create_date']['month'] }}/{{ project['create_date']['day'] }}/{{ project['create_date']['year'] }}
+                    </td>
+                    <td>{{ project['update_date']['month'] }}/{{ project['update_date']['day'] }}/{{ project['update_date']['year'] }}
+                    </td>
+                    {% if user %}
+                        <td>
+                            {% if project['star'] %}
+                                <img id="{{ project['name'] }}" class="circle" height="50px" width="50px"
+                                     onclick="toggleStarStatus('{{ user['username'] }}', '{{ project['name'] }}')"
+                                     src="/unstar-picture" alt="icon">
+                            {% else %}
+                                <img id="{{ project['name'] }}" class="circle" height="50px" width="50px"
+                                     onclick="toggleStarStatus('{{ user['username'] }}', '{{ project['name'] }}')"
+                                     src="/star-picture" alt="icon">
+                            {% endif %}
+
+                        </td>
+                        {% if user['admin'] == True %}
+                            <td>
+                                <button class="btn btn-primary btn-sm"
+                                        onclick="changeDeleteModalBehavior('{{ project['name'] }}')" data-toggle="modal"
+                                        data-target="#myprojectdelete">
+                                    Delete
+                                </button>
+                            </td>
+                        {% endif %}
+                    {% endif %}
+
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
     </div>
-  </div>
-</div>
+
+    <div class="modal fade" id="myprojectdelete" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+         aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span
+                            class="sr-only">x</span></button>
+                    <h3 class="modal-title" id="myModalLabel">Delete Confirm</h3>
+                </div>
+
+                <div class="modal-body">
+
+                    <h4 id="deleteProject"></h4>
+                    <h4>This operation cannot be reverted.</h4>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">No</button>
+                        <a id="projectDeleteButton" href="">
+                            <button type="button" class="btn btn-primary" value="confirm">Yes</button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade" id="insert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span
+                            aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
+                    <h4 class="modal-title" id="myModalLabel">Insert a new PROJECT!</h4>
+                </div>
+                <form class="form-horizontal" action="/projects_insert" method="post" enctype="multipart/form-data">
+                    <div class="modal-body">
+                        <div style="overflow-y:auto; overflow-x:auto;  height: 400px">
+                            <table class="table table-striped">
+                                <tbody>
+                                <tr>
+                                    <td><label>Name</label></td>
+                                    <td><input type="text" name="name"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Environment</label></td>
+                                    <td><input type="text" name="environment"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Site</label></td>
+                                    <td><input type="text" name="site"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Sequence Type</label></td>
+                                    <td><input type="text" name="sequence_type"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Project Id</label></td>
+                                    <td><input type="text" name="project_id"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label># of Total sequences</label></td>
+                                    <td><input type="text" name="num_of_total_sequences"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label># of ORFs</label></td>
+                                    <td><input type="text" name="num_of_orfs"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label># of Samples</label></td>
+                                    <td><input type="text" name="num_of_samples"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Read Length</label></td>
+                                    <td><input type="text" name="read_length"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Platform</label></td>
+                                    <td><input type="text" name="platform"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Create Date</label></td>
+                                    <td><input type="text" name="create_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Update Date</label></td>
+                                    <td><input type="text" name="update_date"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Mapping File</label></td>
+                                    <td><input type="file" name="mapping"/></td>
+                                </tr>
+                                <tr>
+                                    <td><label>Sample File</label></td>
+                                    <td><input type="file" name="samples"/></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+                        <button type="submit" class="btn btn-primary" value="Ok">Ok</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 {% endblock %}
 {% block title %}
-        Biopedia - Projects
+    Biopedia - Projects
 {% endblock %}
 {% block picture %}
     {% if not username %}
         {% include "include/login_register_modals.html" %}
     {% endif %}
-{%endblock%}
+{% endblock %}
 {% block scripts %}
- <script type="text/javascript">
- function toggleStarStatus(username, project) {
-     $.ajax({url:"/star?user=" + username + "&project=" + project},
-        async=false)
-     .done(function( html ){
-        if (html == "Star") {
-            $("#" + project).attr('src', '/star-picture');
-        } else if (html == "Unstar"){
-            $("#" + project).attr('src', '/unstar-picture');
-        } else {
-            alert("Session failed. Please reload your page.")
-        };
+    <script type="text/javascript">
+        function toggleStarStatus(username, project) {
+            $.ajax({url: "/star?user=" + username + "&project=" + project},
+                    async = false)
+                    .done(function (html) {
+                        if (html == "Star") {
+                            $("#" + project).attr('src', '/star-picture');
+                        } else if (html == "Unstar") {
+                            $("#" + project).attr('src', '/unstar-picture');
+                        } else {
+                            alert("Session failed. Please reload your page.")
+                        }
+                        ;
 
-     })
- }
+                    })
+        }
+        function changeDeleteModalBehavior(project) {
+            var refstr = "/delete-project?projectname=" + project;
+            document.getElementById('projectDeleteButton').href = refstr;
+            $('#deleteProject').text('Do you really want to delete the project ' + project + "?");
+        }
 
-    $(document).ready(function () {
-        $('#projects').dataTable().columnFilter();
-    });
-</script>
+        $(document).ready(function () {
+            $('#projects').dataTable().columnFilter();
+        });
+    </script>
 {% endblock %}
 

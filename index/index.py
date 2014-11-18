@@ -16,9 +16,14 @@ def index_backend(language='en'):
     :param language: Defines the language ('en' or 'cn') used for the template.
     :return: The rendered index.html template, which currently contains almost nothing.
     """
-    alert_place = request.args.get('alert_place', '')
-    alert_message = request.args.get('alert_message', '')
-    if alert_message and alert_place:
+    #alert_place = request.args.get('alert_place', '')
+    #alert_message = request.args.get('alert_message', '')
+
+    if 'alert_message' in session and 'alert_place' in session:
+        alert_message = session['alert_message']
+        alert_place = session['alert_place']
+        session.pop('alert_message', None)
+        session.pop('alert_place', None)
         return render_template('index.html', language=language, alert_place=alert_place, alert_message=alert_message)
     if 'username' in session:
         user = User.objects.get(username=session['username'])
