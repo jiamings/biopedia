@@ -181,10 +181,10 @@ def projects_insert(language='en'):
 def delete_project_backend(language='en'):
     if 'username' in session:
         username = session['username']
-
+        user = User.objects.get(username=username)
         project_name = request.args.get('projectname', '')
         count = CreatedProjects.objects(username=username, project_name=project_name).count()
-        if count <= 0:
+        if count <= 0 and not user['admin']:
             return redirect(url_for('index.index_backend', language=language))
         else:
             CreatedProjects.objects(project_name=project_name).delete()
