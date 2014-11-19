@@ -180,13 +180,19 @@ def projects_insert(language='en'):
 @projects.route('/<language>/delete-project', methods=['GET'])
 def delete_project_backend(language='en'):
     if 'username' in session:
+        username = session['username']
+
         project_name = request.args.get('projectname', '')
-        CreatedProjects.objects(project_name=project_name).delete()
-        StarredProjects.objects(project_name=project_name).delete()
-        mongo.db.projects.remove({'name': project_name})
-        mongo.db.samples.remove({'project_name': project_name})
-        mongo.db.fields.remove({'project_name': project_name})
-        mongo.db.mapping.remove({'project_name': project_name})
-        return redirect(url_for('.projects_backend', language=language))
+        count = CreatedProjects.objects(username=username, project_name=project_name).count()
+        if count <= 0:
+            return redirect(url_for('index.index_backend', language=language))
+        else:
+            CreatedProjects.objects(project_name=project_name).delete()
+            StarredProjects.objects(project_name=project_name).delete()
+            mongo.db.projects.remove({'name': project_name})
+            mongo.db.samples.remove({'project_name': project_name})
+            mongo.db.fields.remove({'project_name': project_name})
+            mongo.db.mapping.remove({'project_name': project_name})
+            return redirect(url_for('.projects_backend', language=language))
     else:
         return redirect(url_for('index.index_backend', language=language))
