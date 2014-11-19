@@ -10,7 +10,7 @@ samples = Blueprint('samples', __name__, template_folder='templates')
 
 default_selected_fields = \
     {"MetaTongue": ["sex", "age", "residence", "Nationality",
-                    "married", "drink", "smoke", "tongueColor", "tongueType"]}
+                    "married", "drink", "smoke"]}
 
 default_fields_string_type = {
     "MetaTongue": ["sex", "residence", "Nationality", "tongueColor"]}

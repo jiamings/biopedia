@@ -33,6 +33,9 @@ def projects_backend(language='en'):
         return render_template('projects.html', language=language, project_list=project_list, user=user)
     return render_template('projects.html', language=language, project_list=project_list)
 
+default_default_fields = {"sex", "age", "residence", "Nationality",
+                    "married", "drink", "smoke"}
+
 UPLOAD_FOLDER = '.'
 
 @projects.route('/projects_insert', methods=['POST'])
@@ -101,11 +104,6 @@ def projects_insert(language='en'):
         succeed = False
     else:
         fvalue = mapping_file.read()
-        #vs = str(fvalue).split('\\r\\n')
-        #fvalue = 'project_name,en,cn,details'
-        #for v in vs:
-        #    fvalue += name + ',' + v + '\r\n'
-       # print fvalue
         mapping_file.seek(0)
         mapping_file.save(os.path.join(UPLOAD_FOLDER, mapping_file_secure_name))
 
@@ -135,8 +133,27 @@ def projects_insert(language='en'):
         os.system("mongoimport -c mapping -d Biopedia --file %s --type csv --headerline" % mapping_file_secure_name)
         os.system("mongoimport -c samples -d Biopedia --file %s" % samples_file_secure_name)
 
-        os.system("del %s" % mapping_file_secure_name)
-        os.system("del %s" % samples_file_secure_name)
+        os.system("rm -f %s" % mapping_file_secure_name)
+        os.system("rm -f %s" % samples_file_secure_name)
+
+    if mongo.db.samples.count({"project_name": name})>0:
+        samples = mongo.db.samples.find({"project_name": name})
+        fields = samples[0].keys()
+        fields.remove("project_name")
+        fields.remove("_id")
+        string_fields = []
+        default_fields = []
+        for field in fields:
+            # check if string
+            for sample in samples:
+                if sample[field] != 'NA' and not sample[field].isdigit():
+                    string_fields.insert(field)
+                    break
+            # create default
+            if field in default_default_fields:
+                default_fields.insert(field)
+        mongo.db.fields.insert({"project_name": name, "default_fields": default_fields,
+                                "string_fields": string_fields})
 
     project_list = mongo.db.projects.find()
 
