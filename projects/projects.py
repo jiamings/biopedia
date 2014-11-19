@@ -66,25 +66,17 @@ def projects_insert(language='en'):
     create_date = request.form['create_date']
     update_date = request.form['update_date']
 
-    print name
     mapping_file = request.files['mapping']
     mapping_file_secure_name = secure_filename(mapping_file.filename)
 
     samples_file = request.files['samples']
     samples_file_secure_name = secure_filename(samples_file.filename)
 
-    print(mapping_file_secure_name)
-    print(samples_file_secure_name)
-
     succeed = str(name) and mongo.db.projects.find({'name': name}).count() == 0
-
-    print succeed
 
     succeed = succeed and environment and site and sequence_type and project_id and \
               str(num_of_total_sequences).isdigit() and str(num_of_orfs).isdigit() and \
               str(read_length).isdigit() and platform
-
-    print succeed
 
     if len(str(create_date).split('/'))==3 and str(create_date).split('/')[0].isdigit() and \
             str(create_date).split('/')[1].isdigit() and str(create_date).split('/')[2].isdigit():
@@ -94,8 +86,6 @@ def projects_insert(language='en'):
     else:
         succeed = False
 
-    print succeed
-
     if len(str(update_date).split('/'))==3 and str(update_date).split('/')[0].isdigit() and \
             str(update_date).split('/')[1].isdigit() and str(update_date).split('/')[2].isdigit():
         update_date = {'month': int(str(update_date).split('/')[0]),
@@ -103,8 +93,6 @@ def projects_insert(language='en'):
                        'year': int(str(update_date).split('/')[2]) }
     else:
         succeed = False
-
-    print succeed
 
     if mapping_file_secure_name.split('.')[-1] != 'csv' or samples_file_secure_name.split('.')[-1] != 'json':
         succeed = False
@@ -116,8 +104,6 @@ def projects_insert(language='en'):
         fvalue = samples_file.read()
         samples_file.seek(0)
         samples_file.save(os.path.join(UPLOAD_FOLDER, samples_file_secure_name))
-
-    print succeed
 
     if succeed:
         proj_info = {
@@ -147,7 +133,6 @@ def projects_insert(language='en'):
         fields = samples[0].keys()
         fields.remove("project_name")
         fields.remove("_id")
-        print fields
         string_fields = []
         default_fields = []
         for field in fields:
@@ -156,7 +141,6 @@ def projects_insert(language='en'):
 
             for sample in samples:
                 if sample[field] != 'NA' and type(sample[field])!=int:
-                    print "%s %s " % (field, type(sample[field]))
                     string_fields.append(field)
                     break
             # create default
@@ -165,7 +149,6 @@ def projects_insert(language='en'):
         mongo.db.fields.insert({"project_name": name, "default_fields": default_fields,
                                 "string_fields": string_fields})
         user = User.objects.get(username=session['username'])
-        print name
         project_name = name
         created_project = CreatedProjects(username=user['username'], project_name=project_name)
         created_project.save()

@@ -2,7 +2,7 @@ import sys
 from bson.json_util import dumps
 sys.path.append('../')
 
-from flask import Blueprint, render_template, session, request, make_response
+from flask import Blueprint, render_template, session, request, make_response, redirect, url_for
 from models import User
 from definition import mongo
 import os
@@ -26,15 +26,18 @@ def samples_backend(language='en'):
     :return: The rendered samples.html template
               /samples?name=<project_name>
     """
+
     project_name = request.args.get('name', '')
-    assert project_name
-    assert mongo.db.projects.find({"name": project_name}).count() > 0
-    assert mongo.db.samples.find({"project_name": project_name}).count() > 0
+    if not project_name or mongo.db.projects.find({"name": project_name}).count() <= 0 or \
+        mongo.db.samples.find({"project_name": project_name}).count() <= 0:
+        redirect(url_for('projects.projects_backend', language=language))
+
     sample_list = mongo.db.samples.find({"project_name": project_name})
     if request.args.get("fields", ''):
         project_fields_name = request.args.getlist("fields")
     else:
-        assert mongo.db.fields.find({"project_name": project_name}).count() > 0
+        if mongo.db.fields.find({"project_name": project_name}).count() <= 0:
+            redirect(url_for('projects.projects_backend', language=language))
         project_fields_name = mongo.db.fields.find({"project_name": project_name})[0]["default_fields"]
     # to take the keys of one of the sample as heads of the sample table
     all_fields_name = dict(sample_list[0]).keys()
@@ -42,7 +45,8 @@ def samples_backend(language='en'):
     all_fields_name.remove("project_name")
     all_fields_name.sort()
     # get all the fields (for more fields)
-    assert mongo.db.fields.find({"project_name": project_name}).count() > 0
+    if mongo.db.fields.find({"project_name": project_name}).count() <= 0:
+        redirect(url_for('projects.projects_backend', language=language))
     fields_string_type = mongo.db.fields.find({"project_name": project_name})[0]["string_fields"]
 
     string_field_element = {}
@@ -53,8 +57,6 @@ def samples_backend(language='en'):
                 string_field_element[field] = []
             string_field_element[field].append(sample[field])
     # to get possible value of keys
-
-    print request.args
 
     filter = {"project_name": project_name}
     for field in project_fields_name:
