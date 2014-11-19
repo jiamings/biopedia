@@ -1,8 +1,9 @@
+# -*- coding: utf-8 -*-  
 import sys
 sys.path.append('../')
 
 from flask import Blueprint, render_template, session, request, redirect, url_for
-from models import User, StarredProjects
+from models import User, StarredProjects, CreatedProjects
 
 user_profile = Blueprint('user_profile', __name__, template_folder='templates')
 
@@ -13,17 +14,20 @@ def profile_backend(language='en'):
         username = session['username']
         user = User.objects.get(username=username)
         starred_projects = StarredProjects.objects(username=username)
+        created_projects = CreatedProjects.objects(username=username)
         if not user['admin']:
             alert_message = request.args.get('alert_message', '')
             alert_type = request.args.get('alert_type', '')
             if alert_type:
                 return render_template('user.html', user=user, disp_user=user,
                                        starred_projects=starred_projects,
+                                       created_projects=created_projects,
                                language=language, alert_message=alert_message,
                                alert_type=alert_type)
             else:
                 return render_template('user.html', user=user, disp_user=user,
                                        starred_projects=starred_projects,
+                                       created_projects=created_projects,
                                        language=language)
         else:
             admin = user
@@ -32,6 +36,7 @@ def profile_backend(language='en'):
                 user = User.objects.get(username=username)
             return render_template('user.html', user=admin, disp_user=user,
                                    starred_projects=starred_projects,
+                                   created_projects=created_projects,
                                    language=language)
 
     else:
@@ -56,13 +61,20 @@ def star_backend(language='en'):
 
 
 @user_profile.route('/modify-password', methods=['POST'])
-def modify_password():
+@user_profile.route('/<language>/modify-password', methods=['POST'])
+def modify_password(language='en'):
     password = request.form['originalPassword']
     newpassword = request.form['newPassword']
     username = session['username']
     user = User.objects.get(username=username)
     if user['password'] == password:
         User.objects(id=user.id).update_one(set__password=newpassword)
-        return redirect(url_for('.profile_backend', alert_type="alert-success", alert_message="Successfully changed password!"))
+        if language == 'en':
+            return redirect(url_for('.profile_backend', language="en", alert_type="alert-success", alert_message="Successfully changed password!"))
+        else:
+            return redirect(url_for('.profile_backend', language="cn", alert_type="alert-success", alert_message=u"修改密码成功！"))
     else:
-        return redirect(url_for('.profile_backend', alert_type="alert-danger", alert_message="Password incorrect."))
+        if language == 'en':
+            return redirect(url_for('.profile_backend', language="en", alert_type="alert-danger", alert_message="Password incorrect."))
+        else:
+            return redirect(url_for('.profile_backend', language="cn", alert_type="alert-danger", alert_message=u"密码错误。"))

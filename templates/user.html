@@ -43,13 +43,38 @@
                     </table>
                 </div>
             </div>
-            <div class="col-lg-8">
+            <div class="col-lg-4">
                 <h2>Starred Projects:</h2>
 
                 <p><br/></p>
 
                 <div class="list-group">
                     {% for project in starred_projects %}
+                    <div class="list-group-item">
+                        <div class="row-picture">
+                            <img class="circle" src="/random-picture?project_name={{ project['project_name'] }}" alt="icon">
+                        </div>
+                        <div class="row-content">
+                            <h4 class="list-group-item-heading"><a href="samples?name={{ project['project_name'] }}">
+                                {{ project['project_name'] }}
+                            </a>
+                            </h4>
+                            <p>
+                                We need a description for every project.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="list-group-separator"></div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <h2>Created Projects:</h2>
+
+                <p><br/></p>
+
+                <div class="list-group">
+                    {% for project in created_projects %}
                     <div class="list-group-item">
                         <div class="row-picture">
                             <img class="circle" src="/random-picture?project_name={{ project['project_name'] }}" alt="icon">

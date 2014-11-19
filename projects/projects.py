@@ -158,13 +158,16 @@ def projects_insert(language='en'):
                 default_fields.append(field)
         mongo.db.fields.insert({"project_name": name, "default_fields": default_fields,
                                 "string_fields": string_fields})
+        user = User.objects.get(username=session['username'])
+        print name
+        project_name = name
+        created_project = CreatedProjects(username=user['username'], project_name=project_name)
+        created_project.save()
 
     project_list = mongo.db.projects.find()
 
     if 'username' in session:
         user = User.objects.get(username=session['username'])
-
-    if 'username' in session:
         return render_template('projects.html', language=language, project_list=project_list, user=user)
     else:
         return render_template('projects.html', language=language, project_list=project_list)
