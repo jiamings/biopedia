@@ -1,7 +1,7 @@
 import sys
 sys.path.append('../')
 
-from flask import Blueprint, render_template, session, request
+from flask import Blueprint, render_template, session, request, redirect, url_for
 from models import User, StarredProjects, CreatedProjects
 from definition import mongo
 import os
@@ -175,3 +175,18 @@ def projects_insert(language='en'):
         return render_template('projects.html', language=language, project_list=project_list, user=user)
     else:
         return render_template('projects.html', language=language, project_list=project_list)
+
+@projects.route('/delete-project', methods=['GET'])
+@projects.route('/<language>/delete-project', methods=['GET'])
+def delete_project_backend(language='en'):
+    if 'username' in session:
+        project_name = request.args.get('projectname', '')
+        CreatedProjects.objects(project_name=project_name).delete()
+        StarredProjects.objects(project_name=project_name).delete()
+        mongo.db.projects.remove({'name': project_name})
+        mongo.db.samples.remove({'project_name': project_name})
+        mongo.db.fields.remove({'project_name': project_name})
+        mongo.db.mapping.remove({'project_name': project_name})
+        return redirect(url_for('.projects_backend', language=language))
+    else:
+        return redirect(url_for('index.index_backend', language=language))
