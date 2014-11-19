@@ -6,6 +6,9 @@ from models import User
 from definition import app
 
 index = Blueprint('index', __name__, template_folder='templates')
+counter = 0
+
+
 
 @index.route('/')
 @index.route('/index')
@@ -18,6 +21,8 @@ def index_backend(language='en'):
     """
     #alert_place = request.args.get('alert_place', '')
     #alert_message = request.args.get('alert_message', '')
+    global counter
+    counter =  counter + 1
 
     if 'alert_message' in session and 'alert_place' in session:
         alert_message = session['alert_message']
@@ -27,8 +32,8 @@ def index_backend(language='en'):
         return render_template('index.html', language=language, alert_place=alert_place, alert_message=alert_message)
     if 'username' in session:
         user = User.objects.get(username=session['username'])
-        return render_template('index.html', language=language, user=user)
-    return render_template('index.html', language=language)
+        return render_template('index.html', language=language, user=user, counter=counter)
+    return render_template('index.html', language=language, counter=counter)
 
 @index.route('/random-picture', methods=['GET'])
 def random_picture(language='en'):
