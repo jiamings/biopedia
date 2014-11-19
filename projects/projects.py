@@ -10,6 +10,7 @@ from werkzeug.utils import secure_filename
 
 projects = Blueprint('projects', __name__, template_folder='templates')
 
+
 @projects.route('/projects', methods=['GET'])
 @projects.route('/<language>/projects', methods=['GET'])
 def projects_backend(language='en'):
@@ -37,6 +38,7 @@ def projects_backend(language='en'):
 
         return render_template('projects.html', language=language, project_list=project_list, user=user)
     return render_template('projects.html', language=language, project_list=project_list)
+
 
 default_default_fields = {"sex", "age", "residence", "Nationality",
                     "married", "drink", "smoke"}
@@ -172,9 +174,9 @@ def projects_insert(language='en'):
 
     if 'username' in session:
         user = User.objects.get(username=session['username'])
-        return render_template('projects.html', language=language, project_list=project_list, user=user)
-    else:
-        return render_template('projects.html', language=language, project_list=project_list)
+
+    return redirect(url_for('projects.projects_backend', language=language))
+
 
 @projects.route('/delete-project', methods=['GET'])
 @projects.route('/<language>/delete-project', methods=['GET'])
