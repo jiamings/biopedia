@@ -48,7 +48,6 @@ def star_backend(language='en'):
             starred_project.delete()
             return 'Star'
         else:
-            print username, project_name
             starred_project = StarredProjects(username=username, project_name=project_name)
             starred_project.save()
             return 'Unstar'

@@ -22,8 +22,22 @@ def user_admin_backend(language='en'):
 
 @user_admin.route('/delete-user')
 def delete_user():
-    username = request.args.get('username', '')
-    user = User.objects.get(username=username)
-    if user:
-        user.delete()
-    return redirect(url_for('.user_admin_backend'))
+    if session['username']:
+        username = session['username']
+        user = User.objects.get(username=username)
+        if not user['admin']:
+            return redirect(url_for('index'))
+        else:
+            username = request.args.get('username', '')
+            user = User.objects.get(username=username)
+            if user:
+                user.delete()
+            return redirect(url_for('.user_admin_backend'))
+    else:
+        return redirect(url_for('index'))
+
+
+@user_admin.route('/data-admin')
+@user_admin.route('/<language>/data-admin')
+def data_admin_backend(language='en'):
+    return redirect(url_for('projects.projects_backend', language=language))

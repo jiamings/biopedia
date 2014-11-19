@@ -14,3 +14,8 @@ class User(Document):
 class StarredProjects(Document):
     username = StringField(required=True, max_length=16)
     project_name = StringField(required=True)
+
+
+class CreatedProjects(Document):
+    username = StringField(required=True, max_length=16)
+    project_name = StringField(required=True)
