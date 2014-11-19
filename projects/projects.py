@@ -64,7 +64,6 @@ def projects_insert(language='en'):
     create_date = request.form['create_date']
     update_date = request.form['update_date']
 
-    print 'name'
     print name
     mapping_file = request.files['mapping']
     mapping_file_secure_name = secure_filename(mapping_file.filename)
@@ -141,7 +140,7 @@ def projects_insert(language='en'):
         os.system("rm -f %s" % mapping_file_secure_name)
         os.system("rm -f %s" % samples_file_secure_name)
 
-    if mongo.db.samples.count({"project_name": name})>0:
+    if mongo.db.samples.find({"project_name": name}).count() > 0:
         samples = mongo.db.samples.find({"project_name": name})
         fields = samples[0].keys()
         fields.remove("project_name")
@@ -151,12 +150,12 @@ def projects_insert(language='en'):
         for field in fields:
             # check if string
             for sample in samples:
-                if sample[field] != 'NA' and not sample[field].isdigit():
-                    string_fields.insert(field)
+                if sample[field] != 'NA' and type(sample[field])==str:
+                    string_fields.append(field)
                     break
             # create default
             if field in default_default_fields:
-                default_fields.insert(field)
+                default_fields.append(field)
         mongo.db.fields.insert({"project_name": name, "default_fields": default_fields,
                                 "string_fields": string_fields})
 

@@ -74,12 +74,6 @@ def samples_backend(language='en'):
     sample_list = mongo.db.samples.find(filter)
     sample_list_out =  list(mongo.db.samples.find(filter))
 
-    file = open("./static/samples.json", "w")
-    for o in sample_list_out:
-        file.write(str(o))
-
-    file.close()
-
     for field in fields_string_type:
         string_field_element[field] = list(set(string_field_element[field]))
         string_field_element[field].sort()
