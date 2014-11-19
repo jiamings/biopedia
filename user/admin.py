@@ -2,7 +2,7 @@ import sys
 sys.path.append('../')
 
 from flask import Blueprint, render_template, request, session, redirect, url_for
-from models import User
+from models import User, StarredProjects, CreatedProjects
 
 user_admin = Blueprint('user_admin', __name__, template_folder='templates')
 
@@ -32,6 +32,8 @@ def delete_user():
             user = User.objects.get(username=username)
             if user:
                 user.delete()
+                StarredProjects.objects(username=username).delete()
+                CreatedProjects.objects(username=username).update(set__username=session['username'])
             return redirect(url_for('.user_admin_backend'))
     else:
         return redirect(url_for('index'))
