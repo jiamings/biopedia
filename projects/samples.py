@@ -53,6 +53,8 @@ def samples_backend(language='en'):
             string_field_element[field].append(sample[field])
     # to get possible value of keys
 
+    print request.args
+
     filter = {"project_name": project_name}
     for field in project_fields_name:
         if field in fields_string_type:
@@ -100,3 +102,4 @@ def samples_backend(language='en'):
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
                            string_field_element=string_field_element, mapping=mapping)
+

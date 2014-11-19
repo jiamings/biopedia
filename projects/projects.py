@@ -145,12 +145,16 @@ def projects_insert(language='en'):
         fields = samples[0].keys()
         fields.remove("project_name")
         fields.remove("_id")
+        print fields
         string_fields = []
         default_fields = []
         for field in fields:
             # check if string
+            samples = mongo.db.samples.find({"project_name": name})
+
             for sample in samples:
-                if sample[field] != 'NA' and type(sample[field])==str:
+                if sample[field] != 'NA' and type(sample[field])!=int:
+                    print "%s %s " % (field, type(sample[field]))
                     string_fields.append(field)
                     break
             # create default
