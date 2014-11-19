@@ -1,7 +1,8 @@
 import sys
+from bson.json_util import dumps
 sys.path.append('../')
 
-from flask import Blueprint, render_template, session, request
+from flask import Blueprint, render_template, session, request, make_response
 from models import User
 from definition import mongo
 import os
@@ -102,4 +103,18 @@ def samples_backend(language='en'):
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
                            string_field_element=string_field_element, mapping=mapping)
+
+@samples.route('/download-sample', methods=['GET'])
+def download_sample_backend():
+    project_name = request.args.get('project_name', '')
+    samples = mongo.db.samples.find({'project_name': project_name})
+    json_string = ''
+    samples = list(samples)
+    for sample in samples:
+        del sample['_id']
+        json_string += dumps(sample, ensure_ascii=False) + '\n'
+    response = make_response(json_string)
+    response.headers['Content-Disposition'] = 'attachment; filename=' + project_name + '.json'
+    return response
+
 
