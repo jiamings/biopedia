@@ -7,20 +7,26 @@
     {% include "include/nav_bar_right.html" %}
 {% endblock %}
 {% block contain %}
-    <div class="jumbotron">
+    <div class="jumbotron" style="background-image: url(/static/images/projects_jumbo.jpg);
+        background-size: cover;">
         <div class="container">
-            <h1>Projects</h1>
+            <h2>Projects</h2>
+            <p>
+                {% if user %}
+                <button class="btn btn-primary" data-toggle="modal" data-target="#insert">
+                     Create your own project!
+                </button>
+                {% else %}
+                    Register a free account to create your own project!
+                {% endif %}
+            </p>
 
-            <p>All the projects are listed here.</p>
 
-            <p><a class="btn btn-primary btn-lg">Learn more</a></p>
         </div>
     </div>
 
     <div class="container">
-        <div data-toggle="modal" data-target="#insert">
-            <div class="icon-preview"><i class="mdi-content-filter-list"></i><span>Insert a new PROJECT</span></div>
-        </div>
+
         <table id="projects" class="table table-striped table-bordered">
             <thead>
             <tr>
@@ -38,9 +44,7 @@
                 <th>Update Date</th>
                 {% if user %}
                     <th>Star</th>
-                    {% if user['admin'] == True %}
-                        <th>Delete</th>
-                    {% endif %}
+                    <th>Delete</th>
                 {% endif %}
 
             </tr>
@@ -75,11 +79,17 @@
                             {% endif %}
 
                         </td>
-                        {% if user['admin'] == True %}
+                        {% if user['admin'] == True or project['delete'] == True %}
                             <td>
                                 <button class="btn btn-primary btn-sm"
                                         onclick="changeDeleteModalBehavior('{{ project['name'] }}')" data-toggle="modal"
                                         data-target="#myprojectdelete">
+                                    Delete
+                                </button>
+                            </td>
+                        {% else %}
+                            <td>
+                                <button class="btn btn-primary btn-sm disabled">
                                     Delete
                                 </button>
                             </td>
