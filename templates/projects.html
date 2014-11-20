@@ -110,7 +110,13 @@
                     <button type="button" class="close" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span><span
                             class="sr-only">x</span></button>
-                    <h3 class="modal-title" id="myModalLabel">Delete Confirm</h3>
+                    <h3 class="modal-title" id="myModalLabel">
+                        {% if language == 'en' %}
+                        Delete Confirm
+                        {% else %}
+                        确认删除
+                        {% endif %}
+                    </h3>
                 </div>
 
                 <div class="modal-body">
@@ -220,13 +226,6 @@
     {{posts.pro_title}}
 {% endblock %}
 {% block picture %}
-     <footer>
-        {% if 'en' in language %}
-        <p><a href="/cn/projects">点击转换为中文</a>.</p>
-        {% else %}
-        <p><a href="/en/projects">click to convert to English</a>.</p>
-        {% endif %}
-    </footer>
     {% if not username %}
         {% include "include/login_register_modals.html" %}
     {% endif %}
@@ -251,7 +250,11 @@
         function changeDeleteModalBehavior(project) {
             var refstr = "/delete-project?projectname=" + project;
             document.getElementById('projectDeleteButton').href = refstr;
+            {% if language == 'en' %}
             $('#deleteProject').text('Do you really want to delete the project ' + project + "?");
+            {% else %}
+            $('#deleteProject').text('你真的要删除项目 ' + project + "?");
+            {% endif %}
         }
 
         $(document).ready(function () {
