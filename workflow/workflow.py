@@ -52,5 +52,5 @@ def handleworkflow():
         response.headers["Content-Disposition"] = "attachment; filename=output.txt"
         return response
     except:
-        return redirect(url_for('.workflow'))
+        return redirect(url_for('workflow_bp.workflow'))
 

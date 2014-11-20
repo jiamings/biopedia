@@ -1,5 +1,5 @@
 import math
-
+import sys
 
 class Vector9:
 
@@ -33,7 +33,7 @@ class Vector9:
         return ret
 
     def optMax(self):
-        d = -10000000
+        d = -sys.maxint
         for i in range(0, self.count):
             if self.x[i] > d :
                 d = self.x[i]
