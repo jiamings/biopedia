@@ -13,6 +13,8 @@ counter = 0
 @index.route('/index')
 @index.route('/<language>/index')
 def index_backend(language='en'):
+    global counter
+    counter = counter + 1
     """
     Returns the index page.
     :param language: Defines the language ('en' or 'cn') used for the template.
@@ -91,11 +93,11 @@ def index_backend(language='en'):
         alert_place = session['alert_place']
         session.pop('alert_message', None)
         session.pop('alert_place', None)
-        return render_template('index.html', posts = posts,language=language, alert_place=alert_place, alert_message=alert_message)
+        return render_template('index.html', counter=counter, posts = posts,language=language, alert_place=alert_place, alert_message=alert_message)
     if 'username' in session:
         user = User.objects.get(username=session['username'])
-        return render_template('index.html', posts = posts,language=language, user=user)
-    return render_template('index.html', posts = posts,language=language)
+        return render_template('index.html', counter=counter, posts = posts,language=language, user=user)
+    return render_template('index.html', counter=counter, posts = posts, language=language)
 
 @index.route('/random-picture', methods=['GET'])
 def random_picture(language='en'):

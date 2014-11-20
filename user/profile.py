@@ -7,8 +7,9 @@ from models import User, StarredProjects, CreatedProjects
 
 user_profile = Blueprint('user_profile', __name__, template_folder='templates')
 
+@user_profile.route('/user', methods=['GET'])
 @user_profile.route('/<language>/user', methods=['GET'])
-def profile_backend(language):
+def profile_backend(language='en'):
     if language == 'en':
         posts = { # fake array of posts
             'Home': "Home",
@@ -87,7 +88,7 @@ def profile_backend(language):
             alert_message = request.args.get('alert_message', '')
             alert_type = request.args.get('alert_type', '')
             if alert_type:
-                return render_template('user.html', user=user,posts = posts, disp_user=user,
+                return render_template('user.html', user=user, posts = posts, disp_user=user,
                                        starred_projects=starred_projects,
                                        created_projects=created_projects,
                                language=language, alert_message=alert_message,

@@ -2,11 +2,29 @@
     {% if user %}
         {% if user['admin'] == True %}
             <li class="dropdown">
-                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">Admin Management<b
-                        class="caret"></b></a>
+                <a href="javascript:void(0)" class="dropdown-toggle" data-toggle="dropdown">
+                    {% if language == 'en' %}
+                        Admin Management
+                        {% else %}
+                        管理员管理
+                        {% endif %}
+
+                        <b class="caret"></b></a>
                 <ul class="dropdown-menu">
-                    <li><a href="user-admin">User Management</a></li>
-                    <li><a href="data-admin">Database Management</a></li>
+                    <li><a href="user-admin">
+                        {% if language == 'en' %}
+                        User Management
+                        {% else %}
+                            用户管理
+                        {% endif %}
+
+                    </a></li>
+                    <li><a href="data-admin">
+                        {% if language == 'en' %}
+                        Database Management
+                        {% else %}
+                            数据库管理
+                        {% endif %}</a></li>
                 </ul>
             </li>
         {% endif %}
@@ -14,10 +32,22 @@
             <a href="javascript:void(0)" class="dropdown-toggle"
                data-toggle="dropdown">{{ user['firstname'] }} {{ user['lastname'] }}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="user">{{posts.profile}}</a></li>
+                <li><a href="user">
+                {% if language == 'en' %}
+                        Profile
+                        {% else %}
+                        基本信息
+                        {% endif %}
+                </a></li>
 
                 <li class="divider"></li>
-                <li><a href="logout">{{posts.Logout}}</a></li>
+                <li><a href="logout">
+                    {% if language == 'en' %}
+                       Logout
+                        {% else %}
+                            登出
+                        {% endif %}
+                </a></li>
             </ul>
         </li>
     {% else %}
