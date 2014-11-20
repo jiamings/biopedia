@@ -1,8 +1,8 @@
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
     <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="/{{ language }}/projects">Projects</a></li>
+        <li class="active"><a href="#">{{posts.Home}}</a></li>
+        <li><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
     </ul>
     {% include "include/nav_bar_right.html" %}
 {% endblock %}
@@ -10,9 +10,9 @@
 <div class="jumbotron" style="background-image: url(/static/images/biopedia_jumbo.jpg);
         background-size: cover;">
     <div class="container">
-        <h1>Biopedia</h1>
+        <h1>{{posts.Biopedia}}</h1>
 
-        <p>This is the index page for Biopedia.</p>
+        <p>{{posts.comment}}</p>
     </div>
 </div>
 <div class="container">
@@ -21,29 +21,26 @@
             <img src="{{ url_for('static', filename='images/sass-less.png') }}" alt="Sass and Less support"
                  class="img-responsive">
 
-            <h3>Preprocessors</h3>
+            <h3>{{posts.Preprocessors}}</h3>
 
-            <p>Bootstrap ships with vanilla CSS, but its source code utilizes the two most popular CSS preprocessors, <a
-                    href="../css/#less">Less</a> and <a href="../css/#sass">Sass</a>. Quickly get started with
-                precompiled CSS or build on the source.</p>
+              <p>{{posts.pre_comment1}}<a
+                    href="../css/#less">{{posts.Less}}</a>{{posts.and}}<a href="../css/#sass">{{posts.Sass}}</a>{{posts.pre_comment2}}</p>
         </div>
         <div class="col-sm-4">
             <img src="{{ url_for('static', filename='images/devices.png') }}" alt="Responsive across devices"
                  class="img-responsive">
 
-            <h3>One framework, every device.</h3>
+            <h3>{{posts.One}}</h3>
 
-            <p>Bootstrap easily and efficiently scales your websites and applications with a single code base, from
-                phones to tablets to desktops with CSS media queries.</p>
+            <p>{{posts.One_comment}}</p>
         </div>
         <div class="col-sm-4">
             <img src="{{ url_for('static', filename='images/components.png') }}" alt="Components"
                  class="img-responsive">
 
-            <h3>Full of features</h3>
+            <h3>{{posts.Full}}</h3>
 
-            <p>With Bootstrap, you get extensive and beautiful documentation for common HTML elements, dozens of custom
-                HTML and CSS components, and awesome jQuery plugins.</p>
+            <p>{{posts.Full_comment}}</p>
         </div>
     </div>
 
@@ -74,7 +71,7 @@
 
 {% endblock %}
 {% block title %}
-         Online Bioinformatics Data Center - Biopedia
+        {{posts.title}}
 {% endblock %}
 {% block picture %}
     {% if not username %}

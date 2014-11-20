@@ -1,8 +1,8 @@
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
     <ul class="nav navbar-nav">
-                <li><a href="/index">Home</a></li>
-                <li><a href="/{{ language }}/projects">Projects</a></li>
+                <li><a href="/{{ language }}/index">{{posts.Home}}</a></li>
+                <li><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
             </ul>
     <ul class="nav navbar-nav navbar-right">
          {% include "include/nav_bar_right.html" %}
@@ -15,28 +15,28 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="well">
-                    <h2>User Information</h2>
+                    <h2>{{posts.User_info}}</h2>
 
                     <h2></h2>
                     <table class="table">
                         <tr>
-                            <th>Username:</th>
+                            <th>{{posts.username}}:</th>
                             <td>{{ disp_user['username'] }}</td>
                         </tr>
                         <tr>
-                            <th>Full Name:</th>
+                            <th>{{posts.Full_name}}:</th>
                             <td>{{ disp_user['firstname'] }} {{ disp_user['lastname'] }}</td>
                         </tr>
                         <tr>
-                            <th>Email:</th>
+                            <th>{{posts.Email}}:</th>
                             <td>{{ disp_user['email'] }}</td>
                         </tr>
                         <tr>
-                            <th>Password:</th>
+                            <th>{{posts.Password}}:</th>
                             <td>
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                         data-target="#mymodifypassword">
-                                    Modify Password
+                                   {{posts.mdf_pass}}
                                 </button>
                             </td>
                         </tr>
@@ -44,7 +44,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <h2>Starred Projects:</h2>
+                <h2>{{posts.star_pro}}:</h2>
 
                 <p><br/></p>
 
@@ -60,7 +60,7 @@
                             </a>
                             </h4>
                             <p>
-                                We need a description for every project.
+                                {{posts.Desprition}}
                             </p>
                         </div>
                     </div>
@@ -69,7 +69,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <h2>Created Projects:</h2>
+                <h2>{{posts.create_Project}}:</h2>
 
                 <p><br/></p>
 
@@ -85,7 +85,7 @@
                             </a>
                             </h4>
                             <p>
-                                We need a description for every project.
+                                {{posts.Desprition}}
                             </p>
                         </div>
                     </div>
@@ -98,7 +98,7 @@
 
 {% endblock %}
 {% block title %}
-        User Profile - {{ disp_user['firstname'] }} {{ disp_user['lastname'] }}
+        {{posts.U_Profile}} - {{ disp_user['firstname'] }} {{ disp_user['lastname'] }}
 {% endblock %}
 {% block picture %}
         {% include "include/modify_user_profile_modal.html" %}
