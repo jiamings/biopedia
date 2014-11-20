@@ -14,21 +14,21 @@
             <a href="javascript:void(0)" class="dropdown-toggle"
                data-toggle="dropdown">{{ user['firstname'] }} {{ user['lastname'] }}<b class="caret"></b></a>
             <ul class="dropdown-menu">
-                <li><a href="user">Profile</a></li>
+                <li><a href="user">{{posts.profile}}</a></li>
 
                 <li class="divider"></li>
-                <li><a href="logout">Logout</a></li>
+                <li><a href="logout">{{posts.Logout}}</a></li>
             </ul>
         </li>
     {% else %}
         <li>
             <button class="btn btn-primary" data-toggle="modal" data-target="#mylogin">
-                Login
+               {{posts.Login}}
             </button>
         </li>
         <li>
             <button class="btn btn-primary" data-toggle="modal" data-target="#myregister">
-                Register
+               {{posts.Register}}
             </button>
         </li>
     {% endif %}

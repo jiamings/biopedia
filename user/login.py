@@ -8,10 +8,9 @@ user_login = Blueprint('user_login', __name__, template_folder='templates')
 
 @user_login.route('/login', methods=['POST'])
 @user_login.route('/<language>/login', methods=['POST'])
-def login(language='en'):
+def login(language):
     username = request.form['username']
     password = request.form['password']
-
     # whether we find the target username in the database or not
     user = User.objects(username=username).count()
     if user != 1:

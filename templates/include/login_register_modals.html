@@ -4,7 +4,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">x</span></button>
-                <h4 class="modal-title" id="myModalLabel">Login with Biopedia Account</h4>
+                <h4 class="modal-title" id="myModalLabel">{{posts.login_title}}</h4>
             </div>
             <form class="form-horizontal" action="login" method="post">
                 <div class="modal-body">
@@ -13,14 +13,14 @@
                     </div>
                     <fieldset>
                         <div class="form-group">
-                            <label for="inputEmail" class="col-lg-4 control-label">Username</label>
+                            <label for="inputEmail" class="col-lg-4 control-label">{{posts.username}}</label>
 
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" name="username" placeholder="Username" required>
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword" class="col-lg-4 control-label">Password</label>
+                            <label for="inputPassword" class="col-lg-4 control-label">{{posts.Password}}</label>
 
                             <div class="col-lg-8">
                                 <input type="password" class="form-control" name="password" placeholder="Password"
@@ -31,8 +31,8 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" value="login">Login</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{posts.CLOSE}}</button>
+                    <button type="submit" class="btn btn-primary" value="login">{{posts.Login}}</button>
                 </div>
             </form>
         </div>
@@ -45,7 +45,7 @@
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span
                         class="sr-only">x</span></button>
-                <h4 class="modal-title" id="myModalLabel">Register New Biopedia Account</h4>
+                <h4 class="modal-title" id="myModalLabel">{{posts.regi_title}}</h4>
             </div>
             <form class="form-horizontal" action="register" onsubmit="return validateRegistration()" method="post">
                 <div class="modal-body">
@@ -54,7 +54,7 @@
                     </div>
                     <fieldset>
                         <div class="form-group">
-                            <label for="inputUsername" class="col-lg-4 control-label">Username</label>
+                            <label for="inputUsername" class="col-lg-4 control-label">{{posts.username}}</label>
 
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" name="username" id="registerUsername"
@@ -62,7 +62,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputFirstname" class="col-lg-4 control-label">First Name</label>
+                            <label for="inputFirstname" class="col-lg-4 control-label">{{posts.name_First}}</label>
 
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" name="firstname" id="registerFirstname"
@@ -70,7 +70,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputLastname" class="col-lg-4 control-label">Last Name</label>
+                            <label for="inputLastname" class="col-lg-4 control-label">{{posts.name_Last}}</label>
 
                             <div class="col-lg-8">
                                 <input type="text" class="form-control" name="lastname" id="registerLastname"
@@ -78,7 +78,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputEmail" class="col-lg-4 control-label">Email</label>
+                            <label for="inputEmail" class="col-lg-4 control-label">{{posts.Email}}</label>
 
                             <div class="col-lg-8">
                                 <input type="email" class="form-control" name="email" id="registerEmail"
@@ -86,7 +86,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputPassword" class="col-lg-4 control-label">Password</label>
+                            <label for="inputPassword" class="col-lg-4 control-label">{{posts.Password}}</label>
 
                             <div class="col-lg-8">
                                 <input type="password" class="form-control" name="password" id="registerPassword"
@@ -94,7 +94,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label for="inputConfirmPassword" class="col-lg-4 control-label">Confirm Password</label>
+                            <label for="inputConfirmPassword" class="col-lg-4 control-label">{{posts.con_password}}</label>
 
                             <div class="col-lg-8">
                                 <input type="password" class="form-control" id="registerConfirmPassword"
@@ -104,8 +104,8 @@
                     </fieldset>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-primary" value="register" id="registerButton">Register</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">{{posts.CLOSE}}</button>
+                    <button type="submit" class="btn btn-primary" value="register" id="registerButton">{{posts.Register}}</button>
                 </div>
             </form>
         </div>
