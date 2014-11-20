@@ -35,11 +35,10 @@ class Vector9:
     def optMax(self):
         d = -10000000
         for i in range(0, self.count):
-            if(self.x[i] > d):
+            if self.x[i] > d :
                 d = self.x[i]
-        for i in range(0, self.count):
-            self.x[i] = d
-        return self
+        ret = Vector9([d for x in self.x])
+        return ret
 
     def operator(self, flag):
         if flag == 1:

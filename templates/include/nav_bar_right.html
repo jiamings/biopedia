@@ -1,4 +1,7 @@
 <ul class="nav navbar-nav navbar-right">
+    <li>
+        <a href="/workflow">Workflow</a>
+    </li>
     {% if user %}
         {% if user['admin'] == True %}
             <li class="dropdown">
@@ -53,12 +56,20 @@
     {% else %}
         <li>
             <button class="btn btn-primary btn-material-lightblue" data-toggle="modal" data-target="#mylogin">
-               {{posts.Login}}
+               {% if language == 'en' %}
+                        Login
+                        {% else %}
+                            登陆
+                        {% endif %}
             </button>
         </li>
         <li>
             <button class="btn btn-primary btn-material-lightblue" data-toggle="modal" data-target="#myregister">
-               {{posts.Register}}
+               {% if language == 'en' %}
+                        Register
+                        {% else %}
+                            注册
+                        {% endif %}
             </button>
         </li>
     {% endif %}

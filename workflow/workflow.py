@@ -36,8 +36,8 @@ def handleworkflow():
         ftvalue = tuple(ffvalue)            #file tuple value
 
         obj1 = Vector9(ftvalue)
-
         for i in range(0, len(a)):
+            print 'opt', a[i]
             obj1 = obj1.operator(a[i])
 
         print 'execute sequence is ', a
