@@ -8,6 +8,7 @@ GlobStr = GlobStr+'&statslink='+statslink;
 GlobStr = GlobStr+'&sitelink='+sitelink;
 GlobStr = GlobStr+'&cntvisible='+cntvisible;
 GlobStr = GlobStr+'&mode='+mode;
-
 document.write('<script language=JavaScript src='+baseURL+GlobStr+'></script>');
+
+
 
