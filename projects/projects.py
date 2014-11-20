@@ -165,6 +165,12 @@ def projects_insert(language='en'):
 @projects.route('/update-project',  methods=['GET'])
 @projects.route('/<language>/update-project',  methods=['GET'])
 def update_project_backend(language='en'):
+    file = request.files['update']
+    mapping_file_secure_name = secure_filename(file.filename)
+
+    if mapping_file_secure_name.split('.') <= 0 or mapping_file_secure_name.split('.')[-1] != 'json':
+        return redirect(url_for('.projects_backend', language=language))
+
     if 'username' in session:
         username = session['username']
         user = User.objects.get(username=username)
@@ -183,12 +189,6 @@ def update_project_backend(language='en'):
 @projects.route('/<language>/delete-project', methods=['GET'])
 def delete_project_backend(language='en'):
 
-    file = request.files['update']
-    mapping_file_secure_name = secure_filename(file.filename)
-
-    if mapping_file_secure_name.split('.') <= 0 or mapping_file_secure_name.split('.')[-1] != 'json':
-        return redirect(url_for('.projects_backend', language=language))
-    
     if 'username' in session:
         username = session['username']
         user = User.objects.get(username=username)
