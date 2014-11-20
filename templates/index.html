@@ -46,7 +46,31 @@
                 HTML and CSS components, and awesome jQuery plugins.</p>
         </div>
     </div>
+
+<!-- Start of Counter -->
+
+<div>
+    <CENTER>
+        <h3>Visits 
+        <script language="JavaScript">
+            var count = "biopedia";          // Change Your Account?
+            var type = "signlng";       // Change Your Counter Image?
+            var digits = "5";          // Change The Amount of Digits on Your Counter?
+            var prog = "unique";          // Change to Either hit/unique?
+            var statslink = "no";    // provide statistical link in counter yes/no?
+            var sitelink = "yes";     // provide link back to our site;~) yes/no?
+            var cntvisible = "yes"; // do you want counter visible yes/no?
+        </script>
+        <script language="JavaScript" src="{{ url_for('static', filename='js/count-035.js') }}"></script>
+        </h3>
+    </CENTER>
+
 </div>
+<!-- End of Counter -->
+</div>
+
+
+
 {% endblock %}
 {% block title %}
          Online Bioinformatics Data Center - Biopedia
