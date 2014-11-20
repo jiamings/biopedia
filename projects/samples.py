@@ -3,19 +3,11 @@ from bson.json_util import dumps
 sys.path.append('../')
 
 from flask import Blueprint, render_template, session, request, make_response, redirect, url_for
-from models import User
+from models import User, CreatedProjects
 from definition import mongo
 import os
 
 samples = Blueprint('samples', __name__, template_folder='templates')
-
-default_selected_fields = \
-    {"MetaTongue": ["sex", "age", "residence", "Nationality",
-                    "married", "drink", "smoke"]}
-
-default_fields_string_type = {
-    "MetaTongue": ["sex", "residence", "Nationality", "tongueColor"]}
-
 
 @samples.route('/samples', methods=['GET'])
 @samples.route('/<language>/samples', methods=['GET'])
@@ -97,10 +89,16 @@ def samples_backend(language='en'):
     all_fields_name.remove('name')
     if 'username' in session:
         user = User.objects.get(username=session['username'])
+        count = CreatedProjects.objects(username=user['username'], project_name=project_name).count()
+        if count > 0 or user['admin']:
+            created_project = True
+        else:
+            created_project = False
         return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
-                           string_field_element=string_field_element, mapping=mapping, user=user)
+                           string_field_element=string_field_element, mapping=mapping, user=user,
+                           created_project=created_project)
     return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
