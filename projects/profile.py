@@ -13,7 +13,7 @@ default_selected_details = \
     {"MetaTongue": ["name", "sex", "age", "residence", "Nationality",
                     "married", "drink", "smoke"]}
 
-
+@sample_profile.route('/profile', methods=['GET'])
 @sample_profile.route('/<language>/profile', methods=['GET'])
 def profile_backend(language):
     """

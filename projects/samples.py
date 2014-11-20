@@ -11,6 +11,7 @@ import os
 
 samples = Blueprint('samples', __name__, template_folder='templates')
 
+@samples.route('/samples', methods=['GET'])
 @samples.route('/<language>/samples', methods=['GET'])
 def samples_backend(language):
     """

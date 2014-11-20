@@ -12,6 +12,7 @@ from werkzeug.utils import secure_filename
 
 projects = Blueprint('projects', __name__, template_folder='templates')
 
+@projects.route('/projects', methods=['GET'])
 @projects.route('/<language>/projects', methods=['GET'])
 def projects_backend(language):
     """
