@@ -1,5 +1,5 @@
 var mode = "java";
-var baseURL = "http://006.free-counters.co.uk/count-035.pl";
+var baseURL = "static/js/count-035.pl";
 var GlobStr = '?count='+count;
 GlobStr = GlobStr+'&type='+type;
 GlobStr = GlobStr+'&digits='+digits;

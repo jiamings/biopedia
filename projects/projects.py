@@ -94,7 +94,8 @@ def projects_insert(language='en'):
     else:
         succeed = False
 
-    if mapping_file_secure_name.split('.')[-1] != 'csv' or samples_file_secure_name.split('.')[-1] != 'json':
+    if len(mapping_file_secure_name.split('.')) <=0 or mapping_file_secure_name.split('.')[-1] != 'csv'  or \
+            len(samples_file_secure_name.split('.')) <= 0 or samples_file_secure_name.split('.')[-1] != 'json':
         succeed = False
     else:
         fvalue = mapping_file.read()
@@ -161,9 +162,33 @@ def projects_insert(language='en'):
     return redirect(url_for('projects.projects_backend', language=language))
 
 
+@projects.route('/update-project',  methods=['GET'])
+@projects.route('/<language>/update-project',  methods=['GET'])
+def update_project_backend(language='en'):
+    if 'username' in session:
+        username = session['username']
+        user = User.objects.get(username=username)
+        project_name = request.args.get('projectname', '')
+        count = CreatedProjects.objects(username=username, project_name=project_name).count()
+        if count <= 0 and not user['admin']:
+            return redirect(url_for('index.index_backend', language=language))
+        else:
+            mongo.db.samples.remove({'project_name': project_name})
+            return redirect(url_for('.projects_backend', language=language))
+    else:
+        return redirect(url_for('index.index_backend', language=language))
+
+
 @projects.route('/delete-project', methods=['GET'])
 @projects.route('/<language>/delete-project', methods=['GET'])
 def delete_project_backend(language='en'):
+
+    file = request.files['update']
+    mapping_file_secure_name = secure_filename(file.filename)
+
+    if mapping_file_secure_name.split('.') <= 0 or mapping_file_secure_name.split('.')[-1] != 'json':
+        return redirect(url_for('.projects_backend', language=language))
+    
     if 'username' in session:
         username = session['username']
         user = User.objects.get(username=username)
