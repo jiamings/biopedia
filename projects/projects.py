@@ -14,7 +14,7 @@ projects = Blueprint('projects', __name__, template_folder='templates')
 
 @projects.route('/projects', methods=['GET'])
 @projects.route('/<language>/projects', methods=['GET'])
-def projects_backend(language):
+def projects_backend(language='en'):
     """
     Returns the projects page.
     :param language: Defines the language ('en' or 'cn') used for the template.

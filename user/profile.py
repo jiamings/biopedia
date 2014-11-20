@@ -131,7 +131,7 @@ def star_backend(language='en'):
 
 @user_profile.route('/modify-password', methods=['POST'])
 @user_profile.route('/<language>/modify-password', methods=['POST'])
-def modify_password(language):
+def modify_password(language='en'):
     password = request.form['originalPassword']
     newpassword = request.form['newPassword']
     username = session['username']

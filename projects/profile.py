@@ -15,7 +15,7 @@ default_selected_details = \
 
 @sample_profile.route('/profile', methods=['GET'])
 @sample_profile.route('/<language>/profile', methods=['GET'])
-def profile_backend(language):
+def profile_backend(language='en'):
     """
 
     :param language: language: Defines the language ('en' or 'cn') used for the template

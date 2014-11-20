@@ -13,7 +13,7 @@ samples = Blueprint('samples', __name__, template_folder='templates')
 
 @samples.route('/samples', methods=['GET'])
 @samples.route('/<language>/samples', methods=['GET'])
-def samples_backend(language):
+def samples_backend(language='en'):
     """
     Returns the sample page.
     :param language: Defines the language ('en' or 'cn') used for the template
