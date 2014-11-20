@@ -166,26 +166,30 @@ def projects_insert(language='en'):
 @projects.route('/<language>/update-project',  methods=['POST'])
 def update_project_backend(language='en'):
     file = request.files['update']
-    mapping_file_secure_name = secure_filename(file.filename)
+    file_secure_name = secure_filename(file.filename)
 
-    project_name = request.args.get('project_name', '')
+    project_name = request.form['project_name']
 
-    if mapping_file_secure_name.split('.') <= 0 or mapping_file_secure_name.split('.')[-1] != 'json':
+    if file_secure_name.split('.') <= 0 or file_secure_name.split('.')[-1] != 'json':
         if project_name:
             return redirect(url_for('samples.samples_backend', language=language, project_name=project_name))
         else:
             return redirect(url_for('.projects_backend', language=language))
 
+    file.seek(0)
+    file.save(os.path.join(UPLOAD_FOLDER, file_secure_name))
+
     if 'username' in session:
         username = session['username']
         user = User.objects.get(username=username)
-
         count = CreatedProjects.objects(username=username, project_name=project_name).count()
         if count <= 0 and not user['admin']:
             return redirect(url_for('index.index_backend', language=language))
         else:
             mongo.db.samples.remove({'project_name': project_name})
-            return redirect(url_for('samples.samples_backend', language=language, project_name=project_name))
+            os.system("mongoimport -c samples -d Biopedia --file %s" % file_secure_name)
+            os.system("rm -f %s" % file_secure_name)
+            return redirect(url_for('samples.samples_backend', language=language, name=project_name))
     else:
         return redirect(url_for('index.index_backend', language=language))
 

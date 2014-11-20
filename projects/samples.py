@@ -22,14 +22,14 @@ def samples_backend(language='en'):
     project_name = request.args.get('name', '')
     if not project_name or mongo.db.projects.find({"name": project_name}).count() <= 0 or \
         mongo.db.samples.find({"project_name": project_name}).count() <= 0:
-        redirect(url_for('projects.projects_backend', language=language))
+        return redirect(url_for('projects.projects_backend', language=language))
 
     sample_list = mongo.db.samples.find({"project_name": project_name})
     if request.args.get("fields", ''):
         project_fields_name = request.args.getlist("fields")
     else:
         if mongo.db.fields.find({"project_name": project_name}).count() <= 0:
-            redirect(url_for('projects.projects_backend', language=language))
+            return redirect(url_for('projects.projects_backend', language=language))
         project_fields_name = mongo.db.fields.find({"project_name": project_name})[0]["default_fields"]
     # to take the keys of one of the sample as heads of the sample table
     all_fields_name = dict(sample_list[0]).keys()
@@ -38,7 +38,7 @@ def samples_backend(language='en'):
     all_fields_name.sort()
     # get all the fields (for more fields)
     if mongo.db.fields.find({"project_name": project_name}).count() <= 0:
-        redirect(url_for('projects.projects_backend', language=language))
+        return redirect(url_for('projects.projects_backend', language=language))
     fields_string_type = mongo.db.fields.find({"project_name": project_name})[0]["string_fields"]
 
     string_field_element = {}
