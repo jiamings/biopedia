@@ -19,13 +19,13 @@
         <p>{{posts.Desp}}</p>
         <div class="row">
             <div class="col-lg-3">
-                <a href="/download-sample?project_name={{ project_name }}"><button class="btn btn-primary btn-sm">Download</button></a>
+                <a href="/download-sample?project_name={{ project_name }}"><button class="btn btn-primary btn-sm">{{posts.Download}}</button></a>
             </div>
             <div class="col-lg-3">
                 <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter">{{posts.S_F_F}}</button>
             </div>
             <div class="col-lg-3">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#column_selection">View More Fields</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#column_selection">{{posts.V_M_F}}</button>
             </div>
             {% if created_project %}
             <div class="col-lg-3">
@@ -195,6 +195,13 @@
         Biopedia - {{ project_name }}
 {% endblock %}
 {% block picture %}
+         <footer>
+        {% if 'en' in language %}
+        <p><a href="/cn/samples?name={{ project_name }}">点击转换为中文</a>.</p>
+        {% else %}
+        <p><a href="/en/samples?name={{ project_name }}">click to convert to English</a>.</p>
+        {% endif %}
+        </footer>
         <script src="{{ url_for('static', filename='js/dataTables.keyTable.js') }}"></script>
         {% if not username %}
         {% include "include/login_register_modals.html" %}

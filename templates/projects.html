@@ -220,6 +220,13 @@
     {{posts.pro_title}}
 {% endblock %}
 {% block picture %}
+     <footer>
+        {% if 'en' in language %}
+        <p><a href="/cn/projects">点击转换为中文</a>.</p>
+        {% else %}
+        <p><a href="/en/projects">click to convert to English</a>.</p>
+        {% endif %}
+    </footer>
     {% if not username %}
         {% include "include/login_register_modals.html" %}
     {% endif %}
