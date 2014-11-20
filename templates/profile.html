@@ -105,6 +105,13 @@
         {% if not username %}
         {% include "include/login_register_modals.html" %}
         {% endif %}
+         <footer>
+        {% if 'en' in language %}
+        <p><a href="/cn/profile?project={{project_name}}&name={{sample_name}}">点击转换为中文</a>.</p>
+        {% else %}
+        <p><a href="/en/profile?project={{project_name}}&name={{sample_name}}">click to convert to English</a>.</p>
+        {% endif %}
+        </footer>
 {% endblock %}
 {% block scripts %}
  <script type="text/javascript">

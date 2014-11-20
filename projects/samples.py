@@ -110,7 +110,7 @@ def samples_backend(language):
             'new_pass':'New Password',
             'modify':'MODIFY',
             'S_F_F':'Set Fields Filter',
-            'MORE':'MORE',
+            'V_M_F':'view more fileds',
             'S_Fileds':'Select fields',
              'S_C':'Select Columns to Show',
              'Logout':'Logout',
@@ -121,7 +121,7 @@ def samples_backend(language):
             'Home': U"主页",
             'Projects': U'工程',
             'Download':U'下载',
-
+            'V_M_F':U'查看更多方面',
             'S_F_F':U'筛选文件设置',
             'MORE':U'更多',
             'S_Fileds':U'筛选范围',
