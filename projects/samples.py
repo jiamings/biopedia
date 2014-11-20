@@ -90,7 +90,7 @@ def samples_backend(language='en'):
     if 'username' in session:
         user = User.objects.get(username=session['username'])
         count = CreatedProjects.objects(username=user['username'], project_name=project_name).count()
-        if count > 0 or user['admin']:
+        if count > 0 or user['admin'] == True:
             created_project = True
         else:
             created_project = False
