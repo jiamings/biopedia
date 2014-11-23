@@ -1,8 +1,15 @@
+{% macro switch_lang(en, cn) %}
+    {% if language =='en' %}
+        {{ en }}
+    {% else %}
+        {{ cn }}
+    {% endif %}
+{% endmacro %}
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
     <ul class="nav navbar-nav">
-        <li><a href="/{{ language }}/index">{{posts.Home}}</a></li>
-        <li class="active"><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
+        <li><a href="/{{ language }}/index">{{switch_lang('Home','主页')}}</a></li>
+        <li class="active"><a href="/{{ language }}/projects">{{switch_lang('Projects','工程')}}</a></li>
     </ul>
     {% include "include/nav_bar_right.html" %}
 {% endblock %}
@@ -10,14 +17,14 @@
     <div class="jumbotron" style="background-image: url(/static/images/projects_jumbo.jpg);
         background-size: cover;">
         <div class="container">
-            <h2>{{posts.Projects}}</h2>
+            <h2>{{switch_lang('Projects','工程')}}</h2>
             <p>
                 {% if user %}
                 <button class="btn btn-primary" data-toggle="modal" data-target="#insert">
-                     {{posts.proj_comment}}
+                     {{switch_lang（'Create your own project!','添加你自己的项目')}}
                 </button>
                 {% else %}
-                    {{posts.Insert_pro}}
+                    {{switch_lang('Register a free account to create your own project!','注册一个免费的账号来添加自己的项目'}}
                 {% endif %}
             </p>
 
@@ -30,21 +37,21 @@
         <table id="projects" class="table table-striped table-bordered">
             <thead>
             <tr>
-                <th>{{posts.Projects}}</th>
-                <th>{{posts.Environment}}</th>
-                <th>{{posts.Site}}</th>
-                <th>{{posts.seq_type}}</th>
-                <th>{{posts.pro_id}}</th>
-                <th>{{posts.F}}</th>
-                <th>{{posts.S}}</th>
-                <th>{{posts.T}}</th>
-                <th>{{posts.Fo}}</th>
-                <th>{{posts.Fi}}</th>
-                <th>{{posts.Si}}</th>
-                <th>{{posts.Se}}</th>
+                <th>{{switch_lang('Projects','工程')}}</th>
+                <th>{{switch_lang('Environment','环境')}}</th>
+                <th>{{switch_lang('Site','地域')}}</th>
+                <th>{{switch_lang('seq_type','结论类型')}}</th>
+                <th>{{switch_lang('Project ID','项目编号')}}</th>
+                <th>{{switch_lang('# of Total Sequences','# 全序列')}}</th>
+                <th>{{switch_lang('# of ORFs','# 开关频谱')}}</th>
+                <th>{{switch_lang('# of Samples','# 样本数')}}</th>
+                <th>{{switch_lang('Read Length','读入长度')}}</th>
+                <th>{{switch_lang('Platform','平台')}}</th>
+                <th>{{switch_lang('Create Date','创建时间')}}</th>
+                <th>{{switch_lang('Update Date','更新时间')}}</th>
                 {% if user %}
-                    <th>{{posts.Star}}</th>
-                    <th>{{posts.Delete}}</th>
+                    <th>{{switch_lang('Star','赞')}}</th>
+                    <th>{{switch_lang('Delete','删除')}}</th>
                 {% endif %}
 
             </tr>
@@ -84,13 +91,13 @@
                                 <button class="btn btn-primary btn-sm"
                                         onclick="changeDeleteModalBehavior('{{ project['name'] }}')" data-toggle="modal"
                                         data-target="#myprojectdelete">
-                                    {{posts.Delete}}
+                                    {{switch_lang('Delete','删除')}}
                                 </button>
                             </td>
                         {% else %}
                             <td>
                                 <button class="btn btn-primary btn-sm disabled">
-                                    {{posts.Delete}}
+                                    {{switch_lang('Delete','删除')}}
                                 </button>
                             </td>
                         {% endif %}
@@ -122,12 +129,12 @@
                 <div class="modal-body">
 
                     <h4 id="deleteProject"></h4>
-                    <h4>{{posts.cannot_be_revert}}</h4>
+                    <h4>{{switch_lang('This operation cannot be reverted.','操作不可被恢复')}}</h4>
 
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-default" data-dismiss="modal">{{posts.NO}}</button>
+                        <button type="button" class="btn btn-default" data-dismiss="modal">{{switch_lang('No','否')}}</button>
                         <a id="projectDeleteButton" href="">
-                            <button type="button" class="btn btn-primary" value="confirm">{{posts.Yes}}</button>
+                            <button type="button" class="btn btn-primary" value="confirm">{{switch_lang('Yes','是')}}</button>
                         </a>
                     </div>
                 </div>
@@ -142,7 +149,7 @@
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal"><span
                             aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-                    <h4 class="modal-title" id="myModalLabel">{{posts.insert_N}}</h4>
+                    <h4 class="modal-title" id="myModalLabel">{{switch_lang('Insert a new PROJECT!','添加一个新项目')}}</h4>
                 </div>
                 <form class="form-horizontal" action="/projects_insert" method="post" enctype="multipart/form-data">
                     <div class="modal-body">
@@ -150,59 +157,59 @@
                             <table class="table table-striped">
                                 <tbody>
                                 <tr>
-                                    <td><label>{{posts.Name}}</label></td>
+                                    <td><label>{{switch_lang('Name','用户名')}}</label></td>
                                     <td><input type="text" name="name"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.Environment}}</label></td>
+                                    <td><label>{{switch_lang('Environment','环境')}}</label></td>
                                     <td><input type="text" name="environment"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.Site}}</label></td>
+                                    <td><label>{{switch_lang('Site','地域')}}</label></td>
                                     <td><input type="text" name="site"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.seq_type}}</label></td>
+                                    <td><label>{{switch_lang('seq_type','结论类型')}}</label></td>
                                     <td><input type="text" name="sequence_type"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.pro_id}}</label></td>
+                                    <td><label>{{switch_lang('Project ID','项目编号')}}</label></td>
                                     <td><input type="text" name="project_id"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.F}}</label></td>
+                                    <td><label>{{switch_lang('# of Total Sequences','# 全序列')}}</label></td>
                                     <td><input type="text" name="num_of_total_sequences"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.S}}</label></td>
+                                    <td><label>{{switch_lang('# of ORFs','# 开关频谱')}}</label></td>
                                     <td><input type="text" name="num_of_orfs"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.T}}</label></td>
+                                    <td><label>{{switch_lang('# of Samples','# 样本数')}}</label></td>
                                     <td><input type="text" name="num_of_samples"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.Fo}}</label></td>
+                                    <td><label>{{switch_lang('Read Length','读入长度')}}</label></td>
                                     <td><input type="text" name="read_length"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.Fi}}</label></td>
+                                    <td><label>{{switch_lang('Platform','平台')}}</label></td>
                                     <td><input type="text" name="platform"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.Si}}</label></td>
+                                    <td><label>{{switch_lang('Create Date','创建时间')}}</label></td>
                                     <td><input type="text" name="create_date"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.Se}}</label></td>
+                                    <td><label>{{switch_lang('Update Date','更新时间')}}</label></td>
                                     <td><input type="text" name="update_date"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.M_F}}</label></td>
+                                    <td><label>{{switch_lang('Mapping File','映像文件')}}</label></td>
                                     <td><input type="file" name="mapping"/></td>
                                 </tr>
                                 <tr>
-                                    <td><label>{{posts.S_F}}</label></td>
+                                    <td><label>{{switch_lang('Sample File','样本文件')}}</label></td>
                                     <td><input type="file" name="samples"/></td>
                                 </tr>
                                 </tbody>
@@ -210,8 +217,8 @@
                         </div>
                     </div>
                     <div class="modal-footer">
-                        <button type="button" data-dismiss="modal" class="btn btn-default">{{posts.CLOSE}}</button>
-                        <button type="submit" class="btn btn-primary" value="Ok">{{posts.OK }}</button>
+                        <button type="button" data-dismiss="modal" class="btn btn-default">{{switch_lang('CLOSE','关闭')}}</button>
+                        <button type="submit" class="btn btn-primary" value="Ok">{{switch_lang('OK','确认') }}</button>
                     </div>
                 </form>
             </div>
@@ -223,7 +230,7 @@
 
 {% endblock %}
 {% block title %}
-    {{posts.pro_title}}
+    {{switch_lang('Biopedia - Projects','Biopedia-项目')}}
 {% endblock %}
 {% block picture %}
     {% if not username %}

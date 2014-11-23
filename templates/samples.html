@@ -1,11 +1,18 @@
+{% macro switch_lang(en, cn) %}
+    {% if language =='en' %}
+        {{ en }}
+    {% else %}
+        {{ cn }}
+    {% endif %}
+{% endmacro %}
 {% extends "include/navbar-fixed-top.html" %}
 {% block link %}
      <link href="{{ url_for('static', filename='css/dataTables.keyTable.css') }}" rel="stylesheet">
 {% endblock %}
 {% block navbar %}
    <ul class="nav navbar-nav">
-                <li><a href="/{{ language }}/index">{{posts.Home}}</a></li>
-                <li><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
+                <li><a href="/{{ language }}/index">{{switch_lang('Home','主页')}}</a></li>
+                <li><a href="/{{ language }}/projects">{{switch_lang('Projects','工程')}}</a></li>
                 <li class="active"><a href="#">{{ project_name }}</a></li>
             </ul>
    {% include "include/nav_bar_right.html" %}
@@ -16,16 +23,16 @@
     <div class="container">
 
         <h2>{{ project_name }}</h2>
-        <p>{{posts.Desp}}</p>
+        <p>{{switch_lang('We need a description for every project.','每个项目都需要描述')}}</p>
         <div class="row">
             <div class="col-lg-3">
-                <a href="/download-sample?project_name={{ project_name }}"><button class="btn btn-primary btn-sm">{{posts.Download}}</button></a>
+                <a href="/download-sample?project_name={{ project_name }}"><button class="btn btn-primary btn-sm">{{switch_lang('Download','下载')}}</button></a>
             </div>
             <div class="col-lg-3">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter">{{posts.S_F_F}}</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#filter">{{switch_lang('Set Fields Filter','筛选文件设置')}}</button>
             </div>
             <div class="col-lg-3">
-                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#column_selection">{{posts.V_M_F}}</button>
+                <button class="btn btn-primary btn-sm" data-toggle="modal" data-target="#column_selection">{{switch_lang('view more fileds','查看更多方面')}}</button>
             </div>
             {% if created_project %}
             <div class="col-lg-3">
@@ -78,7 +85,7 @@
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">x</span></button>
-        <h4 class="modal-title" id="myModalLabel">{{posts.S_C}}</h4>
+        <h4 class="modal-title" id="myModalLabel">{{switch_lang('Select Columns to Show','按列筛选')}}</h4>
       </div>
     <form class="form-horizontal">
       <div class="modal-body">
@@ -101,8 +108,8 @@
           </div>
       </div>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">{{posts.CLOSE}}</button>
-        <button type="submit" class="btn btn-primary" value="Ok">{{posts.OK}}</button>
+        <button type="button" data-dismiss="modal" class="btn btn-default">{{switch_lang('CLOSE','关闭')}}</button>
+        <button type="submit" class="btn btn-primary" value="Ok">{{switch_lang('OK','确认')}}</button>
       </div>
     </form>
     </div>
@@ -115,7 +122,7 @@
     <form action="/samples" method="get">
         <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-            <h4 class="modal-title">{{posts.S_Fileds}}</h4>
+            <h4 class="modal-title">{{switch_lang('Select fields','筛选范围')}}</h4>
         </div>
         <div class="modal-body">
 
@@ -153,8 +160,8 @@
             <input name="name" value="{{ project_name }}" type = "hidden">
         </div>
         <div class="modal-footer">
-            <button type="button" data-dismiss="modal" class="btn btn-default">{{posts.CLOSE}}</button>
-            <button type="submit" class="btn btn-primary" value="Ok">{{posts.OK}}</button>
+            <button type="button" data-dismiss="modal" class="btn btn-default">{{switch_lang('CLOSE','关闭')}}</button>
+            <button type="submit" class="btn btn-primary" value="Ok">{{switch_lang('OK','确认')}}</button>
         </div>
 
     </form>

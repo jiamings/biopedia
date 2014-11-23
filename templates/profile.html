@@ -1,8 +1,15 @@
+{% macro switch_lang(en, cn) %}
+    {% if language =='en' %}
+        {{ en }}
+    {% else %}
+        {{ cn }}
+    {% endif %}
+{% endmacro %}
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
      <ul class="nav navbar-nav">
-               <li><a href="/{{ language }}/index">{{posts.Home}}</a></li>
-                <li><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
+               <li><a href="/{{ language }}/index">{{switch_lang('Home','主页')}}</a></li>
+                <li><a href="/{{ language }}/projects">{{switch_lang('Projects','工程')}}</a></li>
                 <li><a href="/{{ language }}/samples?name={{ project_name }}">{{ project_name }}</a></li>
                 <li class="active"><a
                         href="/{{ language }}/profile?project={{ project_name }}&name={{ sample_name }}">{{ sample_name }}</a>

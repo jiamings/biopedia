@@ -1,3 +1,10 @@
+{% macro switch_lang(en, cn) %}
+    {% if language =='en' %}
+        {{ en }}
+    {% else %}
+        {{ cn }}
+    {% endif %}
+{% endmacro %}
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
    <ul class="nav navbar-nav">

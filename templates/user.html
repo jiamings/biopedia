@@ -1,8 +1,15 @@
+{% macro switch_lang(en, cn) %}
+    {% if language =='en' %}
+        {{ en }}
+    {% else %}
+        {{ cn }}
+    {% endif %}
+{% endmacro %}
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
     <ul class="nav navbar-nav">
-                <li><a href="/{{ language }}/index">{{posts.Home}}</a></li>
-                <li><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
+                <li><a href="/{{ language }}/index">{{switch_lang('Home','主页')}}</a></li>
+                <li><a href="/{{ language }}/projects">{{switch_lang('Projects','工程')}}</a></li>
             </ul>
     <ul class="nav navbar-nav navbar-right">
          {% include "include/nav_bar_right.html" %}
@@ -15,28 +22,28 @@
         <div class="row">
             <div class="col-lg-4">
                 <div class="well">
-                    <h2>{{posts.User_info}}</h2>
+                    <h2>{{switch_lang('User Information','用户信息')}}</h2>
 
                     <h2></h2>
                     <table class="table">
                         <tr>
-                            <th>{{posts.username}}:</th>
+                            <th>{{switch_lang('Username','用户名')}}:</th>
                             <td>{{ disp_user['username'] }}</td>
                         </tr>
                         <tr>
-                            <th>{{posts.Full_name}}:</th>
+                            <th>{{switch_lang('Full Name','全名')}}:</th>
                             <td>{{ disp_user['firstname'] }} {{ disp_user['lastname'] }}</td>
                         </tr>
                         <tr>
-                            <th>{{posts.Email}}:</th>
+                            <th>{{switch_lang('Email','电子邮件')}}:</th>
                             <td>{{ disp_user['email'] }}</td>
                         </tr>
                         <tr>
-                            <th>{{posts.Password}}:</th>
+                            <th>{{switch_lang('Password','密码')}}:</th>
                             <td>
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
                                         data-target="#mymodifypassword">
-                                   {{posts.mdf_pass}}
+                                   {{switch_lang('Modify Password','修改密码')}}
                                 </button>
                             </td>
                         </tr>
@@ -44,7 +51,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <h2>{{posts.star_pro}}:</h2>
+                <h2>{{switch_lang('Starred Projects','喜欢的项目')}}:</h2>
 
                 <p><br/></p>
 
@@ -60,7 +67,7 @@
                             </a>
                             </h4>
                             <p>
-                                {{posts.Desprition}}
+                                {{switch_lang('We need a description for every project.','请描述你的项目')}}
                             </p>
                         </div>
                     </div>
@@ -69,7 +76,7 @@
                 </div>
             </div>
             <div class="col-lg-4">
-                <h2>{{posts.create_Project}}:</h2>
+                <h2>{{switch_lang('Created Projects','创建的项目')}}:</h2>
 
                 <p><br/></p>
 
@@ -85,7 +92,7 @@
                             </a>
                             </h4>
                             <p>
-                                {{posts.Desprition}}
+                                {{switch_lang('We need a description for every project.','请描述你的项目')}}
                             </p>
                         </div>
                     </div>
@@ -98,7 +105,7 @@
 
 {% endblock %}
 {% block title %}
-        {{posts.U_Profile}} - {{ disp_user['firstname'] }} {{ disp_user['lastname'] }}
+        {{switch_lang('User Profile','个人信息')}} - {{ disp_user['firstname'] }} {{ disp_user['lastname'] }}
 {% endblock %}
 {% block picture %}
         {% include "include/modify_user_profile_modal.html" %}
