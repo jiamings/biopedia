@@ -1,8 +1,15 @@
+{% macro switch_lang(en, cn) %}
+    {% if language =='en' %}
+        {{ en }}
+    {% else %}
+        {{ cn }}
+    {% endif %}
+{% endmacro %}
 {% extends "include/navbar-fixed-top.html" %}
 {% block navbar %}
     <ul class="nav navbar-nav">
-        <li class="active"><a href="#">{{posts.Home}}</a></li>
-        <li><a href="/{{ language }}/projects">{{posts.Projects}}</a></li>
+        <li class="active"><a href="#">{{switch_lang('index','首页')}}</a></li>
+        <li><a href="/{{ language }}/projects">{{switch_lang('Projects','工程')}}</a></li>
     </ul>
     {% include "include/nav_bar_right.html" %}
 {% endblock %}
@@ -10,9 +17,9 @@
 <div class="jumbotron" style="background-image: url(/static/images/biopedia_jumbo.jpg);
         background-size: cover;">
     <div class="container">
-        <h1>{{posts.Biopedia}}</h1>
+        <h1>{{switch_lang('Biopedia','Biopedia')}}</h1>
 
-        <p>{{posts.comment}}</p>
+        <p>{{switch_lang('This is the index page for Biopedia.','这是Biopedia的索引页')}}</p>
     </div>
 </div>
 <div class="container">
@@ -21,26 +28,26 @@
             <img src="{{ url_for('static', filename='images/sass-less.png') }}" alt="Sass and Less support"
                  class="img-responsive">
 
-            <h3>{{posts.Preprocessors}}</h3>
+            <h3>{{switch_lang('Preprocessors','预处理器')}}</h3>
 
-              <p>{{posts.pre_comment1}}<a
-                    href="../css/#less">{{posts.Less}}</a>{{posts.and}}<a href="../css/#sass">{{posts.Sass}}</a>{{posts.pre_comment2}}</p>
+              <p>{{switch_lang('Bootstrap ships with vanilla CSS, but its source code utilizes the two most popular CSS preprocessors, ','Bootstrap基于vanilla CSS,但是它的源码利用了两个最常用的预处理器，')}}<a
+                    href="../css/#less">{{switch_lang('Less','Less')}}</a>{{switch_lang('and','和')}}<a href="../css/#sass">{{switch_lang('Saas','Saas')}}</a>{{switch_lang('. Quickly get started with precompiled CSS or build on the source.','。快速使用precompiled CSS 或者在源上建立项目。')}}</p>
         </div>
         <div class="col-sm-4">
             <img src="{{ url_for('static', filename='images/devices.png') }}" alt="Responsive across devices"
                  class="img-responsive">
 
-            <h3>{{posts.One}}</h3>
+            <h3>{{switch_lang('One framework, every device.','适用于所有设备的网络开发框架')}}</h3>
 
-            <p>{{posts.One_comment}}</p>
+            <p>{{switch_lang('Bootstrap easily and efficiently scales your websites and applications with a single code base, from phones to tablets to desktops with CSS media queries.','从电话到平板电脑到虚拟桌面，使用CSS media queries，Bootstrap 简单、有效的构建你的网站和应用。')}}</p>
         </div>
         <div class="col-sm-4">
             <img src="{{ url_for('static', filename='images/components.png') }}" alt="Components"
                  class="img-responsive">
 
-            <h3>{{posts.Full}}</h3>
+            <h3>{{switch_lang('Full of features','包含所有特性')}}</h3>
 
-            <p>{{posts.Full_comment}}</p>
+            <p>{{switch_lang('With Bootstrap, you get extensive and beautiful documentation for common HTML elements, dozens of custom HTML and CSS components, and awesome jQuery plugins.','使用Bootstrap, 你可以得到对常用网页设计、大量的常见HTML和CSS components以及极好的jQuery plugins进行拓展且漂亮的文档。')}}</p>
         </div>
     </div>
 
@@ -70,11 +77,12 @@
 
 {% endblock %}
 {% block title %}
-        {{posts.title}}
+        {{switch_lang('title','在线生物信息学数据中心-Biopedia')}}
 {% endblock %}
 {% block picture %}
     {% if not username %}
     {% include "include/login_register_modals.html" %}
     {% endif %}
 {%endblock%}
+
 
