@@ -9,7 +9,6 @@ function getChart_06(json) {
 			plotBackgroundColor: null,
 			plotBorderWidth: null,
 			plotShadow: false,
-			plotBackgroundImage: "static/images/background.jpg"
 		},
 		title: {
 			text: json.name
