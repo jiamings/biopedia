@@ -6,7 +6,6 @@ sys.path.append('../')
 from flask import Blueprint, render_template, request, session, send_file
 from models import User
 from definition import app
-from indexLanguage import Language
 
 index = Blueprint('index', __name__, template_folder='templates')
 counter = 0
@@ -23,12 +22,6 @@ def index_backend(language='en'):
     """
     #alert_place = request.args.get('alert_place', '')
     #alert_message = request.args.get('alert_message', '')
-
-    lang = Language()
-    if language == 'cn':
-        posts = lang.selectLanguage('cn')
-    else:
-        posts = lang.selectLanguage('en')
         
     if 'alert_message' in session and 'alert_place' in session:
         alert_message = session['alert_message']

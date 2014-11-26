@@ -4,18 +4,12 @@ sys.path.append('../')
 
 from flask import Blueprint, render_template, session, request, redirect, url_for
 from models import User, StarredProjects, CreatedProjects
-from profileLanguage import Language
 
 user_profile = Blueprint('user_profile', __name__, template_folder='templates')
 
 @user_profile.route('/user', methods=['GET'])
 @user_profile.route('/<language>/user', methods=['GET'])
 def profile_backend(language='en'):
-    lang = Language()
-    if language == 'cn':
-        posts = lang.selectLanguage('cn')
-    else:
-        posts = lang.selectLanguage('en')
 
     if session['username']:
         username = session['username']
@@ -32,7 +26,7 @@ def profile_backend(language='en'):
                                language=language, alert_message=alert_message,
                                alert_type=alert_type)
             else:
-                return render_template('user.html', user=user, posts = posts,disp_user=user,
+                return render_template('user.html', user=user, disp_user=user,
                                        starred_projects=starred_projects,
                                        created_projects=created_projects,
                                        language=language)
@@ -41,7 +35,7 @@ def profile_backend(language='en'):
             username = request.args.get('username', '')
             if username:
                 user = User.objects.get(username=username)
-            return render_template('user.html', user=admin, posts = posts,disp_user=user,
+            return render_template('user.html', user=admin, disp_user=user,
                                    starred_projects=starred_projects,
                                    created_projects=created_projects,
                                    language=language)

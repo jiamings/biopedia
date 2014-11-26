@@ -87,65 +87,7 @@ def samples_backend(language='en'):
     else:
         for field in all_fields_name:
             mapping[field] = field
-    if language == 'en':
-        posts = { # fake array of posts
-            'Home': "Home",
-            'Download':'Download',
-            'Desp':'We need a description for every project.',
-            'Projects': 'Projects',
-            'Login':'Login',
-            'Register':'Register',
-            'login_title':'Login with Biopedia Account',
-            'username':'Username',
-            'Password':'Password',
-            'CLOSE':'close',
-            'regi_title':'Register New Biopedia Account',
-            'name_First':'First Name',
-            'name_Last':'Last Name',
-            'Email':'Email',
-            'con_password':'Confirm Password',
-            'Star':'Star',
-            'Delete':'Delete',
-            'OK':'OK',
-            'star_pro':'Starred Projects',
-            'new_pass':'New Password',
-            'modify':'MODIFY',
-            'S_F_F':'Set Fields Filter',
-            'V_M_F':'view more fileds',
-            'S_Fileds':'Select fields',
-             'S_C':'Select Columns to Show',
-             'Logout':'Logout',
-            'profile':'Profile'
-        }
-    else:
-        posts = { # fake array of posts
-            'Home': U"主页",
-            'Projects': U'工程',
-            'Download':U'下载',
-            'V_M_F':U'查看更多方面',
-            'S_F_F':U'筛选文件设置',
-            'MORE':U'更多',
-            'S_Fileds':U'筛选范围',
-            'S_C':U'按列筛选',
-            'Desp':U'每个项目都需要描述',
-            'Login':U'登录',
-            'Register':U'注册',
-            'login_title':U'使用Biopedia账号登录',
-            'username':U'用户名',
-            'Password':U'密码',
-            'CLOSE':U'关闭',
-            'regi_title':U'注册新的Biopedia账号',
-            'name_First':U'名',
-            'name_Last':U'姓',
-            'Email':U'电子邮件',
-            'con_password':U'确认密码',
-            'Star':U'赞',
-            'Delete':U'取消',
-            'OK':U'确认',
-             'Logout':U'登出',
-             'profile':U'个人简介'
 
-        }
     all_fields_name.remove('name')
     if 'username' in session:
         user = User.objects.get(username=session['username'])
@@ -154,12 +96,12 @@ def samples_backend(language='en'):
             created_project = True
         else:
             created_project = False
-        return render_template('samples.html', posts=posts, language=language, project_name=project_name,
+        return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
                            string_field_element=string_field_element, mapping=mapping, user=user,
                            created_project=created_project)
-    return render_template('samples.html', posts = posts,language=language, project_name=project_name,
+    return render_template('samples.html', language=language, project_name=project_name,
                            sample_list=sample_list, project_fields_name=project_fields_name,
                            all_fields_name=all_fields_name, fields_string_type=fields_string_type,
                            string_field_element=string_field_element, mapping=mapping)

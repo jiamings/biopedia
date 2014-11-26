@@ -21,105 +21,6 @@ def projects_backend(language='en'):
     :return: The rendered project.html template which contains all the projects for now.
                 /projects
     """
-    if language == 'en':
-        posts = { # fake array of posts
-            'Home': "Home",
-            'Projects': 'Projects',
-            'Biopedia': 'Biopedia',
-            'Login':'Login',
-            'Register':'Register',
-            'login_title':'Login with Biopedia Account',
-            'username':'Username',
-            'Password':'Password',
-            'CLOSE':'close',
-            'regi_title':'Register New Biopedia Account',
-            'name_First':'First Name',
-            'name_Last':'Last Name',
-            'Email':'Email',
-            'con_password':'Confirm Password',
-            'proj_comment':'Create your own project!',
-            'Insert_pro':'Register a free account to create your own project!',
-            'Environment':'Environment',
-            'Site':'Site',
-            'seq_type':'Sequence Type',
-            'pro_id':'Project Id',
-            'F':'# of Total Sequences',
-            'S':'# of ORFs',
-            'T':'# of Samples',
-            'Fo':'Read Length',
-            'Fi':'Platform',
-            'Si':'Create Date',
-            'Se':'Update Date',
-            'Star':'Star',
-            'Delete':'Delete',
-            'M_F':'Mapping File',
-            'S_F':'Sample File',
-            'OK':'OK',
-            'pro_title':'Biopedia - Projects',
-            'User_info':'User Information',
-            'Full_name':'Full Name',
-            'mdf_pass':'MODIFY PASSWORD',
-            'star_pro':'Starred Projects',
-            'new_pass':'New Password',
-            'modify':'MODIFY',
-            'cannot_be_revert':'This operation cannot be reverted.',
-            'NO':'No',
-            'Yes':'Yes',
-            'insert_N':'Insert a new PROJECT!',
-            'Name':'Name',
-            'Logout':'Logout',
-            'profile':'Profile'
-        }
-    else:
-        posts = { # fake array of posts
-            'Home': U"主页",
-            'Projects': U'工程',
-            'Biopedia': U'未命名',
-            'Login':U'登录',
-            'Register':U'注册',
-            'title':U'在线生物信息学数据中心-Biopedia',
-            'login_title':U'使用Biopedia账号登录',
-            'username':U'用户名',
-            'Password':U'密码',
-            'CLOSE':U'关闭',
-            'regi_title':U'注册新的Biopedia账号',
-            'name_First':U'名',
-            'name_Last':U'姓',
-            'Email':U'电子邮件',
-            'con_password':U'确认密码',
-            'proj_comment':U'添加你自己的项目',
-            'Insert_pro':U'注册一个免费的账号来添加自己的项目',
-            'Environment':U'环境',
-            'Site':U'地域',
-            'seq_type':U'结论类型',
-            'pro_id':U'项目编号',
-            'F':U'# 全序列',
-            'S':U'# 开关频谱',
-            'T':U'# 样本数',
-            'Fo':U'读入长度',
-            'Fi':U'平台',
-            'Si':U'创建时间',
-            'Se':U'更新时间',
-            'Star':U'赞',
-            'Delete':U'删除',
-            'M_F':U'映像文件',
-            'S_F':U'样本文件',
-            'OK':U'确认',
-            'pro_title':U'Biopedia-项目',
-            'User_info':U'用户信息',
-            'Full_name':U'全名',
-            'mdf_pass':U'修改密码',
-            'star_pro':U'喜欢的项目',
-            'new_pass':U'新密码',
-            'modify':U'修改',
-            'cannot_be_revert':U'操作不可被恢复',
-            'NO':U'否',
-            'Yes':U'是',
-            'insert_N':U'添加一个新项目',
-             'Name':U'名称',
-              'Logout':U'登出',
-             'profile':U'个人简介'
-        }
     project_list = list(mongo.db.projects.find())
     if 'username' in session:
         user = User.objects.get(username=session['username'])
@@ -136,8 +37,8 @@ def projects_backend(language='en'):
             else:
                 project['delete'] = False
 
-        return render_template('projects.html', posts = posts,language=language, project_list=project_list, user=user)
-    return render_template('projects.html', posts = posts,language=language, project_list=project_list)
+        return render_template('projects.html',language=language, project_list=project_list, user=user)
+    return render_template('projects.html', language=language, project_list=project_list)
 
 
 default_default_fields = {"sex", "age", "residence", "Nationality",
