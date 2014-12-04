@@ -20,7 +20,7 @@ def profile_backend(language='en'):
             alert_message = request.args.get('alert_message', '')
             alert_type = request.args.get('alert_type', '')
             if alert_type:
-                return render_template('user.html', user=user, posts = posts, disp_user=user,
+                return render_template('user.html', user=user, disp_user=user,
                                        starred_projects=starred_projects,
                                        created_projects=created_projects,
                                language=language, alert_message=alert_message,

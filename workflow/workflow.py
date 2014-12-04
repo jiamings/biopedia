@@ -35,6 +35,10 @@ def handleworkflow():
             ffvalue.append(float(i))
         ftvalue = tuple(ffvalue)            #file tuple value
 
+        for i in range(1, len(a)):
+            if a[i-1] == 1 and a[i] == 2:
+                raise Exception
+
         obj1 = Vector9(ftvalue)
         for i in range(0, len(a)):
             print 'opt', a[i]
