@@ -121,32 +121,32 @@
 {% block scripts %}
  <script type="text/javascript">
 $(function () {
-        //createSpline_01('#container','/static/json/01-PerBaseQuality-1.json');
-    	convert_to_01('#chart1_1',"/static/text_File/01-PerBaseQuality-1.txt");
+        createSpline_01('#chart1_1','/static/json/01-PerBaseQuality-1.json');
+    	//convert_to_01('#chart1_1',"/static/text_File/01-PerBaseQuality-1.txt");
     	//createSpline_01('#container','/static/json/01-PerBaseQuality-2.json');
     	convert_to_01('#chart1_2',"/static/text_File/01-PerBaseQuality-2.txt");
-        convert_to_02("#chart2_1","/static/text_File/02-PerSequenceQualityScores-1.txt");
-        //createSpline_02('#chart2_1','/static/json/02-PerSequenceQualityScores-1.json');
+        //convert_to_02("#chart2_1","/static/text_File/02-PerSequenceQualityScores-1.txt");
+        createSpline_02('#chart2_1','/static/json/02-PerSequenceQualityScores-1.json');
         // $('#chart2').highcharts(chartOptions);
-	     convert_to_03('#chart3_1',"/static/text_File/03-PerBaseSequenceContent-1.txt");
-    	//createSpline_03('#chart3_1','/static/json/03-PerBaseSequenceContent-1.json');
-    	//createSpline_04('#chart4_1','/static/json/04-PerBaseGCContent-1.json');
-    	convert_to_04('#chart4_1',"/static/text_File/04-PerBaseGCContent-1.txt");
-	    //createSpline_05('#chart5_1','/static/json/05-PerSequenceGCContent-1.json');
-    	convert_to_05('#chart5_1',"/static/text_File/05-PerSequenceGCContent-1.txt");
+	    // convert_to_03('#chart3_1',"/static/text_File/03-PerBaseSequenceContent-1.txt");
+    	createSpline_03('#chart3_1','/static/json/03-PerBaseSequenceContent-1.json');
+    	createSpline_04('#chart4_1','/static/json/04-PerBaseGCContent-1.json');
+    	//convert_to_04('#chart4_1',"/static/text_File/04-PerBaseGCContent-1.txt");
+	    createSpline_05('#chart5_1','/static/json/05-PerSequenceGCContent-1.json');
+    	//convert_to_05('#chart5_1',"/static/text_File/05-PerSequenceGCContent-1.txt");
 
-    	convert_to_02("#chart2_2","/static/text_File/02-PerSequenceQualityScores-2.txt");
-        //createSpline_02('#chart2_2','/static/json/02-PerSequenceQualityScores-2.json');
+    	//convert_to_02("#chart2_2","/static/text_File/02-PerSequenceQualityScores-2.txt");
+        createSpline_02('#chart2_2','/static/json/02-PerSequenceQualityScores-2.json');
         // $('#chart2').highcharts(chartOptions);
-	     convert_to_03('#chart3_2',"/static/text_File/03-PerBaseSequenceContent-2.txt");
-    	//createSpline_03('#chart3_2','/static/json/03-PerBaseSequenceContent-2.json');
-    	//createSpline_04('#chart4_2','/static/json/04-PerBaseGCContent-2.json');
-    	convert_to_04('#chart4_2',"/static/text_File/04-PerBaseGCContent-2.txt");
-	    //createSpline_05('#chart5_2','/static/json/05-PerSequenceGCContent-2.json');
-    	convert_to_05('#chart5_2',"/static/text_File/05-PerSequenceGCContent-2.txt");
+	    // convert_to_03('#chart3_2',"/static/text_File/03-PerBaseSequenceContent-2.txt");
+    	createSpline_03('#chart3_2','/static/json/03-PerBaseSequenceContent-2.json');
+    	createSpline_04('#chart4_2','/static/json/04-PerBaseGCContent-2.json');
+    	//convert_to_04('#chart4_2',"/static/text_File/04-PerBaseGCContent-2.txt");
+	    createSpline_05('#chart5_2','/static/json/05-PerSequenceGCContent-2.json');
+    	//convert_to_05('#chart5_2',"/static/text_File/05-PerSequenceGCContent-2.txt");
 
-	    //createPie_06('#chart6','/static/json/06-COGContent.json');
-    	convert_to_06('#chart6',"/static/text_File/06-COGContent.txt");
+	    createPie_06('#chart6','/static/json/06-COGContent.json');
+    	//convert_to_06('#chart6',"/static/text_File/06-COGContent.txt");
 	});
 </script>
 {% endblock %}
