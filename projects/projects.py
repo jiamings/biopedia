@@ -7,10 +7,24 @@ from flask import Blueprint, render_template, session, request, redirect, url_fo
 from models import User, StarredProjects, CreatedProjects
 from definition import mongo
 import os
+import json
+
 from werkzeug.utils import secure_filename
 
 
 projects = Blueprint('projects', __name__, template_folder='templates')
+
+def check_sample_legal(content, project_name):
+
+    for line in content:
+        try:
+            json.JSONDecoder().decode(line)
+        except:
+            pass
+        if dict(eval(line)).has_key("project_name") and dict(eval(line))["project_name"] == project_name:
+            pass
+        else:
+            raise ValueError('Illegal sample exists.')
 
 @projects.route('/projects', methods=['GET'])
 @projects.route('/<language>/projects', methods=['GET'])
@@ -22,6 +36,18 @@ def projects_backend(language='en'):
                 /projects
     """
     project_list = list(mongo.db.projects.find())
+
+    alertinfo = ''
+    if 'insert_error' in session and session['insert_error'] != '':
+        succeed = 'False'
+        alertinfo = session['insert_error']
+        session['insert_error'] = ''
+    else:
+        succeed = 'True'
+        session['insert_error'] = ''
+
+    print succeed
+    print session['insert_error']
     if 'username' in session:
         user = User.objects.get(username=session['username'])
         for project in project_list:
@@ -36,9 +62,10 @@ def projects_backend(language='en'):
                 project['delete'] = True
             else:
                 project['delete'] = False
-
-        return render_template('projects.html',language=language, project_list=project_list, user=user)
-    return render_template('projects.html', language=language, project_list=project_list)
+        return render_template('projects.html',language=language, project_list=project_list, user=user, succeed=succeed,
+                               alertinfo=alertinfo)
+    return render_template('projects.html', language=language, project_list=project_list, succeed=succeed,
+                           alertinfo=alertinfo)
 
 
 default_default_fields = {"sex", "age", "residence", "Nationality",
@@ -73,11 +100,17 @@ def projects_insert(language='en'):
     samples_file = request.files['samples']
     samples_file_secure_name = secure_filename(samples_file.filename)
 
-    succeed = str(name) and mongo.db.projects.find({'name': name}).count() == 0
-
-    succeed = succeed and environment and site and sequence_type and project_id and \
+    succeed = str(name) and environment and site and sequence_type and project_id and \
               str(num_of_total_sequences).isdigit() and str(num_of_orfs).isdigit() and \
               str(read_length).isdigit() and platform
+
+    if not succeed:
+        session['insert_error'] = 'Data format error!'
+
+    if mongo.db.projects.find({'name': name}).count() != 0:
+        if succeed:
+            session['insert_error'] = 'Project name already exists!'
+        succeed = False
 
     if len(str(create_date).split('/'))==3 and str(create_date).split('/')[0].isdigit() and \
             str(create_date).split('/')[1].isdigit() and str(create_date).split('/')[2].isdigit():
@@ -85,6 +118,8 @@ def projects_insert(language='en'):
                        'day': int(str(create_date).split('/')[1]),
                        'year': int(str(create_date).split('/')[2]) }
     else:
+        if succeed:
+            session['insert_error'] = 'Date format error: MM/DD/YY'
         succeed = False
 
     if len(str(update_date).split('/'))==3 and str(update_date).split('/')[0].isdigit() and \
@@ -93,11 +128,17 @@ def projects_insert(language='en'):
                        'day': int(str(update_date).split('/')[1]),
                        'year': int(str(update_date).split('/')[2]) }
     else:
+        if succeed:
+            session['insert_error'] = 'Date format error: MM/DD/YY'
         succeed = False
+
 
     if len(mapping_file_secure_name.split('.')) <=0 or mapping_file_secure_name.split('.')[-1] != 'csv'  or \
             len(samples_file_secure_name.split('.')) <= 0 or samples_file_secure_name.split('.')[-1] != 'json':
+        if succeed:
+            session['insert_error'] = 'File format error: mapping should be .csv and samples should be .json'
         succeed = False
+
     else:
         fvalue = mapping_file.read()
         mapping_file.seek(0)
@@ -106,6 +147,13 @@ def projects_insert(language='en'):
         fvalue = samples_file.read()
         samples_file.seek(0)
         samples_file.save(os.path.join(UPLOAD_FOLDER, samples_file_secure_name))
+
+    try:
+        check_sample_legal(open(os.path.join(UPLOAD_FOLDER, samples_file_secure_name), "r").readlines(), name)
+    except:
+        if succeed:
+            session['insert_error'] = 'File data error: some sample in the file does not belong to the project'
+        succeed = False
 
     if succeed:
         proj_info = {
@@ -142,9 +190,13 @@ def projects_insert(language='en'):
             samples = mongo.db.samples.find({"project_name": name})
 
             for sample in samples:
-                if sample[field] != 'NA' and type(sample[field])!=int:
-                    string_fields.append(field)
-                    break
+                if sample[field] != 'NA':
+                    try:
+                        tmpeval = eval(str(sample[field]))
+                    except Exception:
+                        string_fields.append(field)
+                        break
+
             # create default
             if field in default_default_fields:
                 default_fields.append(field)
@@ -154,12 +206,17 @@ def projects_insert(language='en'):
         project_name = name
         created_project = CreatedProjects(username=user['username'], project_name=project_name)
         created_project.save()
+    else:
+        mongo.db.projects.remove({"name": name})
+        if succeed:
+            session['insert_error'] = 'Samples failed!'
+        succeed = False
+
 
     project_list = mongo.db.projects.find()
 
     if 'username' in session:
         user = User.objects.get(username=session['username'])
-
     return redirect(url_for('projects.projects_backend', language=language))
 
 

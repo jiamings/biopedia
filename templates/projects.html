@@ -1,3 +1,10 @@
+{% if succeed == 'False' %}
+    <script type="text/JavaScript">
+        var info = '{{ alertinfo }}';
+        alert(info);
+    </script>
+{% endif %}
+
 {% macro switch_lang(en, cn) %}
     {% if language =='en' %}
         {{ en }}
@@ -13,7 +20,9 @@
     </ul>
     {% include "include/nav_bar_right.html" %}
 {% endblock %}
+
 {% block contain %}
+
     <div class="jumbotron" style="background-image: url(/static/images/projects_jumbo.jpg);
         background-size: cover;">
         <div class="container">
@@ -271,5 +280,6 @@
 
         });
     </script>
+
 {% endblock %}
 

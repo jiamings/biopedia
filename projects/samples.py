@@ -60,7 +60,11 @@ def samples_backend(language='en'):
                 filter[field] = value
         else:
             value = request.args.getlist(field)
-            if len(value) > 1 and value[1].isdigit():
+            if len(value) > 1:
+                try:
+                    tmpeval = eval(str(value[1]))
+                except:
+                    continue
                 if value[0] != 'no':
                     if value[0] == 'eq':
                         filter[field] = int(value[1])

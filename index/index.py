@@ -12,6 +12,8 @@ counter = 0
 
 @index.route('/index')
 @index.route('/<language>/index')
+@index.route('/')
+@index.route('/<language>/')
 def index_backend(language='en'):
     global counter
     counter = counter + 1
