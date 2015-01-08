@@ -22,4 +22,4 @@ app.register_blueprint(user_admin)
 app.register_blueprint(workflow_bp)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0')

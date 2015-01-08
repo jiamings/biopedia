@@ -1,13 +1,18 @@
 from vector9 import Vector9
 from werkzeug.utils import secure_filename
 import sys
+from flask import Blueprint, render_template, request, session, send_file
+from models import User
 sys.path.append('../')
 from flask import Blueprint, make_response, render_template, request, url_for, redirect
 workflow_bp = Blueprint('workflow', __name__, template_folder='templates')
 
 @workflow_bp.route('/workflow', methods=['GET'])
-def workflow():
-    return render_template('workflow.html')
+def workflow(language='en'):
+    if 'username' in session:
+        user = User.objects.get(username=session['username'])
+        return render_template('workflow.html', language=language, user=user)
+    return render_template('workflow.html', language=language)
 
 @workflow_bp.route('/handleworkflow', methods=['POST'])
 def handleworkflow():
